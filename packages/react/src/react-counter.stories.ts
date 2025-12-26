@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/web-components-vite';
+import type { Meta, StoryObj } from '@storybook/web-components';
 import './react-counter.tsx';
 
 interface ReactCounterProps {
@@ -24,7 +24,7 @@ export const Default: Story = {
   args: {
     count: 0,
   },
-  render: (args) => {
+  render: (args: ReactCounterProps) => {
     const element = document.createElement('react-counter');
     element.setAttribute('count', args.count.toString());
     return element;
@@ -35,7 +35,7 @@ export const WithInitialValue: Story = {
   args: {
     count: 10,
   },
-  render: (args) => {
+  render: (args: ReactCounterProps) => {
     const element = document.createElement('react-counter');
     element.setAttribute('count', args.count.toString());
     return element;
@@ -46,7 +46,7 @@ export const NegativeValue: Story = {
   args: {
     count: -5,
   },
-  render: (args) => {
+  render: (args: ReactCounterProps) => {
     const element = document.createElement('react-counter');
     element.setAttribute('count', args.count.toString());
     return element;
