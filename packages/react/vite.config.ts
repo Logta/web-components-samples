@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     lib: {
-      entry: 'src/react-counter.jsx',
+      entry: 'src/react-counter.tsx',
       formats: ['es'],
       fileName: 'react-counter'
     },

@@ -4,12 +4,16 @@
   "type": "module",
   "main": "./dist/lit-counter.js",
   "module": "./dist/lit-counter.js",
+  "types": "./dist/lit-counter.d.ts",
   "exports": {
-    ".": "./dist/lit-counter.js"
+    ".": {
+      "types": "./dist/lit-counter.d.ts",
+      "default": "./dist/lit-counter.js"
+    }
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

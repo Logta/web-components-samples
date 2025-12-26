@@ -1,42 +1,44 @@
 class MyCounter extends HTMLElement {
+  private _count: number = 0;
+  declare shadowRoot: ShadowRoot;
+
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this._count = 0;
   }
 
-  static get observedAttributes() {
+  static get observedAttributes(): string[] {
     return ['count'];
   }
 
-  connectedCallback() {
+  connectedCallback(): void {
     this.render();
-    this.shadowRoot.querySelector('.increment').addEventListener('click', () => {
+    this.shadowRoot.querySelector('.increment')?.addEventListener('click', () => {
       this.count++;
     });
-    this.shadowRoot.querySelector('.decrement').addEventListener('click', () => {
+    this.shadowRoot.querySelector('.decrement')?.addEventListener('click', () => {
       this.count--;
     });
   }
 
-  attributeChangedCallback(name, oldValue, newValue) {
+  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
     if (name === 'count' && oldValue !== newValue) {
-      this._count = parseInt(newValue, 10) || 0;
+      this._count = parseInt(newValue || '0', 10) || 0;
       this.render();
     }
   }
 
-  get count() {
+  get count(): number {
     return this._count;
   }
 
-  set count(value) {
+  set count(value: number) {
     this._count = value;
-    this.setAttribute('count', value);
+    this.setAttribute('count', value.toString());
     this.render();
   }
 
-  render() {
+  render(): void {
     this.shadowRoot.innerHTML = `
       <style>
         :host {

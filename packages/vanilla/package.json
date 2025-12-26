@@ -4,12 +4,16 @@
   "type": "module",
   "main": "./dist/my-counter.js",
   "module": "./dist/my-counter.js",
+  "types": "./dist/my-counter.d.ts",
   "exports": {
-    ".": "./dist/my-counter.js"
+    ".": {
+      "types": "./dist/my-counter.d.ts",
+      "default": "./dist/my-counter.js"
+    }
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "devDependencies": {

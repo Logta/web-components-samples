@@ -6,9 +6,22 @@
   "scripts": {
     "dev": "pnpm -r dev",
     "build": "pnpm -r build",
-    "preview": "pnpm -r preview"
+    "preview": "pnpm -r preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
-  "keywords": ["web-components", "vite", "lit", "react"],
+  "keywords": [
+    "web-components",
+    "vite",
+    "lit",
+    "react"
+  ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@storybook/web-components-vite": "10.1.10",
+    "@types/node": "^25.0.3",
+    "storybook": "10.1.10",
+    "typescript": "^5.9.3"
+  }
 }

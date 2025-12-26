@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
+import { useState } from 'react';
+import { createRoot, Root } from 'react-dom/client';
 
-function CounterComponent({ initialCount = 0 }) {
+interface CounterComponentProps {
+  initialCount?: number;
+}
+
+function CounterComponent({ initialCount = 0 }: CounterComponentProps) {
   const [count, setCount] = useState(initialCount);
 
   const styles = {
@@ -32,7 +36,7 @@ function CounterComponent({ initialCount = 0 }) {
     count: {
       fontWeight: 'bold',
       minWidth: '40px',
-      textAlign: 'center',
+      textAlign: 'center' as const,
       fontSize: '24px',
       color: '#333',
     },
@@ -49,8 +53,8 @@ function CounterComponent({ initialCount = 0 }) {
         <button
           style={styles.button}
           onClick={() => setCount(count - 1)}
-          onMouseOver={(e) => (e.target.style.background = '#4fa8c5')}
-          onMouseOut={(e) => (e.target.style.background = '#61dafb')}
+          onMouseOver={(e) => (e.currentTarget.style.background = '#4fa8c5')}
+          onMouseOut={(e) => (e.currentTarget.style.background = '#61dafb')}
         >
           -
         </button>
@@ -58,8 +62,8 @@ function CounterComponent({ initialCount = 0 }) {
         <button
           style={styles.button}
           onClick={() => setCount(count + 1)}
-          onMouseOver={(e) => (e.target.style.background = '#4fa8c5')}
-          onMouseOut={(e) => (e.target.style.background = '#61dafb')}
+          onMouseOver={(e) => (e.currentTarget.style.background = '#4fa8c5')}
+          onMouseOut={(e) => (e.currentTarget.style.background = '#61dafb')}
         >
           +
         </button>
@@ -69,33 +73,30 @@ function CounterComponent({ initialCount = 0 }) {
 }
 
 class ReactCounter extends HTMLElement {
-  constructor() {
-    super();
-    this._root = null;
-  }
+  private _root: Root | null = null;
 
-  connectedCallback() {
+  connectedCallback(): void {
     const mountPoint = document.createElement('div');
     this.appendChild(mountPoint);
 
-    const initialCount = parseInt(this.getAttribute('count'), 10) || 0;
+    const initialCount = parseInt(this.getAttribute('count') || '0', 10) || 0;
     this._root = createRoot(mountPoint);
     this._root.render(<CounterComponent initialCount={initialCount} />);
   }
 
-  disconnectedCallback() {
+  disconnectedCallback(): void {
     if (this._root) {
       this._root.unmount();
     }
   }
 
-  static get observedAttributes() {
+  static get observedAttributes(): string[] {
     return ['count'];
   }
 
-  attributeChangedCallback(name, oldValue, newValue) {
+  attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null): void {
     if (name === 'count' && this._root) {
-      const count = parseInt(newValue, 10) || 0;
+      const count = parseInt(newValue || '0', 10) || 0;
       this._root.render(<CounterComponent initialCount={count} />);
     }
   }

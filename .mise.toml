@@ -14,9 +14,18 @@ description = "Build all packages"
 run = "pnpm build"
 
 [tasks.preview]
-description = "Preview all built packages"
+description = "Build and preview all packages"
+depends = ["build"]
 run = "pnpm preview"
 
 [tasks.install]
 description = "Install dependencies"
 run = "pnpm install"
+
+[tasks.storybook]
+description = "Run Storybook development server"
+run = "pnpm storybook"
+
+[tasks."storybook:build"]
+description = "Build Storybook for production"
+run = "pnpm build-storybook"
