@@ -13,6 +13,10 @@ class MyCounter extends HTMLElement {
 
   connectedCallback(): void {
     this.render();
+    this.attachEventListeners();
+  }
+
+  private attachEventListeners(): void {
     this.shadowRoot.querySelector('.increment')?.addEventListener('click', () => {
       this.count++;
     });
@@ -87,6 +91,7 @@ class MyCounter extends HTMLElement {
         <button class="increment">+</button>
       </div>
     `;
+    this.attachEventListeners();
   }
 }
 
