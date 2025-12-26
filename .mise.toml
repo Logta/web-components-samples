@@ -1,0 +1,22 @@
+[tools]
+node = "24.3.0"
+pnpm = "10.12.3"
+
+[env]
+# プロジェクト固有の環境変数をここに追加できます
+
+[tasks.dev]
+description = "Run development servers for all packages"
+run = "pnpm dev"
+
+[tasks.build]
+description = "Build all packages"
+run = "pnpm build"
+
+[tasks.preview]
+description = "Preview all built packages"
+run = "pnpm preview"
+
+[tasks.install]
+description = "Install dependencies"
+run = "pnpm install"

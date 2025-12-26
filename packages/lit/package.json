@@ -1,0 +1,21 @@
+{
+  "name": "@web-components-samples/lit",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/lit-counter.js",
+  "module": "./dist/lit-counter.js",
+  "exports": {
+    ".": "./dist/lit-counter.js"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lit": "^3.1.0"
+  },
+  "devDependencies": {
+    "vite": "catalog:"
+  }
+}

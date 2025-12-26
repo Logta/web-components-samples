@@ -1,0 +1,80 @@
+import { LitElement, html, css } from 'lit';
+import { property } from 'lit/decorators.js';
+
+export class LitCounter extends LitElement {
+  static styles = css`
+    :host {
+      display: block;
+      padding: 20px;
+      border: 2px solid #ff6b00;
+      border-radius: 8px;
+      margin: 10px 0;
+      background: #fff5f0;
+    }
+
+    .counter {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 18px;
+    }
+
+    button {
+      padding: 8px 16px;
+      font-size: 16px;
+      border: 1px solid #ff6b00;
+      background: #ff6b00;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #e55a00;
+    }
+
+    .count {
+      font-weight: bold;
+      min-width: 40px;
+      text-align: center;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .label {
+      color: #666;
+      font-size: 14px;
+    }
+  `;
+
+  static properties = {
+    count: { type: Number }
+  };
+
+  constructor() {
+    super();
+    this.count = 0;
+  }
+
+  increment() {
+    this.count++;
+  }
+
+  decrement() {
+    this.count--;
+  }
+
+  render() {
+    return html`
+      <div class="counter">
+        <div class="label">Lit Counter:</div>
+        <button @click=${this.decrement}>-</button>
+        <span class="count">${this.count}</span>
+        <button @click=${this.increment}>+</button>
+      </div>
+    `;
+  }
+}
+
+customElements.define('lit-counter', LitCounter);

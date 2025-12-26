@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lit Web Component</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    .demo {
+      margin: 20px 0;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lit Web Component Demo</h1>
+
+  <div class="demo">
+    <h2>Counter Component</h2>
+    <lit-counter></lit-counter>
+    <lit-counter count="5"></lit-counter>
+  </div>
+
+  <script type="module" src="/src/lit-counter.js"></script>
+</body>
+</html>

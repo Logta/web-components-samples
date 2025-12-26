@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Components Samples - All in One Demo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: #333;
+      margin: 0 0 10px 0;
+      font-size: 2.5em;
+    }
+
+    .subtitle {
+      color: #666;
+      margin: 0 0 40px 0;
+      font-size: 1.1em;
+    }
+
+    .section {
+      margin: 30px 0;
+      padding: 25px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .section h2 {
+      margin: 0 0 15px 0;
+      color: #444;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.75em;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .badge.vanilla {
+      background: #646cff;
+      color: white;
+    }
+
+    .badge.lit {
+      background: #ff6b00;
+      color: white;
+    }
+
+    .badge.react {
+      background: #61dafb;
+      color: #000;
+    }
+
+    .description {
+      color: #666;
+      margin: 0 0 20px 0;
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+
+    .demo-area {
+      background: white;
+      padding: 20px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+    }
+
+    .info {
+      margin-top: 40px;
+      padding: 20px;
+      background: #e3f2fd;
+      border-left: 4px solid #2196f3;
+      border-radius: 4px;
+    }
+
+    .info h3 {
+      margin: 0 0 10px 0;
+      color: #1976d2;
+    }
+
+    .info ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    .info li {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    code {
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎯 Web Components Samples</h1>
+    <p class="subtitle">Vanilla JS、Lit、Reactで構築したWeb Componentsの比較デモ</p>
+
+    <div class="section">
+      <h2>
+        <span class="badge vanilla">Vanilla JS</span>
+        Vanilla JavaScript
+      </h2>
+      <p class="description">
+        純粋なJavaScriptとCustom Elements APIを使用して構築。
+        フレームワークなしで軽量、ブラウザネイティブのAPIのみを使用。
+      </p>
+      <div class="demo-area">
+        <my-counter></my-counter>
+        <my-counter count="10"></my-counter>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>
+        <span class="badge lit">Lit</span>
+        Lit Framework
+      </h2>
+      <p class="description">
+        Litフレームワークを使用して構築。
+        宣言的なテンプレート、リアクティブプロパティ、効率的な再レンダリングを提供。
+      </p>
+      <div class="demo-area">
+        <lit-counter></lit-counter>
+        <lit-counter count="5"></lit-counter>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>
+        <span class="badge react">React</span>
+        React
+      </h2>
+      <p class="description">
+        ReactコンポーネントをWeb Componentとしてラップ。
+        React開発者に馴染みのある方法でWeb Componentsを作成可能。
+      </p>
+      <div class="demo-area">
+        <react-counter></react-counter>
+        <react-counter count="15"></react-counter>
+      </div>
+    </div>
+
+    <div class="info">
+      <h3>📦 技術スタック</h3>
+      <ul>
+        <li><strong>ビルドツール:</strong> Vite</li>
+        <li><strong>パッケージマネージャー:</strong> pnpm</li>
+        <li><strong>モノレポ:</strong> pnpm workspace</li>
+        <li><strong>Web Components API:</strong> Custom Elements, Shadow DOM</li>
+      </ul>
+
+      <h3>🚀 使い方</h3>
+      <ul>
+        <li>開発モード: <code>pnpm dev</code></li>
+        <li>ビルド: <code>pnpm build</code></li>
+        <li>個別パッケージ: <code>cd packages/vanilla && pnpm dev</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Import all web components -->
+  <script type="module">
+    // Vanilla JS component
+    import './packages/vanilla/src/my-counter.js';
+
+    // Lit component
+    import './packages/lit/src/lit-counter.js';
+
+    // React component
+    import './packages/react/src/react-counter.jsx';
+  </script>
+</body>
+</html>
