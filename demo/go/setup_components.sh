@@ -12,14 +12,8 @@ echo "Setting up Web Components for Go..."
 # staticディレクトリを作成
 mkdir -p static/components
 
-# パッケージをビルド（バンドル版含む）
-echo "Building packages..."
-cd ../..
-pnpm build
-
 # ビルド済みファイルをコピー
 echo "Copying bundled components..."
-cd demo/go
 
 # 各コンポーネントをコピー
 cp ../../packages/vanilla/dist/my-counter.js static/components/vanilla.js

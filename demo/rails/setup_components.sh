@@ -12,14 +12,8 @@ echo "Setting up Web Components for Rails..."
 # publicディレクトリを作成
 mkdir -p public/components
 
-# パッケージをビルド（バンドル版含む）
-echo "Building packages..."
-cd ../..
-pnpm build
-
 # ビルド済みファイルをコピー
 echo "Copying bundled components..."
-cd demo/rails
 
 # 各コンポーネントをコピー
 cp ../../packages/vanilla/dist/my-counter.js public/components/vanilla.js
