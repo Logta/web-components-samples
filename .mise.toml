@@ -1,31 +1,148 @@
+# =============================================================================
+# Tools Configuration
+# =============================================================================
 [tools]
 node = "24.3.0"
 pnpm = "10.12.3"
+go = "1.25.5"
+ruby = "3.3.6"
 
+# =============================================================================
+# Environment Variables
+# =============================================================================
 [env]
-# プロジェクト固有の環境変数をここに追加できます
+# Ruby build configuration for macOS with Homebrew libyaml
+_.source = """
+if command -v brew >/dev/null 2>&1; then
+  export RUBY_CONFIGURE_OPTS="--with-libyaml-dir=$(brew --prefix libyaml)"
+fi
+"""
+
+# =============================================================================
+# Package Development Tasks
+# =============================================================================
+
+[tasks.clean]
+description = "Clean all build artifacts"
+run = "pnpm clean || rm -rf packages/*/dist demo/*/node_modules/.vite"
+
+[tasks.install]
+description = "Install all project dependencies"
+run = "pnpm install"
+alias = "i"
 
 [tasks.dev]
-description = "Run development servers for all packages"
+description = "Start development servers for all packages"
 run = "pnpm dev"
+alias = "d"
 
 [tasks.build]
-description = "Build all packages"
+description = "Build all packages for production"
 run = "pnpm build"
+alias = "b"
 
 [tasks.preview]
 description = "Build and preview all packages"
 depends = ["build"]
 run = "pnpm preview"
 
-[tasks.install]
-description = "Install dependencies"
-run = "pnpm install"
+[tasks.test]
+description = "Run tests for all packages"
+run = "pnpm test"
+alias = "t"
+
+# =============================================================================
+# Storybook Tasks
+# =============================================================================
 
 [tasks.storybook]
-description = "Run Storybook development server"
+description = "Start Storybook development server"
 run = "pnpm storybook"
+alias = "sb"
 
 [tasks."storybook:build"]
 description = "Build Storybook for production"
 run = "pnpm build-storybook"
+
+# =============================================================================
+# Demo Tasks - Setup
+# =============================================================================
+
+[tasks."demo:setup"]
+description = "Setup all demos (build components and configure)"
+depends = ["build", "demo:setup-rails", "demo:setup-go"]
+
+[tasks."demo:setup-rails"]
+description = "Setup Rails demo (build & copy components, install gems, setup DB)"
+run = """
+cd demo/rails
+./setup_components.sh
+bundle install
+bundle exec rails db:create db:migrate
+"""
+
+[tasks."demo:setup-go"]
+description = "Setup Go demo (build & copy components)"
+run = "cd demo/go && ./setup_components.sh"
+
+# =============================================================================
+# Demo Tasks - Development Servers
+# =============================================================================
+
+[tasks."demo:react"]
+description = "🚀 React Demo - http://localhost:3000"
+run = "cd demo/react && pnpm dev"
+alias = "dr"
+
+[tasks."demo:vanilla"]
+description = "🚀 Vanilla JS Demo - http://localhost:3001"
+run = "cd demo/vanillajs && pnpm dev"
+alias = "dv"
+
+[tasks."demo:rails"]
+description = "🚀 Rails Demo - http://localhost:3000"
+run = "cd demo/rails && bundle exec rails server"
+alias = "drails"
+
+[tasks."demo:go"]
+description = "🚀 Go Demo - http://localhost:8080"
+run = "cd demo/go && go run main.go"
+alias = "dgo"
+
+# =============================================================================
+# Demo Tasks - Shortcuts
+# =============================================================================
+
+[tasks."demo:all"]
+description = "List all available demos"
+run = """
+echo "📦 Available Demos:"
+echo ""
+echo "  React      → mise demo:react    (port 3000)"
+echo "  Vanilla JS → mise demo:vanilla  (port 3001)"
+echo "  Rails      → mise demo:rails    (port 3000)"
+echo "  Go         → mise demo:go       (port 8080)"
+echo ""
+echo "💡 Tip: Setup Rails/Go demos first with 'mise demo:setup'"
+"""
+
+# =============================================================================
+# Utility Tasks
+# =============================================================================
+
+[tasks.fmt]
+description = "Format all code (prettier, rubocop, gofmt)"
+run = """
+pnpm prettier --write .
+cd demo/rails && bundle exec rubocop -A || true
+cd demo/go && go fmt ./... || true
+"""
+
+[tasks.check]
+description = "Run all checks (lint, type-check, test)"
+run = "pnpm lint && pnpm type-check && pnpm test"
+
+[tasks.help]
+description = "Show available tasks"
+run = "mise tasks"
+alias = "h"
