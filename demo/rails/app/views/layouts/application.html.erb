@@ -8,10 +8,14 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
 
     <!-- Web Components CSS -->
     <link rel="stylesheet" href="/components/web-components-samples.css">
+
+    <!-- Web Components Scripts -->
+    <script type="module" src="/components/vanilla.js"></script>
+    <script type="module" src="/components/react.js"></script>
+    <script type="module" src="/components/lit.js"></script>
 
     <style>
       :root {
