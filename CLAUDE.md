@@ -6,10 +6,15 @@
 
 下記ドキュメントに関わる変更を行なった場合、行なったことをドキュメントに反映すること
 
-- @CLAUDE.md
-- 下記の仕様を表すドキュメント
-  - @.claude/rules/demo.md
-  - @.claude/rules/packages.md
+### プロジェクト設計・仕様ドキュメント
+- @CLAUDE.md - プロジェクト全体のガイド（このファイル）
+- @.claude/rules/demo.md - デモアプリケーションの詳細仕様
+- @.claude/rules/packages.md - パッケージの詳細仕様
+
+### トラブルシューティングドキュメント
+- @docs/ - 技術ドキュメントとトラブルシューティングガイド
+  - 新しい問題に遭遇した場合、docs/troubleshooting-*.md として追加
+  - 詳細は「過去に遭遇した問題と解決策」セクションのテンプレートを参照
 
 ## プロジェクト概要
 
@@ -203,69 +208,69 @@ mise clean              # ビルド成果物削除
 
 ## 過去に遭遇した問題と解決策
 
-### 問題 1: "specifier 'react' は露出していますが、どこにも再マップされていません"
+**新しい問題に遭遇した場合は、[docs/](docs/)配下に詳細なトラブルシューティングガイドを追加してください。**
 
-**状況**: Rails/Go demo で React 依存関係が解決されない
+### クイックリファレンス
 
-**解決策**: `bundle-components.config.ts`で外部依存を含めずにすべてバンドル
+以下は過去に遭遇した主要な問題の概要です。詳細は各ドキュメントを参照してください。
 
-```typescript
-rollupOptions: {
-  // external を設定しない
-}
+#### 問題 1: "specifier 'react' は露出していますが、どこにも再マップされていません"
+
+- **状況**: Rails/Go demo で React 依存関係が解決されない
+- **解決策**: `bundle-components.config.ts`で外部依存を含めずにすべてバンドル
+- **詳細**: [docs/troubleshooting-01-react-dependencies.md](docs/troubleshooting-01-react-dependencies.md)
+
+#### 問題 2: "process is not defined"
+
+- **状況**: ブラウザで`process.env`が未定義
+- **解決策**: Vite 設定の`define`オプションでビルド時に置換
+- **効果**: バンドルサイズ66%削減（962KB → 324KB）
+- **詳細**: [docs/troubleshooting-02-process-env.md](docs/troubleshooting-02-process-env.md)
+
+#### 問題 3: React Web Component の TypeScript エラー
+
+- **状況**: `reactToWebComponent()`の第3引数の型エラー
+- **解決策**: `import * as ReactDOMClient from 'react-dom/client'`を使用
+- **詳細**: [docs/troubleshooting-03-react-typescript-error.md](docs/troubleshooting-03-react-typescript-error.md)
+
+#### 問題 4: React Web Component のスタイルが適用されない
+
+- **状況**: Rails/Go demo で React コンポーネントのCSS Modulesスタイルが表示されない
+- **解決策**: `?inline` importでCSSをJSバンドルに含め、`useEffect`で実行時に注入
+- **詳細**: [docs/troubleshooting-04-react-css-not-applied.md](docs/troubleshooting-04-react-css-not-applied.md)
+
+### トラブルシューティング文書の追加方法
+
+新しい問題に遭遇した場合、以下のテンプレートに従ってドキュメントを作成してください：
+
+```markdown
+# トラブルシューティング #N: [問題のタイトル]
+
+## 問題の概要
+[簡潔な問題の説明とエラーメッセージ]
+
+## 発生状況
+- **環境**: [どの環境で発生するか]
+- **タイミング**: [いつ発生するか]
+- **原因**: [根本原因の要約]
+
+## 根本原因
+[詳細な原因の説明]
+
+## 解決策
+[ステップバイステップの解決手順]
+
+## まとめ
+- **問題**: [問題の要約]
+- **原因**: [原因の要約]
+- **解決**: [解決策の要約]
+- **結果**: [解決後の状態]
+
+## 関連ドキュメント
+- [関連するドキュメントへのリンク]
 ```
 
-### 問題 2: "process is not defined"
-
-**状況**: ブラウザで`process.env`が未定義
-
-**解決策**: Vite 設定で置換
-
-```typescript
-define: {
-  'process.env.NODE_ENV': JSON.stringify('production'),
-}
-```
-
-### 問題 3: React Web Component の TypeScript エラー
-
-**状況**: `reactToWebComponent()`の第 3 引数の型エラー
-
-**解決策**: `react-dom/client`を使用
-
-```typescript
-import * as ReactDOMClient from "react-dom/client";
-reactToWebComponent(Component, React, ReactDOMClient);
-```
-
-### 問題 4: React Web Component のスタイルが適用されない
-
-**状況**: Rails/Go demo で React コンポーネントのCSS Modulesスタイルが表示されない
-
-**解決策**:
-1. `?inline` importでCSSをJSバンドルに含める
-2. `useEffect`でCSSをグローバルに注入
-3. HTMLで`web-components-samples.css`を読み込む
-
-```typescript
-// packages/react/src/react-counter.tsx
-import cssText from './react-counter.module.css?inline';
-
-useEffect(() => {
-  const styleId = 'react-counter-styles';
-  if (!document.getElementById(styleId)) {
-    const styleElement = document.createElement('style');
-    styleElement.id = styleId;
-    styleElement.textContent = cssText;
-    document.head.appendChild(styleElement);
-  }
-}, []);
-```
-
-```html
-<!-- Rails/Goのlayout -->
-<link rel="stylesheet" href="/components/web-components-samples.css">
-```
+ドキュメント作成後、このセクションに追加してください。
 
 ## 新機能追加時の注意点
 
@@ -290,8 +295,17 @@ useEffect(() => {
 
 ## 詳細ドキュメント
 
+### 仕様ドキュメント
 - **[.claude/rules/packages.md](.claude/rules/packages.md)**: パッケージの詳細仕様
 - **[.claude/rules/demo.md](.claude/rules/demo.md)**: デモの詳細仕様
+
+### トラブルシューティング・技術解説
+- **[docs/README.md](docs/README.md)**: ドキュメントインデックス
+- **[docs/troubleshooting-01-react-dependencies.md](docs/troubleshooting-01-react-dependencies.md)**: React依存関係の解決
+- **[docs/troubleshooting-02-process-env.md](docs/troubleshooting-02-process-env.md)**: process.env未定義エラー
+- **[docs/troubleshooting-03-react-typescript-error.md](docs/troubleshooting-03-react-typescript-error.md)**: React TypeScriptエラー
+- **[docs/troubleshooting-04-react-css-not-applied.md](docs/troubleshooting-04-react-css-not-applied.md)**: React CSSが適用されない
+- **[docs/why-react-css-injection.md](docs/why-react-css-injection.md)**: なぜReactだけCSS注入が必要なのか
 
 ## 技術スタック
 
