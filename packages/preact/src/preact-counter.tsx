@@ -8,11 +8,12 @@ interface CounterProps {
 }
 
 function PreactCounter({ count: initialCount = 0 }: CounterProps) {
-  const [count, setCount] = useState(initialCount);
+  // 初期値を数値に変換（HTML属性は文字列として渡されるため）
+  const [count, setCount] = useState(Number(initialCount));
 
   // count propが変更されたら状態を更新
   useEffect(() => {
-    setCount(initialCount);
+    setCount(Number(initialCount));
   }, [initialCount]);
 
   // CSSをグローバルに注入（一度だけ）
