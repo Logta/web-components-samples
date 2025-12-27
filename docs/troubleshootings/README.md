@@ -37,6 +37,16 @@
    - ViteのライブラリモードでのCSS処理
    - 解決策の詳細な実装方法
 
+### Q&A
+
+よくある質問と回答をまとめています。
+
+6. **[なぜReact Web Componentのファイルサイズが大きいのか？](../questions/react-bundle-size.md)**
+   - React、Lit、Vanilla JSのバンドルサイズ比較
+   - Reactが大きい理由（React本体 + ReactDOM + react-to-webcomponent）
+   - サイズを削減する方法（Preact、CDN、Code Splitting）
+   - ユースケース別の推奨実装
+
 ## 🗂️ プロジェクト全体のドキュメント構成
 
 ```
@@ -49,12 +59,15 @@ web-components-samples/
 │       ├── packages.md              # パッケージの詳細仕様
 │       └── demo.md                  # デモアプリケーションの詳細仕様
 └── docs/                            # 技術ドキュメント（このディレクトリ）
-    ├── README.md                    # このファイル
-    ├── troubleshooting-01-react-dependencies.md
-    ├── troubleshooting-02-process-env.md
-    ├── troubleshooting-03-react-typescript-error.md
-    ├── troubleshooting-04-react-css-not-applied.md
-    └── why-react-css-injection.md
+    ├── troubleshootings/
+    │   ├── README.md                # このファイル
+    │   ├── 01-react-dependencies.md
+    │   ├── 02-process-env.md
+    │   ├── 03-react-typescript-error.md
+    │   ├── 04-react-css-not-applied.md
+    │   └── why-react-css-injection.md
+    └── questions/
+        └── react-bundle-size.md     # Q&A: ファイルサイズについて
 ```
 
 ## 📖 推奨される読む順番
@@ -69,10 +82,14 @@ web-components-samples/
 
 問題の症状に応じて、該当するトラブルシューティングガイドを参照してください：
 
-- **"specifier 'react' は露出していますが..."** → [トラブルシューティング #1](./troubleshooting-01-react-dependencies.md)
-- **"process is not defined"** → [トラブルシューティング #2](./troubleshooting-02-process-env.md)
-- **TypeScriptの型エラー** → [トラブルシューティング #3](./troubleshooting-03-react-typescript-error.md)
-- **スタイルが適用されない** → [トラブルシューティング #4](./troubleshooting-04-react-css-not-applied.md)
+- **"specifier 'react' は露出していますが..."** → [トラブルシューティング #1](./01-react-dependencies.md)
+- **"process is not defined"** → [トラブルシューティング #2](./02-process-env.md)
+- **TypeScriptの型エラー** → [トラブルシューティング #3](./03-react-typescript-error.md)
+- **スタイルが適用されない** → [トラブルシューティング #4](./04-react-css-not-applied.md)
+
+### よくある質問
+
+- **Reactのバンドルサイズが大きい理由は？** → [Q&A: React バンドルサイズ](../questions/react-bundle-size.md)
 
 ### より深く理解したい方
 
@@ -84,17 +101,21 @@ web-components-samples/
 
 ### ビルド設定関連
 
-- [#1: React依存関係の解決](./troubleshooting-01-react-dependencies.md)
-- [#2: process.env未定義エラー](./troubleshooting-02-process-env.md)
+- [#1: React依存関係の解決](./01-react-dependencies.md)
+- [#2: process.env未定義エラー](./02-process-env.md)
 
 ### TypeScript/型エラー関連
 
-- [#3: React TypeScriptエラー](./troubleshooting-03-react-typescript-error.md)
+- [#3: React TypeScriptエラー](./03-react-typescript-error.md)
 
 ### スタイリング関連
 
-- [#4: React CSSが適用されない](./troubleshooting-04-react-css-not-applied.md)
+- [#4: React CSSが適用されない](./04-react-css-not-applied.md)
 - [なぜReact Web ComponentだけCSS注入が必要なのか？](./why-react-css-injection.md)
+
+### パフォーマンス・最適化関連
+
+- [Q&A: React バンドルサイズ](../questions/react-bundle-size.md)
 
 ## 📝 ドキュメントの更新
 
