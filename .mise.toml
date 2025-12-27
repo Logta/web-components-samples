@@ -131,16 +131,24 @@ echo "💡 Tip: Setup Rails/Go demos first with 'mise demo:setup'"
 # =============================================================================
 
 [tasks.fmt]
-description = "Format all code (prettier, rubocop, gofmt)"
+description = "Format all code (Biome, rubocop, gofmt)"
 run = """
-pnpm prettier --write .
+pnpm biome format --write .
 cd demo/rails && bundle exec rubocop -A || true
 cd demo/go && go fmt ./... || true
 """
 
+[tasks.lint]
+description = "Lint and fix code with Biome"
+run = "pnpm biome lint --write ."
+
 [tasks.check]
-description = "Run all checks (lint, type-check, test)"
-run = "pnpm lint && pnpm type-check && pnpm test"
+description = "Run all checks (Biome check, type-check, test)"
+run = "pnpm biome check --write . && pnpm type-check && pnpm test"
+
+[tasks."check:ci"]
+description = "Run CI checks (Biome CI mode)"
+run = "pnpm biome ci ."
 
 [tasks.help]
 description = "Show available tasks"
