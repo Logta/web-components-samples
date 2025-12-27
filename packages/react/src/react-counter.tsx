@@ -1,13 +1,19 @@
-import { useState } from 'react';
-import { createRoot, Root } from 'react-dom/client';
+import React, { useState, useEffect } from 'react';
+import * as ReactDOMClient from 'react-dom/client';
+import reactToWebComponent from 'react-to-webcomponent';
 import styles from './react-counter.module.css';
 
 interface CounterComponentProps {
-  initialCount?: number;
+  count?: number;
 }
 
-function CounterComponent({ initialCount = 0 }: CounterComponentProps) {
+function CounterComponent({ count: initialCount = 0 }: CounterComponentProps) {
   const [count, setCount] = useState(initialCount);
+
+  // count propが変更されたら状態を更新
+  useEffect(() => {
+    setCount(initialCount);
+  }, [initialCount]);
 
   return (
     <div className={styles.container}>
@@ -31,36 +37,13 @@ function CounterComponent({ initialCount = 0 }: CounterComponentProps) {
   );
 }
 
-class ReactCounter extends HTMLElement {
-  private _root: Root | null = null;
+// react-to-webcomponentを使ってWeb Componentを作成
+const ReactCounterElement = reactToWebComponent(CounterComponent, React, ReactDOMClient);
 
-  connectedCallback(): void {
-    const mountPoint = document.createElement('div');
-    this.appendChild(mountPoint);
-
-    const initialCount = parseInt(this.getAttribute('count') || '0', 10) || 0;
-    this._root = createRoot(mountPoint);
-    this._root.render(<CounterComponent initialCount={initialCount} />);
-  }
-
-  disconnectedCallback(): void {
-    if (this._root) {
-      this._root.unmount();
-    }
-  }
-
-  static get observedAttributes(): string[] {
-    return ['count'];
-  }
-
-  attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null): void {
-    if (name === 'count' && this._root) {
-      const count = parseInt(newValue || '0', 10) || 0;
-      this._root.render(<CounterComponent initialCount={count} />);
-    }
-  }
+// Web Componentとして定義
+if (!customElements.get('react-counter')) {
+  customElements.define('react-counter', ReactCounterElement);
 }
 
-customElements.define('react-counter', ReactCounter);
-
-export default ReactCounter;
+export default CounterComponent;
+export { ReactCounterElement };

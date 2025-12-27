@@ -5,6 +5,10 @@ import { resolve } from 'path';
 // Rails demo用のバンドル設定 - すべての依存関係を含める
 export default defineConfig({
   plugins: [react()],
+  define: {
+    // process.env をブラウザ用に置き換え
+    'process.env.NODE_ENV': JSON.stringify('production'),
+  },
   build: {
     outDir: resolve(__dirname, 'public/components'),
     emptyOutDir: true,
