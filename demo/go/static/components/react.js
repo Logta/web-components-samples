@@ -10734,23 +10734,9 @@ function Cd({ count: E = 0 }) {
     }
   }, []), /* @__PURE__ */ Ma.jsx("div", { className: pa.container, children: /* @__PURE__ */ Ma.jsxs("div", { className: pa.counter, children: [
     /* @__PURE__ */ Ma.jsx("div", { className: pa.label, children: "React Counter:" }),
-    /* @__PURE__ */ Ma.jsx(
-      "button",
-      {
-        className: pa.button,
-        onClick: () => D(R - 1),
-        children: "-"
-      }
-    ),
+    /* @__PURE__ */ Ma.jsx("button", { type: "button", className: pa.button, onClick: () => D(R - 1), children: "-" }),
     /* @__PURE__ */ Ma.jsx("span", { className: pa.count, children: R }),
-    /* @__PURE__ */ Ma.jsx(
-      "button",
-      {
-        className: pa.button,
-        onClick: () => D(R + 1),
-        children: "+"
-      }
-    )
+    /* @__PURE__ */ Ma.jsx("button", { type: "button", className: pa.button, onClick: () => D(R + 1), children: "+" })
   ] }) });
 }
 const qd = Md(Cd, cd, hd);
