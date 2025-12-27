@@ -11,7 +11,9 @@
   "dependencies": {
     "@web-components-samples/vanilla": "workspace:*",
     "@web-components-samples/react": "workspace:*",
-    "@web-components-samples/lit": "workspace:*"
+    "@web-components-samples/lit": "workspace:*",
+    "@web-components-samples/preact": "workspace:*",
+    "@web-components-samples/svelte": "workspace:*"
   },
   "devDependencies": {
     "typescript": "catalog:",

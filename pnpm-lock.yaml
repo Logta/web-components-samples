@@ -41,9 +41,15 @@ importers:
       '@web-components-samples/lit':
         specifier: workspace:*
         version: link:../../packages/lit
+      '@web-components-samples/preact':
+        specifier: workspace:*
+        version: link:../../packages/preact
       '@web-components-samples/react':
         specifier: workspace:*
         version: link:../../packages/react
+      '@web-components-samples/svelte':
+        specifier: workspace:*
+        version: link:../../packages/svelte
       '@web-components-samples/vanilla':
         specifier: workspace:*
         version: link:../../packages/vanilla
@@ -75,9 +81,15 @@ importers:
       '@web-components-samples/lit':
         specifier: workspace:*
         version: link:../../packages/lit
+      '@web-components-samples/preact':
+        specifier: workspace:*
+        version: link:../../packages/preact
       '@web-components-samples/react':
         specifier: workspace:*
         version: link:../../packages/react
+      '@web-components-samples/svelte':
+        specifier: workspace:*
+        version: link:../../packages/svelte
       '@web-components-samples/vanilla':
         specifier: workspace:*
         version: link:../../packages/vanilla
