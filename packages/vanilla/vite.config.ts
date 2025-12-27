@@ -5,10 +5,10 @@ export default defineConfig({
     lib: {
       entry: 'src/my-counter.ts',
       formats: ['es'],
-      fileName: 'my-counter'
+      fileName: 'my-counter',
     },
     rollupOptions: {
       external: [],
-    }
-  }
+    },
+  },
 });

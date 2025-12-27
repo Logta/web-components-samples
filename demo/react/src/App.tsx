@@ -25,7 +25,10 @@ function App() {
       <div className="info">
         <h3>使い方</h3>
         <p>各カウンターの + / - ボタンをクリックして、カウンターを操作できます。</p>
-        <p>すべてのコンポーネントが標準のWeb Components APIを使用しているため、Reactアプリケーション内でシームレスに動作します。</p>
+        <p>
+          すべてのコンポーネントが標準のWeb Components
+          APIを使用しているため、Reactアプリケーション内でシームレスに動作します。
+        </p>
       </div>
     </div>
   );

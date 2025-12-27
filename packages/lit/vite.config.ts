@@ -5,15 +5,15 @@ export default defineConfig({
     lib: {
       entry: 'src/lit-counter.ts',
       formats: ['es'],
-      fileName: 'lit-counter'
+      fileName: 'lit-counter',
     },
     rollupOptions: {
       external: ['lit'],
       output: {
         globals: {
-          lit: 'Lit'
-        }
-      }
-    }
-  }
+          lit: 'Lit',
+        },
+      },
+    },
+  },
 });

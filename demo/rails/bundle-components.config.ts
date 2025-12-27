@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite';
+import { resolve } from 'node:path';
 import react from '@vitejs/plugin-react';
-import { resolve } from 'path';
+import { defineConfig } from 'vite';
 
 // Rails demo用のバンドル設定 - すべての依存関係を含める
 export default defineConfig({
@@ -19,14 +19,14 @@ export default defineConfig({
         lit: resolve(__dirname, '../../packages/lit/src/lit-counter.ts'),
       },
       formats: ['es'],
-      fileName: (format, entryName) => `${entryName}.js`
+      fileName: (_format, entryName) => `${entryName}.js`,
     },
     rollupOptions: {
       // 依存関係を external にしない（すべてバンドルする）
       output: {
         // 各エントリーポイントを個別のファイルとして出力
         manualChunks: undefined,
-      }
-    }
-  }
+      },
+    },
+  },
 });

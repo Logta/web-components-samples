@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as ReactDOMClient from 'react-dom/client';
 import reactToWebComponent from 'react-to-webcomponent';
 import styles from './react-counter.module.css';
@@ -31,17 +31,11 @@ function CounterComponent({ count: initialCount = 0 }: CounterComponentProps) {
     <div className={styles.container}>
       <div className={styles.counter}>
         <div className={styles.label}>React Counter:</div>
-        <button
-          className={styles.button}
-          onClick={() => setCount(count - 1)}
-        >
+        <button type="button" className={styles.button} onClick={() => setCount(count - 1)}>
           -
         </button>
         <span className={styles.count}>{count}</span>
-        <button
-          className={styles.button}
-          onClick={() => setCount(count + 1)}
-        >
+        <button type="button" className={styles.button} onClick={() => setCount(count + 1)}>
           +
         </button>
       </div>
