@@ -19,7 +19,7 @@ echo "Copying bundled components..."
 cp ../../packages/vanilla/dist/my-counter.js static/components/vanilla.js
 cp ../../packages/react/dist/bundle/react-counter.js static/components/react.js
 cp ../../packages/react/dist/bundle/react-counter.css static/components/web-components-samples.css 2>/dev/null || true
-cp ../../packages/lit/dist/lit-counter.js static/components/lit.js
+cp ../../packages/lit/dist/bundle/lit-counter.js static/components/lit.js
 cp ../../packages/preact/dist/preact-counter.js static/components/preact.js
 cp ../../packages/svelte/dist/bundle/svelte-counter.js static/components/svelte.js
 
