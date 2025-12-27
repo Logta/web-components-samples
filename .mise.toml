@@ -113,8 +113,9 @@ alias = "dgo"
 # Demo Tasks - Shortcuts
 # =============================================================================
 
-[tasks."demo:all"]
+[tasks."demo:list"]
 description = "List all available demos"
+alias = "dl"
 run = """
 echo "📦 Available Demos:"
 echo ""
@@ -124,6 +125,52 @@ echo "  Rails      → mise demo:rails    (port 3002)"
 echo "  Go         → mise demo:go       (port 8080)"
 echo ""
 echo "💡 Tip: Setup Rails/Go demos first with 'mise demo:setup'"
+echo "💡 Run multiple demos: mise demo:frontend OR mise demo:backend"
+"""
+
+[tasks."demo:frontend"]
+description = "Start frontend demos (React + Vanilla JS)"
+run = """
+echo "🚀 Starting frontend demos..."
+echo "  React      → http://localhost:3000"
+echo "  Vanilla JS → http://localhost:3001"
+echo ""
+(cd demo/react && pnpm dev) &
+(cd demo/vanillajs && pnpm dev) &
+wait
+"""
+
+[tasks."demo:backend"]
+description = "Start backend demos (Rails + Go)"
+run = """
+echo "🚀 Starting backend demos..."
+echo "  Rails → http://localhost:3002"
+echo "  Go    → http://localhost:8080"
+echo ""
+echo "⚠️  Make sure you ran 'mise demo:setup' first!"
+echo ""
+(cd demo/rails && bundle exec rails server -p 3002) &
+(cd demo/go && go run main.go) &
+wait
+"""
+
+[tasks."demo:all"]
+description = "Start ALL demos (React + Vanilla + Rails + Go)"
+run = """
+echo "🚀 Starting ALL demos..."
+echo "  React      → http://localhost:3000"
+echo "  Vanilla JS → http://localhost:3001"
+echo "  Rails      → http://localhost:3002"
+echo "  Go         → http://localhost:8080"
+echo ""
+echo "⚠️  Make sure you ran 'mise demo:setup' first!"
+echo "⚠️  Logs from all 4 servers will be mixed. Press Ctrl+C to stop all."
+echo ""
+(cd demo/react && pnpm dev) &
+(cd demo/vanillajs && pnpm dev) &
+(cd demo/rails && bundle exec rails server -p 3002) &
+(cd demo/go && go run main.go) &
+wait
 """
 
 # =============================================================================
