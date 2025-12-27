@@ -20,7 +20,7 @@
 
 ## プロジェクト概要
 
-3 つの異なるアプローチで Web Components を作成し、4 つの異なる環境（React、VanillaJS、Rails、Go）で使用するサンプルプロジェクト。
+5つの異なるアプローチ（Vanilla JS、React、Lit、Svelte、Preact）でWeb Componentsを作成し、4つの異なる環境（React、VanillaJS、Rails、Go）で使用するサンプルプロジェクト。
 
 ## 重要な設計判断と制約
 

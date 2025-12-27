@@ -1,6 +1,6 @@
 # packages/ - Web Components仕様
 
-Web Componentsを作成するパッケージ群。3つの異なるアプローチでカウンターコンポーネントを実装しています。
+Web Componentsを作成するパッケージ群。5つの異なるアプローチでカウンターコンポーネントを実装しています。
 
 ## packages/vanilla/
 
@@ -300,6 +300,250 @@ customElements.define('lit-counter', LitCounter);
 
 ---
 
+## packages/svelte/
+
+**Svelte Web Component**
+
+### 基本情報
+
+- **コンポーネント名**: `<svelte-counter>`
+- **実装方法**: Svelte 5 + `<svelte:options customElement>`
+- **ビルド出力**: `dist/svelte-counter.js`, `dist/bundle/svelte-counter.js`
+
+### ファイル構成
+
+```
+packages/svelte/
+├── src/
+│   ├── SvelteCounter.svelte     # Svelteコンポーネント
+│   └── svelte-counter.ts        # エクスポート用エントリーポイント
+├── package.json
+├── tsconfig.json
+├── vite.config.ts               # 通常のビルド設定
+└── vite.config.bundle.ts        # バンドル版ビルド設定
+```
+
+### 依存関係
+
+```json
+{
+  "dependencies": {
+    "svelte": "^5.46.1"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^6.2.1",
+    "@tsconfig/svelte": "^5.0.6"
+  }
+}
+```
+
+### 実装の特徴
+
+- **Svelte 5 Runes**: `$bindable()`, `$state()`, `$effect()` を使用した最新のリアクティビティAPI
+- **customElement オプション**: `<svelte:options customElement="svelte-counter" />` でWeb Component化
+- **双方向バインディング**: `$bindable()` で外部からの属性変更をサポート
+- **スコープ付きスタイル**: Svelte の `<style>` ブロックで自動スコーピング
+- **2つのビルド出力**: 通常版（Svelte外部依存）とバンドル版（Svelte含む）
+
+### コード例
+
+```svelte
+<svelte:options customElement="svelte-counter" />
+
+<script lang="ts">
+  let { count = $bindable(0) } = $props();
+  let currentCount = $state(count);
+
+  $effect(() => {
+    currentCount = count;
+  });
+
+  function increment() {
+    currentCount++;
+    count = currentCount;
+  }
+
+  function decrement() {
+    currentCount--;
+    count = currentCount;
+  }
+</script>
+
+<div class="container">
+  <div class="counter">
+    <div class="label">Svelte Counter:</div>
+    <button type="button" class="button" onclick={decrement}>-</button>
+    <span class="count">{currentCount}</span>
+    <button type="button" class="button" onclick={increment}>+</button>
+  </div>
+</div>
+
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border: 2px solid #ff3e00;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  /* 他のスタイル... */
+</style>
+```
+
+### ビルド設定
+
+Svelteパッケージは2つのビルド設定を持っています：
+
+**通常版** (`vite.config.ts`):
+- Svelteを外部依存として扱う（`external: ['svelte']`）
+- 開発環境やpnpm workspaceで使用
+
+**バンドル版** (`vite.config.bundle.ts`):
+- Svelteをバンドルに含める
+- Rails/Go環境で使用
+
+### 重要な注意点
+
+**Svelte 5のRunes APIを使用**
+
+```typescript
+// ❌ Svelte 4以前の方法
+export let count = 0;
+$: currentCount = count;
+
+// ✅ Svelte 5の方法
+let { count = $bindable(0) } = $props();
+let currentCount = $state(count);
+$effect(() => {
+  currentCount = count;
+});
+```
+
+---
+
+## packages/preact/
+
+**Preact Web Component**
+
+### 基本情報
+
+- **コンポーネント名**: `<preact-counter>`
+- **実装方法**: Preact + `preact-custom-element`
+- **ビルド出力**: `dist/preact-counter.js`, `dist/preact-counter.css`
+
+### ファイル構成
+
+```
+packages/preact/
+├── src/
+│   ├── preact-counter.tsx              # Preactコンポーネント + Web Component変換
+│   ├── preact-counter.module.css       # CSS Modules
+│   ├── preact-counter.module.css.d.ts  # CSS Modules型定義
+│   └── vite-env.d.ts                  # Vite型定義
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
+```
+
+### 依存関係
+
+```json
+{
+  "dependencies": {
+    "preact": "^10.28.1",
+    "preact-custom-element": "^4.6.0"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.2"
+  }
+}
+```
+
+### 実装の特徴
+
+- **軽量React代替**: Preactは3KBの軽量React互換ライブラリ
+- **preact-custom-element**: Web Component変換ライブラリ
+- **Shadow DOMなし**: `{ shadow: false }` で通常のDOMとして実装
+- **CSS Modules**: スコープ付きスタイリング
+- **CSS注入**: `?inline` importでCSSをJSバンドルに含め、実行時にグローバルに注入
+- **明示的な型変換が必要**: HTML属性は文字列として渡されるため、`Number()`で明示的に変換
+
+### コード例
+
+```typescript
+import { useState, useEffect } from 'preact/hooks';
+import register from 'preact-custom-element';
+import styles from './preact-counter.module.css';
+import cssText from './preact-counter.module.css?inline';
+
+interface CounterProps {
+  count?: number;
+}
+
+function PreactCounter({ count: initialCount = 0 }: CounterProps) {
+  // 初期値を数値に変換（HTML属性は文字列として渡されるため）
+  const [count, setCount] = useState(Number(initialCount));
+
+  // count propが変更されたら状態を更新
+  useEffect(() => {
+    setCount(Number(initialCount));
+  }, [initialCount]);
+
+  // CSSをグローバルに注入（一度だけ）
+  useEffect(() => {
+    const styleId = 'preact-counter-styles';
+    if (!document.getElementById(styleId)) {
+      const styleElement = document.createElement('style');
+      styleElement.id = styleId;
+      styleElement.textContent = cssText;
+      document.head.appendChild(styleElement);
+    }
+  }, []);
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.counter}>
+        <div className={styles.label}>Preact Counter:</div>
+        <button type="button" className={styles.button} onClick={() => setCount(count - 1)}>
+          -
+        </button>
+        <span className={styles.count}>{count}</span>
+        <button type="button" className={styles.button} onClick={() => setCount(count + 1)}>
+          +
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// preact-custom-elementを使ってWeb Componentを作成
+register(PreactCounter, 'preact-counter', ['count'], { shadow: false });
+
+export default PreactCounter;
+```
+
+### 重要な注意点
+
+**属性値は必ず数値に変換する**
+
+```typescript
+// ❌ 誤った実装（文字列連結になる）
+const [count, setCount] = useState(initialCount);
+
+// ✅ 正しい実装
+const [count, setCount] = useState(Number(initialCount));
+```
+
+**理由**: `preact-custom-element`は軽量性を重視しており、属性値の自動型変換を行いません。HTML属性は常に文字列として渡されるため、明示的に`Number()`で変換する必要があります。
+
+詳細は [docs/troubleshooting-06-preact-attribute-type-conversion.md](../../docs/troubleshooting-06-preact-attribute-type-conversion.md) を参照。
+
+---
+
 ## 共通のビルド設定
 
 すべてのパッケージは以下の共通設定を使用します。
@@ -447,6 +691,8 @@ entry: {
   vanilla: resolve(__dirname, '../../packages/vanilla/src/my-counter.ts'),
   react: resolve(__dirname, '../../packages/react/src/react-counter.tsx'),
   lit: resolve(__dirname, '../../packages/lit/src/lit-counter.ts'),
+  svelte: resolve(__dirname, '../../packages/svelte/src/svelte-counter.ts'),
+  preact: resolve(__dirname, '../../packages/preact/src/preact-counter.tsx'),
   'new-component': resolve(__dirname, '../../packages/new-component/src/new-component.ts'), // 追加
 }
 ```
