@@ -7,13 +7,15 @@
 下記ドキュメントに関わる変更を行なった場合、行なったことをドキュメントに反映すること
 
 ### プロジェクト設計・仕様ドキュメント
+
 - @CLAUDE.md - プロジェクト全体のガイド（このファイル）
 - @.claude/rules/demo.md - デモアプリケーションの詳細仕様
 - @.claude/rules/packages.md - パッケージの詳細仕様
 
 ### トラブルシューティングドキュメント
+
 - @docs/ - 技術ドキュメントとトラブルシューティングガイド
-  - 新しい問題に遭遇した場合、docs/troubleshooting-*.md として追加
+  - 新しい問題に遭遇した場合、docs/troubleshooting-\*.md として追加
   - 詳細は「過去に遭遇した問題と解決策」セクションのテンプレートを参照
 
 ## プロジェクト概要
@@ -72,20 +74,20 @@ export default defineConfig({
 3. **React/VanillaJS demo**: 自動反映（HMR）
 4. **Rails/Go demo**: `./setup_components.sh`で再ビルド必須
 
-### 4. React Web ComponentのCSS注入
+### 4. React Web Component の CSS 注入
 
-**必須**: CSS Modulesを使用する場合、`?inline` importでCSSをJSバンドルに含める
+**必須**: CSS Modules を使用する場合、`?inline` import で CSS を JS バンドルに含める
 
 ```typescript
 // packages/react/src/react-counter.tsx
-import styles from './react-counter.module.css';
-import cssText from './react-counter.module.css?inline';
+import styles from "./react-counter.module.css";
+import cssText from "./react-counter.module.css?inline";
 
 // CSSをグローバルに注入（一度だけ）
 useEffect(() => {
-  const styleId = 'react-counter-styles';
+  const styleId = "react-counter-styles";
   if (!document.getElementById(styleId)) {
-    const styleElement = document.createElement('style');
+    const styleElement = document.createElement("style");
     styleElement.id = styleId;
     styleElement.textContent = cssText;
     document.head.appendChild(styleElement);
@@ -95,33 +97,33 @@ useEffect(() => {
 
 **理由**:
 
-- ViteのライブラリモードではCSS Modulesが自動的にバンドルされない
-- Rails/Go環境では別途CSSファイルを読み込む必要がある
-- JSバンドル内にCSSを含めることで、実行時にスタイルを注入できる
+- Vite のライブラリモードでは CSS Modules が自動的にバンドルされない
+- Rails/Go 環境では別途 CSS ファイルを読み込む必要がある
+- JS バンドル内に CSS を含めることで、実行時にスタイルを注入できる
 
-**HTMLでのCSS読み込み（Rails/Go）**:
+**HTML での CSS 読み込み（Rails/Go）**:
 
 ```html
 <!-- Web Components CSS -->
-<link rel="stylesheet" href="/components/web-components-samples.css">
+<link rel="stylesheet" href="/components/web-components-samples.css" />
 <!-- または -->
-<link rel="stylesheet" href="/static/components/web-components-samples.css">
+<link rel="stylesheet" href="/static/components/web-components-samples.css" />
 ```
 
 ### 5. TypeScript 型定義（React package）
 
-`?inline` import用の型定義を`vite-env.d.ts`に追加：
+`?inline` import 用の型定義を`vite-env.d.ts`に追加：
 
 ```typescript
 /// <reference types="vite/client" />
 
 // ?inline importの型定義
-declare module '*.css?inline' {
+declare module "*.css?inline" {
   const content: string;
   export default content;
 }
 
-declare module '*.module.css?inline' {
+declare module "*.module.css?inline" {
   const content: string;
   export default content;
 }
@@ -218,26 +220,39 @@ mise clean              # ビルド成果物削除
 
 - **状況**: Rails/Go demo で React 依存関係が解決されない
 - **解決策**: `bundle-components.config.ts`で外部依存を含めずにすべてバンドル
-- **詳細**: [docs/troubleshooting-01-react-dependencies.md](docs/troubleshooting-01-react-dependencies.md)
+- **詳細**: [docs/troubleshootings/01-react-dependencies.md](docs/troubleshooting-01-react-dependencies.md)
 
 #### 問題 2: "process is not defined"
 
 - **状況**: ブラウザで`process.env`が未定義
 - **解決策**: Vite 設定の`define`オプションでビルド時に置換
-- **効果**: バンドルサイズ66%削減（962KB → 324KB）
-- **詳細**: [docs/troubleshooting-02-process-env.md](docs/troubleshooting-02-process-env.md)
+- **効果**: バンドルサイズ 66%削減（962KB → 324KB）
+- **詳細**: [docs/troubleshootings/02-process-env.md](docs/troubleshooting-02-process-env.md)
 
 #### 問題 3: React Web Component の TypeScript エラー
 
-- **状況**: `reactToWebComponent()`の第3引数の型エラー
+- **状況**: `reactToWebComponent()`の第 3 引数の型エラー
 - **解決策**: `import * as ReactDOMClient from 'react-dom/client'`を使用
-- **詳細**: [docs/troubleshooting-03-react-typescript-error.md](docs/troubleshooting-03-react-typescript-error.md)
+- **詳細**: [docs/troubleshootings/03-react-typescript-error.md](docs/troubleshooting-03-react-typescript-error.md)
 
 #### 問題 4: React Web Component のスタイルが適用されない
 
-- **状況**: Rails/Go demo で React コンポーネントのCSS Modulesスタイルが表示されない
-- **解決策**: `?inline` importでCSSをJSバンドルに含め、`useEffect`で実行時に注入
-- **詳細**: [docs/troubleshooting-04-react-css-not-applied.md](docs/troubleshooting-04-react-css-not-applied.md)
+- **状況**: Rails/Go demo で React コンポーネントの CSS Modules スタイルが表示されない
+- **解決策**: `?inline` import で CSS を JS バンドルに含め、`useEffect`で実行時に注入
+- **詳細**: [docs/troubleshootings/04-react-css-not-applied.md](docs/troubleshooting-04-react-css-not-applied.md)
+
+#### 問題 5: Lit Web Component が表示されない（空白になる）
+
+- **状況**: Go/Rails demo で lit-counter 要素が全く表示されない
+- **解決策**: バンドル版ビルド設定を追加し、lit ライブラリを含める
+- **詳細**: Lit パッケージの`vite.config.ts`で`external: ['lit']`が設定されていたため、lit ライブラリがバンドルされず動作しなかった。`vite.config.bundle.ts`を作成してバンドル版を生成
+
+#### 問題 6: Preact Web Component の数値が文字列連結される
+
+- **状況**: Preact カウンターで `+` を押すと 0→01→011→0111 となる
+- **解決策**: `Number()`で明示的に数値変換
+- **特徴**: `preact-custom-element`は軽量性重視で自動型変換を行わない
+- **詳細**: [docs/troubleshootings/06-preact-attribute-type-conversion.md](docs/troubleshootings/06-preact-attribute-type-conversion.md)
 
 ### トラブルシューティング文書の追加方法
 
@@ -247,26 +262,32 @@ mise clean              # ビルド成果物削除
 # トラブルシューティング #N: [問題のタイトル]
 
 ## 問題の概要
+
 [簡潔な問題の説明とエラーメッセージ]
 
 ## 発生状況
+
 - **環境**: [どの環境で発生するか]
 - **タイミング**: [いつ発生するか]
 - **原因**: [根本原因の要約]
 
 ## 根本原因
+
 [詳細な原因の説明]
 
 ## 解決策
+
 [ステップバイステップの解決手順]
 
 ## まとめ
+
 - **問題**: [問題の要約]
 - **原因**: [原因の要約]
 - **解決**: [解決策の要約]
 - **結果**: [解決後の状態]
 
 ## 関連ドキュメント
+
 - [関連するドキュメントへのリンク]
 ```
 
@@ -296,16 +317,18 @@ mise clean              # ビルド成果物削除
 ## 詳細ドキュメント
 
 ### 仕様ドキュメント
+
 - **[.claude/rules/packages.md](.claude/rules/packages.md)**: パッケージの詳細仕様
 - **[.claude/rules/demo.md](.claude/rules/demo.md)**: デモの詳細仕様
 
 ### トラブルシューティング・技術解説
+
 - **[docs/README.md](docs/README.md)**: ドキュメントインデックス
-- **[docs/troubleshooting-01-react-dependencies.md](docs/troubleshooting-01-react-dependencies.md)**: React依存関係の解決
-- **[docs/troubleshooting-02-process-env.md](docs/troubleshooting-02-process-env.md)**: process.env未定義エラー
-- **[docs/troubleshooting-03-react-typescript-error.md](docs/troubleshooting-03-react-typescript-error.md)**: React TypeScriptエラー
-- **[docs/troubleshooting-04-react-css-not-applied.md](docs/troubleshooting-04-react-css-not-applied.md)**: React CSSが適用されない
-- **[docs/why-react-css-injection.md](docs/why-react-css-injection.md)**: なぜReactだけCSS注入が必要なのか
+- **[docs/troubleshooting-01-react-dependencies.md](docs/troubleshooting-01-react-dependencies.md)**: React 依存関係の解決
+- **[docs/troubleshooting-02-process-env.md](docs/troubleshooting-02-process-env.md)**: process.env 未定義エラー
+- **[docs/troubleshooting-03-react-typescript-error.md](docs/troubleshooting-03-react-typescript-error.md)**: React TypeScript エラー
+- **[docs/troubleshooting-04-react-css-not-applied.md](docs/troubleshooting-04-react-css-not-applied.md)**: React CSS が適用されない
+- **[docs/why-react-css-injection.md](docs/why-react-css-injection.md)**: なぜ React だけ CSS 注入が必要なのか
 
 ## 技術スタック
 

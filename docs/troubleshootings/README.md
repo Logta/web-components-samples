@@ -8,42 +8,56 @@
 
 プロジェクト開発中に遭遇した問題と解決策を詳しく解説しています。
 
-1. **[トラブルシューティング #1: React依存関係の解決](./troubleshooting-01-react-dependencies.md)**
+1. **[トラブルシューティング #1: React 依存関係の解決](./01-react-dependencies.md)**
+
    - 問題: "specifier 'react' は露出していますが、どこにも再マップされていません"
-   - Rails/Go環境でReactの依存関係が解決できない問題
+   - Rails/Go 環境で React の依存関係が解決できない問題
    - バンドル戦略とビルド設定の解説
 
-2. **[トラブルシューティング #2: process.env未定義エラー](./troubleshooting-02-process-env.md)**
+2. **[トラブルシューティング #2: process.env 未定義エラー](./02-process-env.md)**
+
    - 問題: "process is not defined"
    - ブラウザ環境で`process.env`が存在しない問題
-   - Viteの`define`オプションでビルド時に置換
+   - Vite の`define`オプションでビルド時に置換
    - バンドルサイズの大幅削減（66%削減）
 
-3. **[トラブルシューティング #3: React TypeScriptエラー](./troubleshooting-03-react-typescript-error.md)**
-   - 問題: `reactToWebComponent()`の第3引数の型エラー
-   - React 19での API変更への対応
+3. **[トラブルシューティング #3: React TypeScript エラー](./03-react-typescript-error.md)**
+
+   - 問題: `reactToWebComponent()`の第 3 引数の型エラー
+   - React 19 での API 変更への対応
    - `react-dom/client`の正しいインポート方法
 
-4. **[トラブルシューティング #4: React CSSが適用されない](./troubleshooting-04-react-css-not-applied.md)**
-   - 問題: React Web ComponentのCSS Modulesスタイルが表示されない
-   - Shadow DOMの有無による違い
-   - `?inline` importと実行時CSS注入の実装
+4. **[トラブルシューティング #4: React CSS が適用されない](./04-react-css-not-applied.md)**
+
+   - 問題: React Web Component の CSS Modules スタイルが表示されない
+   - Shadow DOM の有無による違い
+   - `?inline` import と実行時 CSS 注入の実装
+
+5. **[トラブルシューティング #5: Svelte 内部モジュール解決エラー](./05-svelte-internal-module-resolution.md)**
+
+   - 問題: Svelte の内部モジュール解決に関するエラー
+   - ビルド設定とバンドルの問題
+
+6. **[トラブルシューティング #6: Preact 属性の型変換問題](./06-preact-attribute-type-conversion.md)**
+   - 問題: Preact カウンターで数値が文字列連結される（0→01→011）
+   - `preact-custom-element`は自動型変換を行わない特徴
+   - `Number()`による明示的な型変換の実装
 
 ### 技術解説
 
-5. **[なぜReact Web ComponentだけCSS注入が必要なのか？](./why-react-css-injection.md)**
-   - Vanilla JS、Lit、Reactの3つのアプローチの比較
-   - Shadow DOMの仕組みと利点
-   - ViteのライブラリモードでのCSS処理
+7. **[なぜ React Web Component だけ CSS 注入が必要なのか？](./why-react-css-injection.md)**
+   - Vanilla JS、Lit、React の 3 つのアプローチの比較
+   - Shadow DOM の仕組みと利点
+   - Vite のライブラリモードでの CSS 処理
    - 解決策の詳細な実装方法
 
 ### Q&A
 
 よくある質問と回答をまとめています。
 
-6. **[なぜReact Web Componentのファイルサイズが大きいのか？](../questions/react-bundle-size.md)**
-   - React、Lit、Vanilla JSのバンドルサイズ比較
-   - Reactが大きい理由（React本体 + ReactDOM + react-to-webcomponent）
+8. **[なぜ React Web Component のファイルサイズが大きいのか？](../questions/react-bundle-size.md)**
+   - React、Lit、Vanilla JS のバンドルサイズ比較
+   - React が大きい理由（React 本体 + ReactDOM + react-to-webcomponent）
    - サイズを削減する方法（Preact、CDN、Code Splitting）
    - ユースケース別の推奨実装
 
@@ -65,6 +79,8 @@ web-components-samples/
     │   ├── 02-process-env.md
     │   ├── 03-react-typescript-error.md
     │   ├── 04-react-css-not-applied.md
+    │   ├── 05-svelte-internal-module-resolution.md
+    │   ├── 06-preact-attribute-type-conversion.md
     │   └── why-react-css-injection.md
     └── questions/
         └── react-bundle-size.md     # Q&A: ファイルサイズについて
@@ -74,9 +90,9 @@ web-components-samples/
 
 ### 初めての方
 
-1. [プロジェクトREADME](../README.md) - プロジェクト全体の概要
+1. [プロジェクト README](../README.md) - プロジェクト全体の概要
 2. [CLAUDE.md](../CLAUDE.md) - 重要な設計判断と制約
-3. [なぜReact Web ComponentだけCSS注入が必要なのか？](./why-react-css-injection.md) - 技術的背景
+3. [なぜ React Web Component だけ CSS 注入が必要なのか？](./why-react-css-injection.md) - 技術的背景
 
 ### 問題に遭遇した方
 
@@ -84,12 +100,14 @@ web-components-samples/
 
 - **"specifier 'react' は露出していますが..."** → [トラブルシューティング #1](./01-react-dependencies.md)
 - **"process is not defined"** → [トラブルシューティング #2](./02-process-env.md)
-- **TypeScriptの型エラー** → [トラブルシューティング #3](./03-react-typescript-error.md)
+- **TypeScript の型エラー** → [トラブルシューティング #3](./03-react-typescript-error.md)
 - **スタイルが適用されない** → [トラブルシューティング #4](./04-react-css-not-applied.md)
+- **Svelte のモジュール解決エラー** → [トラブルシューティング #5](./05-svelte-internal-module-resolution.md)
+- **Preact の数値が文字列連結される** → [トラブルシューティング #6](./06-preact-attribute-type-conversion.md)
 
 ### よくある質問
 
-- **Reactのバンドルサイズが大きい理由は？** → [Q&A: React バンドルサイズ](../questions/react-bundle-size.md)
+- **React のバンドルサイズが大きい理由は？** → [Q&A: React バンドルサイズ](../questions/react-bundle-size.md)
 
 ### より深く理解したい方
 
@@ -101,17 +119,19 @@ web-components-samples/
 
 ### ビルド設定関連
 
-- [#1: React依存関係の解決](./01-react-dependencies.md)
-- [#2: process.env未定義エラー](./02-process-env.md)
+- [#1: React 依存関係の解決](./01-react-dependencies.md)
+- [#2: process.env 未定義エラー](./02-process-env.md)
+- [#5: Svelte 内部モジュール解決エラー](./05-svelte-internal-module-resolution.md)
 
 ### TypeScript/型エラー関連
 
-- [#3: React TypeScriptエラー](./03-react-typescript-error.md)
+- [#3: React TypeScript エラー](./03-react-typescript-error.md)
+- [#6: Preact 属性の型変換問題](./06-preact-attribute-type-conversion.md)
 
 ### スタイリング関連
 
-- [#4: React CSSが適用されない](./04-react-css-not-applied.md)
-- [なぜReact Web ComponentだけCSS注入が必要なのか？](./why-react-css-injection.md)
+- [#4: React CSS が適用されない](./04-react-css-not-applied.md)
+- [なぜ React Web Component だけ CSS 注入が必要なのか？](./why-react-css-injection.md)
 
 ### パフォーマンス・最適化関連
 
@@ -144,15 +164,15 @@ web-components-samples/
 
 ## 📊 バンドルサイズ
 
-Rails/Go demo（gzip圧縮後）:
+Rails/Go demo（gzip 圧縮後）:
 
-| ファイル | サイズ（元） | サイズ（gzip） |
-|---------|------------|---------------|
-| `vanilla.js` | 1.61 KB | 0.79 KB |
-| `lit.js` | 22.38 KB | 7.29 KB |
-| `react.js` | 324.52 KB | 74.83 KB |
-| `web-components-samples.css` | 0.54 KB | 0.31 KB |
-| **合計** | **348.05 KB** | **83.22 KB** |
+| ファイル                     | サイズ（元）  | サイズ（gzip） |
+| ---------------------------- | ------------- | -------------- |
+| `vanilla.js`                 | 1.61 KB       | 0.79 KB        |
+| `lit.js`                     | 22.38 KB      | 7.29 KB        |
+| `react.js`                   | 324.52 KB     | 74.83 KB       |
+| `web-components-samples.css` | 0.54 KB       | 0.31 KB        |
+| **合計**                     | **348.05 KB** | **83.22 KB**   |
 
 ## 🔗 関連リンク
 
@@ -166,7 +186,7 @@ Rails/Go demo（gzip圧縮後）:
 
 ### プロジェクト内ドキュメント
 
-- [プロジェクトREADME](../README.md)
+- [プロジェクト README](../README.md)
 - [CLAUDE.md](../CLAUDE.md)
 - [パッケージ仕様](../.claude/rules/packages.md)
 - [デモ仕様](../.claude/rules/demo.md)
