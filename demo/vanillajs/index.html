@@ -11,35 +11,15 @@
       <h1>Web Components in Vanilla JS Demo</h1>
       <p>このデモでは、純粋なJavaScript環境で3つの異なるWeb Componentsを使用しています。</p>
 
-      <div class="demo-section">
-        <h2>1. Vanilla JS Counter</h2>
-        <p>純粋なJavaScriptで作成されたWeb Component</p>
-        <my-counter count="5"></my-counter>
-      </div>
-
-      <div class="demo-section">
-        <h2>2. React Counter (as Web Component)</h2>
-        <p>Reactで作成されたコンポーネントをWeb Componentとしてラップ</p>
-        <react-counter count="10"></react-counter>
-      </div>
-
-      <div class="demo-section">
-        <h2>3. Lit Counter</h2>
-        <p>Litフレームワークで作成されたWeb Component</p>
-        <lit-counter count="3"></lit-counter>
-      </div>
-
-      <div class="demo-section">
-        <h2>4. 動的に追加</h2>
-        <p>JavaScriptでWeb Componentを動的に作成</p>
-        <div id="dynamic-container"></div>
-        <button id="add-counter-btn">カウンターを追加</button>
+      <div class="counters-grid">
+        <my-counter count="0"></my-counter>
+        <react-counter count="0"></react-counter>
+        <lit-counter count="0"></lit-counter>
       </div>
 
       <div class="info">
         <h3>使い方</h3>
         <p>各カウンターの + / - ボタンをクリックして、カウンターを操作できます。</p>
-        <p>「カウンターを追加」ボタンをクリックすると、JavaScriptで動的にWeb Componentが追加されます。</p>
         <p>フレームワークを使わなくても、標準のWeb Components APIだけでインタラクティブなUIを構築できます。</p>
       </div>
     </div>

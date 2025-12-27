@@ -1,34 +1,27 @@
 #!/bin/bash
 
-# Web ComponentsをGoのstaticディレクトリにコピーするスクリプト
+# Web ComponentsをGoのstaticディレクトリにバンドルするスクリプト
 
 set -e
+
+# demo/goディレクトリに移動
+cd "$(dirname "$0")"
 
 echo "Setting up Web Components for Go..."
 
 # staticディレクトリを作成
 mkdir -p static/components
 
-# プロジェクトルートに移動
-cd ../..
+# Go専用のバンドルを作成（すべての依存関係を含める）
+echo "Building bundled components with all dependencies..."
 
-# 各パッケージをビルド
-echo "Building packages..."
+# 絶対パスで設定ファイルを指定
+pnpm vite build --config "$(pwd)/bundle-components.config.ts"
 
-cd packages/vanilla
-pnpm build
-cd ../react
-pnpm build
-cd ../lit
-pnpm build
-
-# Goのstaticディレクトリにコピー
-echo "Copying built files to Go static directory..."
-
-cd ../..
-cp packages/vanilla/dist/*.js demo/go/static/components/vanilla.js
-cp packages/react/dist/*.js demo/go/static/components/react.js
-cp packages/lit/dist/*.js demo/go/static/components/lit.js
-
-echo "Setup complete! Web Components are now available in static/components/"
+echo ""
+echo "✅ Setup complete! Web Components are now available in static/components/"
+echo ""
+echo "Generated files:"
+ls -lh static/components/
+echo ""
 echo "You can now run 'go run main.go' in the demo/go directory"

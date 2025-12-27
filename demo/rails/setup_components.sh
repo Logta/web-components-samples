@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Web ComponentsをRailsのpublicディレクトリにコピーするスクリプト
+# Web ComponentsをRailsのpublicディレクトリにバンドルするスクリプト
 
 set -e
 
@@ -9,26 +9,16 @@ echo "Setting up Web Components for Rails..."
 # publicディレクトリを作成
 mkdir -p public/components
 
-# プロジェクトルートに移動
-cd ../..
+# Rails専用のバンドルを作成（すべての依存関係を含める）
+echo "Building bundled components with all dependencies..."
 
-# 各パッケージをビルド
-echo "Building packages..."
+# Viteを使ってバンドル
+pnpm vite build --config bundle-components.config.ts
 
-cd packages/vanilla
-pnpm build
-cd ../react
-pnpm build
-cd ../lit
-pnpm build
-
-# Railsのpublicディレクトリにコピー
-echo "Copying built files to Rails public directory..."
-
-cd ../..
-cp packages/vanilla/dist/*.js demo/rails/public/components/vanilla.js
-cp packages/react/dist/*.js demo/rails/public/components/react.js
-cp packages/lit/dist/*.js demo/rails/public/components/lit.js
-
-echo "Setup complete! Web Components are now available in public/components/"
-echo "You can now run 'rails server' in the demo/rails directory"
+echo ""
+echo "✅ Setup complete! Web Components are now available in public/components/"
+echo ""
+echo "Generated files:"
+ls -lh public/components/
+echo ""
+echo "You can now run 'bundle install && rails server' in the demo/rails directory"

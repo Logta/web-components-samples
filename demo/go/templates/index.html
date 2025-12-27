@@ -3,45 +3,16 @@
     <h1>{{.Title}}</h1>
     <p>{{.Description}}</p>
 
-    <div class="demo-section">
-        <h2>1. Vanilla JS Counter</h2>
-        <p>純粋なJavaScriptで作成されたWeb Component</p>
-        <my-counter count="5"></my-counter>
-    </div>
-
-    <div class="demo-section">
-        <h2>2. React Counter (as Web Component)</h2>
-        <p>Reactで作成されたコンポーネントをWeb Componentとしてラップ</p>
-        <react-counter count="10"></react-counter>
-    </div>
-
-    <div class="demo-section">
-        <h2>3. Lit Counter</h2>
-        <p>Litフレームワークで作成されたWeb Component</p>
-        <lit-counter count="3"></lit-counter>
+    <div class="counters-grid">
+        <my-counter count="0"></my-counter>
+        <react-counter count="0"></react-counter>
+        <lit-counter count="0"></lit-counter>
     </div>
 
     <div class="info">
         <h3>使い方</h3>
         <p>各カウンターの + / - ボタンをクリックして、カウンターを操作できます。</p>
         <p>Goのhtml/templateでHTMLを生成し、Web Componentsでインタラクティブ性を追加します。</p>
-
-        <h4>Goテンプレートでの使用例:</h4>
-        <div class="code-example">
-            <pre>{{`{{define "content"}}
-<my-counter count="5"></my-counter>
-<react-counter count="10"></react-counter>
-<lit-counter count="3"></lit-counter>
-{{end}}`}}</pre>
-        </div>
-
-        <h4>Goサーバーコード:</h4>
-        <div class="code-example">
-            <pre>{{`func homeHandler(w http.ResponseWriter, r *http.Request) {
-    tmpl.ExecuteTemplate(w, "layout", data)
-}`}}</pre>
-        </div>
-
         <p>Goの標準ライブラリだけで、モダンなインタラクティブWebアプリケーションを構築できます。</p>
     </div>
 </div>
