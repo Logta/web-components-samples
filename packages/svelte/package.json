@@ -9,11 +9,14 @@
     ".": {
       "types": "./dist/svelte-counter.d.ts",
       "import": "./dist/svelte-counter.js"
+    },
+    "./bundle": {
+      "import": "./dist/bundle/svelte-counter.js"
     }
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vite build --config vite.config.bundle.ts",
     "preview": "vite preview"
   },
   "dependencies": {

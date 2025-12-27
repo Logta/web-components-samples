@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Web ComponentsをRailsのpublicディレクトリにバンドルするスクリプト
+# Web ComponentsをRailsのpublicディレクトリにコピーするスクリプト
 
 set -e
 
@@ -12,11 +12,22 @@ echo "Setting up Web Components for Rails..."
 # publicディレクトリを作成
 mkdir -p public/components
 
-# Rails専用のバンドルを作成（すべての依存関係を含める）
-echo "Building bundled components with all dependencies..."
+# パッケージをビルド（バンドル版含む）
+echo "Building packages..."
+cd ../..
+pnpm build
 
-# 絶対パスで設定ファイルを指定
-pnpm vite build --config "$(pwd)/bundle-components.config.ts"
+# ビルド済みファイルをコピー
+echo "Copying bundled components..."
+cd demo/rails
+
+# 各コンポーネントをコピー
+cp ../../packages/vanilla/dist/my-counter.js public/components/vanilla.js
+cp ../../packages/react/dist/bundle/react-counter.js public/components/react.js
+cp ../../packages/react/dist/bundle/react-counter.css public/components/web-components-samples.css 2>/dev/null || true
+cp ../../packages/lit/dist/lit-counter.js public/components/lit.js
+cp ../../packages/preact/dist/preact-counter.js public/components/preact.js
+cp ../../packages/svelte/dist/bundle/svelte-counter.js public/components/svelte.js
 
 echo ""
 echo "✅ Setup complete! Web Components are now available in public/components/"
