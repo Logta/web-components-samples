@@ -15,7 +15,7 @@ React Web Componentのバンドルサイズが他の実装と比較して非常�
 | **Vanilla JS** | 1.61 KB | **0.79 KB** | **1/95** | フレームワークなし、最軽量 |
 | **Lit** | 22.38 KB | **7.29 KB** | **1/10** | 軽量なWeb Componentsライブラリ |
 | **Preact** | 23.31 KB | **8.00 KB** | **1/9** ⭐ | React互換、驚異的な軽さ |
-| **Svelte** | 56.68 KB | **16.79 KB** | **1/4** | コンパイラベース、中程度 |
+| **Svelte** | 68.35 KB | **19.99 KB** | **1/4** | コンパイラベース、中程度 |
 | **React** | 324.46 KB | **74.82 KB** | **1x** | フルフレームワーク、最も大きい |
 
 #### 注目ポイント
@@ -184,8 +184,10 @@ Svelteはコンパイラベースでランタイムが小さく、Reactの約1/4
 ```
 
 **実測のサイズ：**
-- **Svelte Web Component: 56.68 KB（非圧縮）、16.79 KB（gzip）**
-- **削減率: 78%削減** （React比で1/4のサイズ）
+- **Svelte Web Component: 68.35 KB（非圧縮）、19.99 KB（gzip）**
+- **削減率: 73%削減** （React比で1/4のサイズ）
+
+**注**: Rails/Go環境ではすべての依存関係を含むバンドル版を使用しているため、通常版（56.68 KB）より約12KB大きくなります。
 
 **実装例:** [packages/svelte/](../../packages/svelte/)
 
@@ -305,7 +307,7 @@ export default defineConfig({
 | 最軽量が必要 | Vanilla JS | **0.79 KB** | [packages/vanilla/](../../packages/vanilla/) |
 | 軽量なライブラリ | Lit | **7.29 KB** | [packages/lit/](../../packages/lit/) |
 | React互換（最軽量）⭐ | **Preact** | **8.00 KB** | [packages/preact/](../../packages/preact/) |
-| モダンなコンパイラベース | Svelte | **16.79 KB** | [packages/svelte/](../../packages/svelte/) |
+| モダンなコンパイラベース | Svelte | **19.99 KB** | [packages/svelte/](../../packages/svelte/) |
 | React互換（フル機能） | React | **74.82 KB** | [packages/react/](../../packages/react/) |
 
 **結論:** React互換が必要な場合、**Preactが最良の選択**です。Reactの1/9のサイズで、ほぼ同じAPIが使えます。
