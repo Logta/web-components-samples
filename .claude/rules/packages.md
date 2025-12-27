@@ -138,6 +138,7 @@ packages/react/
 - **Web Component変換**: `reactToWebComponent()` でWeb Componentに変換
 - **React 19対応**: `react-dom/client` の `createRoot` APIを使用
 - **CSS Modules**: スコープ付きスタイリング
+- **CSS注入**: `?inline` importでCSSをJSバンドルに含め、実行時にグローバルに注入
 - **プロパティ監視**: `useEffect` で `count` propの変更を監視
 
 ### コード例
@@ -147,6 +148,7 @@ import React, { useState, useEffect } from 'react';
 import * as ReactDOMClient from 'react-dom/client';
 import reactToWebComponent from 'react-to-webcomponent';
 import styles from './react-counter.module.css';
+import cssText from './react-counter.module.css?inline';
 
 interface CounterComponentProps {
   count?: number;
@@ -159,6 +161,17 @@ function CounterComponent({ count: initialCount = 0 }: CounterComponentProps) {
   useEffect(() => {
     setCount(initialCount);
   }, [initialCount]);
+
+  // CSSをグローバルに注入（一度だけ）
+  useEffect(() => {
+    const styleId = 'react-counter-styles';
+    if (!document.getElementById(styleId)) {
+      const styleElement = document.createElement('style');
+      styleElement.id = styleId;
+      styleElement.textContent = cssText;
+      document.head.appendChild(styleElement);
+    }
+  }, []);
 
   return (
     <div className={styles.container}>

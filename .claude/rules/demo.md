@@ -238,7 +238,10 @@ bundle exec rails db:migrate    # マイグレーション実行
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application" %>
-    
+
+    <!-- Web Components CSS -->
+    <link rel="stylesheet" href="/components/web-components-samples.css">
+
     <!-- Web Components読み込み -->
     <script type="module" src="/components/vanilla.js"></script>
     <script type="module" src="/components/react.js"></script>
@@ -393,7 +396,10 @@ go mod tidy                     # Goモジュールの初期化（初回のみ�
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Go Demo - Web Components</title>
-    
+
+    <!-- Web Components CSS -->
+    <link rel="stylesheet" href="/static/components/web-components-samples.css">
+
     <!-- Web Components読み込み -->
     <script type="module" src="/static/components/vanilla.js"></script>
     <script type="module" src="/static/components/react.js"></script>

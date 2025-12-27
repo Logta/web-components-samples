@@ -67,7 +67,62 @@ export default defineConfig({
 3. **React/VanillaJS demo**: 自動反映（HMR）
 4. **Rails/Go demo**: `./setup_components.sh`で再ビルド必須
 
-### 4. TypeScript 型定義（React demo）
+### 4. React Web ComponentのCSS注入
+
+**必須**: CSS Modulesを使用する場合、`?inline` importでCSSをJSバンドルに含める
+
+```typescript
+// packages/react/src/react-counter.tsx
+import styles from './react-counter.module.css';
+import cssText from './react-counter.module.css?inline';
+
+// CSSをグローバルに注入（一度だけ）
+useEffect(() => {
+  const styleId = 'react-counter-styles';
+  if (!document.getElementById(styleId)) {
+    const styleElement = document.createElement('style');
+    styleElement.id = styleId;
+    styleElement.textContent = cssText;
+    document.head.appendChild(styleElement);
+  }
+}, []);
+```
+
+**理由**:
+
+- ViteのライブラリモードではCSS Modulesが自動的にバンドルされない
+- Rails/Go環境では別途CSSファイルを読み込む必要がある
+- JSバンドル内にCSSを含めることで、実行時にスタイルを注入できる
+
+**HTMLでのCSS読み込み（Rails/Go）**:
+
+```html
+<!-- Web Components CSS -->
+<link rel="stylesheet" href="/components/web-components-samples.css">
+<!-- または -->
+<link rel="stylesheet" href="/static/components/web-components-samples.css">
+```
+
+### 5. TypeScript 型定義（React package）
+
+`?inline` import用の型定義を`vite-env.d.ts`に追加：
+
+```typescript
+/// <reference types="vite/client" />
+
+// ?inline importの型定義
+declare module '*.css?inline' {
+  const content: string;
+  export default content;
+}
+
+declare module '*.module.css?inline' {
+  const content: string;
+  export default content;
+}
+```
+
+### 6. TypeScript 型定義（React demo）
 
 Web Components 用の JSX 型を`vite-env.d.ts`に定義：
 
@@ -181,6 +236,35 @@ define: {
 ```typescript
 import * as ReactDOMClient from "react-dom/client";
 reactToWebComponent(Component, React, ReactDOMClient);
+```
+
+### 問題 4: React Web Component のスタイルが適用されない
+
+**状況**: Rails/Go demo で React コンポーネントのCSS Modulesスタイルが表示されない
+
+**解決策**:
+1. `?inline` importでCSSをJSバンドルに含める
+2. `useEffect`でCSSをグローバルに注入
+3. HTMLで`web-components-samples.css`を読み込む
+
+```typescript
+// packages/react/src/react-counter.tsx
+import cssText from './react-counter.module.css?inline';
+
+useEffect(() => {
+  const styleId = 'react-counter-styles';
+  if (!document.getElementById(styleId)) {
+    const styleElement = document.createElement('style');
+    styleElement.id = styleId;
+    styleElement.textContent = cssText;
+    document.head.appendChild(styleElement);
+  }
+}, []);
+```
+
+```html
+<!-- Rails/Goのlayout -->
+<link rel="stylesheet" href="/components/web-components-samples.css">
 ```
 
 ## 新機能追加時の注意点
