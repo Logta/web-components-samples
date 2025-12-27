@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createRoot, Root } from 'react-dom/client';
+import styles from './react-counter.module.css';
 
 interface CounterComponentProps {
   initialCount?: number;
@@ -8,62 +9,20 @@ interface CounterComponentProps {
 function CounterComponent({ initialCount = 0 }: CounterComponentProps) {
   const [count, setCount] = useState(initialCount);
 
-  const styles = {
-    container: {
-      display: 'block',
-      padding: '20px',
-      border: '2px solid #61dafb',
-      borderRadius: '8px',
-      margin: '10px 0',
-      background: '#f0f9ff',
-    },
-    counter: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '15px',
-      fontSize: '18px',
-    },
-    button: {
-      padding: '8px 16px',
-      fontSize: '16px',
-      border: '1px solid #61dafb',
-      background: '#61dafb',
-      color: '#000',
-      borderRadius: '4px',
-      cursor: 'pointer',
-      transition: 'background 0.2s',
-    },
-    count: {
-      fontWeight: 'bold',
-      minWidth: '40px',
-      textAlign: 'center' as const,
-      fontSize: '24px',
-      color: '#333',
-    },
-    label: {
-      color: '#666',
-      fontSize: '14px',
-    },
-  };
-
   return (
-    <div style={styles.container}>
-      <div style={styles.counter}>
-        <div style={styles.label}>React Counter:</div>
+    <div className={styles.container}>
+      <div className={styles.counter}>
+        <div className={styles.label}>React Counter:</div>
         <button
-          style={styles.button}
+          className={styles.button}
           onClick={() => setCount(count - 1)}
-          onMouseOver={(e) => (e.currentTarget.style.background = '#4fa8c5')}
-          onMouseOut={(e) => (e.currentTarget.style.background = '#61dafb')}
         >
           -
         </button>
-        <span style={styles.count}>{count}</span>
+        <span className={styles.count}>{count}</span>
         <button
-          style={styles.button}
+          className={styles.button}
           onClick={() => setCount(count + 1)}
-          onMouseOver={(e) => (e.currentTarget.style.background = '#4fa8c5')}
-          onMouseOut={(e) => (e.currentTarget.style.background = '#61dafb')}
         >
           +
         </button>

@@ -1,0 +1,32 @@
+source 'https://rubygems.org'
+
+ruby '~> 3.2'
+
+# Rails framework
+gem 'rails', '~> 8.0.1'
+
+# Database
+gem 'sqlite3', '>= 2.1'
+
+# Web server
+gem 'puma', '>= 5.0'
+
+# Asset pipeline (minimal)
+gem 'sprockets-rails'
+
+# Hotwire
+gem 'turbo-rails'
+gem 'stimulus-rails'
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: %i[ windows jruby ]
+
+group :development, :test do
+  gem 'debug', platforms: %i[ mri windows ], require: 'debug/prelude'
+  gem 'brakeman', require: false
+  gem 'rubocop-rails-omakase', require: false
+end
+
+group :development do
+  gem 'web-console'
+end

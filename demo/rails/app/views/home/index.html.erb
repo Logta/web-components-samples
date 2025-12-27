@@ -1,0 +1,33 @@
+<div class="container">
+  <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: #e74c3c;">Web Components in Rails Demo</h1>
+  <p>このデモでは、Ruby on Rails環境で3つの異なるWeb Componentsを使用しています。</p>
+
+  <div style="margin: 2rem 0; padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1);">
+    <h2 style="color: #c0392b; margin-top: 0;">1. Vanilla JS Counter</h2>
+    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 1.5rem;">純粋なJavaScriptで作成されたWeb Component</p>
+    <my-counter count="5"></my-counter>
+  </div>
+
+  <div style="margin: 2rem 0; padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1);">
+    <h2 style="color: #c0392b; margin-top: 0;">2. React Counter (as Web Component)</h2>
+    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 1.5rem;">Reactで作成されたコンポーネントをWeb Componentとしてラップ</p>
+    <react-counter count="10"></react-counter>
+  </div>
+
+  <div style="margin: 2rem 0; padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1);">
+    <h2 style="color: #c0392b; margin-top: 0;">3. Lit Counter</h2>
+    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 1.5rem;">Litフレームワークで作成されたWeb Component</p>
+    <lit-counter count="3"></lit-counter>
+  </div>
+
+  <div style="margin-top: 3rem; padding: 1.5rem; background: rgba(231, 76, 60, 0.1); border-radius: 8px; border: 1px solid rgba(231, 76, 60, 0.3);">
+    <h3 style="margin-top: 0; color: #e74c3c;">使い方</h3>
+    <p style="color: rgba(255, 255, 255, 0.8); text-align: left; margin: 0.5rem 0;">各カウンターの + / - ボタンをクリックして、カウンターを操作できます。</p>
+    <p style="color: rgba(255, 255, 255, 0.8); text-align: left; margin: 0.5rem 0;">RailsのERBテンプレート内で、HTMLタグとして直接Web Componentsを使用できます。</p>
+    <p style="color: rgba(255, 255, 255, 0.8); text-align: left; margin: 0.5rem 0;">フレームワークに依存しないため、任意のRailsアプリケーションに簡単に組み込めます。</p>
+  </div>
+</div>
+
+<script type="module" src="/components/vanilla.js"></script>
+<script type="module" src="/components/react.js"></script>
+<script type="module" src="/components/lit.js"></script>

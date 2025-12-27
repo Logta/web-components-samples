@@ -1,0 +1,110 @@
+{{define "layout"}}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <style>
+        :root {
+            font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            font-weight: 400;
+            color-scheme: light dark;
+            color: rgba(255, 255, 255, 0.87);
+            background-color: #242424;
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            place-items: center;
+            min-width: 320px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+
+        .demo-section {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .demo-section h2 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+
+        .demo-section p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+        }
+
+        .info {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .info h3 {
+            margin-top: 0;
+            color: #3498db;
+        }
+
+        .info p {
+            color: rgba(255, 255, 255, 0.8);
+            text-align: left;
+            margin: 0.5rem 0;
+        }
+
+        .code-example {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: left;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .code-example pre {
+            margin: 0;
+            color: #3498db;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    {{template "content" .}}
+
+    <!-- Web Components -->
+    <script type="module" src="/static/components/vanilla.js"></script>
+    <script type="module" src="/static/components/react.js"></script>
+    <script type="module" src="/static/components/lit.js"></script>
+</body>
+</html>
+{{end}}

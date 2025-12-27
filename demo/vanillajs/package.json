@@ -1,0 +1,20 @@
+{
+  "name": "@demo/vanillajs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@web-components-samples/vanilla": "workspace:*",
+    "@web-components-samples/react": "workspace:*",
+    "@web-components-samples/lit": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}

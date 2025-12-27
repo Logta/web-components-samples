@@ -1,3 +1,5 @@
+import styles from './my-counter.css?inline';
+
 class MyCounter extends HTMLElement {
   private _count: number = 0;
   declare shadowRoot: ShadowRoot;
@@ -13,16 +15,17 @@ class MyCounter extends HTMLElement {
 
   connectedCallback(): void {
     this.render();
-    this.attachEventListeners();
+    // イベント委譲で親要素にリスナーを1回だけ登録
+    this.shadowRoot.addEventListener('click', this.handleClick.bind(this));
   }
 
-  private attachEventListeners(): void {
-    this.shadowRoot.querySelector('.increment')?.addEventListener('click', () => {
+  private handleClick(event: Event): void {
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('increment')) {
       this.count++;
-    });
-    this.shadowRoot.querySelector('.decrement')?.addEventListener('click', () => {
+    } else if (target.classList.contains('decrement')) {
       this.count--;
-    });
+    }
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
@@ -44,46 +47,7 @@ class MyCounter extends HTMLElement {
 
   render(): void {
     this.shadowRoot.innerHTML = `
-      <style>
-        :host {
-          display: block;
-          padding: 20px;
-          border: 2px solid #646cff;
-          border-radius: 8px;
-          margin: 10px 0;
-          background: #f9f9f9;
-        }
-        .counter {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-          font-size: 18px;
-        }
-        button {
-          padding: 8px 16px;
-          font-size: 16px;
-          border: 1px solid #646cff;
-          background: #646cff;
-          color: white;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: background 0.2s;
-        }
-        button:hover {
-          background: #535bf2;
-        }
-        .count {
-          font-weight: bold;
-          min-width: 40px;
-          text-align: center;
-          font-size: 24px;
-          color: #333;
-        }
-        .label {
-          color: #666;
-          font-size: 14px;
-        }
-      </style>
+      <style>${styles}</style>
       <div class="counter">
         <div class="label">Vanilla JS Counter:</div>
         <button class="decrement">-</button>
@@ -91,7 +55,6 @@ class MyCounter extends HTMLElement {
         <button class="increment">+</button>
       </div>
     `;
-    this.attachEventListeners();
   }
 }
 

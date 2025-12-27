@@ -23,6 +23,6 @@
     "@storybook/web-components-vite": "10.1.10",
     "@types/node": "^25.0.3",
     "storybook": "10.1.10",
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   }
 }
