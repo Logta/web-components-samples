@@ -1,10 +1,18 @@
 import { resolve } from 'node:path';
 import react from '@vitejs/plugin-react';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { defineConfig } from 'vite';
 
 // Rails demo用のバンドル設定 - すべての依存関係を含める
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    svelte({
+      compilerOptions: {
+        customElement: true,
+      },
+    }),
+  ],
   define: {
     // process.env をブラウザ用に置き換え
     'process.env.NODE_ENV': JSON.stringify('production'),
@@ -17,6 +25,8 @@ export default defineConfig({
         vanilla: resolve(__dirname, '../../packages/vanilla/src/my-counter.ts'),
         react: resolve(__dirname, '../../packages/react/src/react-counter.tsx'),
         lit: resolve(__dirname, '../../packages/lit/src/lit-counter.ts'),
+        preact: resolve(__dirname, '../../packages/preact/src/preact-counter.tsx'),
+        svelte: resolve(__dirname, '../../packages/svelte/src/svelte-counter.ts'),
       },
       formats: ['es'],
       fileName: (_format, entryName) => `${entryName}.js`,

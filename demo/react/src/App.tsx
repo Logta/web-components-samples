@@ -5,6 +5,8 @@ import './App.css';
 import '@web-components-samples/vanilla';
 import '@web-components-samples/react';
 import '@web-components-samples/lit';
+import '@web-components-samples/preact';
+import '@web-components-samples/svelte';
 
 function App() {
   useEffect(() => {
@@ -14,12 +16,14 @@ function App() {
   return (
     <div className="app">
       <h1>Web Components in React Demo</h1>
-      <p>このデモでは、React環境で3つの異なるWeb Componentsを使用しています。</p>
+      <p>このデモでは、React環境で5つの異なるWeb Componentsを使用しています。</p>
 
       <div className="counters-grid">
         <my-counter count={0}></my-counter>
         <react-counter count={0}></react-counter>
         <lit-counter count={0}></lit-counter>
+        <preact-counter count={0}></preact-counter>
+        <svelte-counter count={0}></svelte-counter>
       </div>
 
       <div className="info">

@@ -17,6 +17,7 @@ export default defineConfig({
         vanilla: resolve(__dirname, '../../packages/vanilla/src/my-counter.ts'),
         react: resolve(__dirname, '../../packages/react/src/react-counter.tsx'),
         lit: resolve(__dirname, '../../packages/lit/src/lit-counter.ts'),
+        preact: resolve(__dirname, '../../packages/preact/src/preact-counter.tsx'),
       },
       formats: ['es'],
       fileName: (_format, entryName) => `${entryName}.js`,

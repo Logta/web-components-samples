@@ -15,6 +15,14 @@ declare namespace React {
         React.HTMLAttributes<HTMLElement> & { count?: number },
         HTMLElement
       >;
+      'preact-counter': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { count?: number },
+        HTMLElement
+      >;
+      'svelte-counter': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { count?: number },
+        HTMLElement
+      >;
     }
   }
 }

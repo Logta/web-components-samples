@@ -30,7 +30,7 @@ func main() {
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	data := PageData{
 		Title:       "Web Components in Go Template Demo",
-		Description: "このデモでは、Goのhtml/template環境で3つの異なるWeb Componentsを使用しています。",
+		Description: "このデモでは、Goのhtml/template環境で5つの異なるWeb Componentsを使用しています。",
 	}
 
 	// テンプレートの解析
