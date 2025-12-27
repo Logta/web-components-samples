@@ -185,7 +185,7 @@ mise build              # または pnpm build
 # デモを起動
 mise demo:react         # React demo (port 3000)
 mise demo:vanilla       # VanillaJS demo (port 3001)
-mise demo:rails         # Rails demo (port 3000)
+mise demo:rails         # Rails demo (port 3002)
 mise demo:go            # Go demo (port 8080)
 
 # Rails/Goのセットアップ

@@ -333,7 +333,7 @@ export default defineConfig({
 ```bash
 mise demo:react      # port 3000
 mise demo:vanilla    # port 3001
-mise demo:rails      # port 3000
+mise demo:rails      # port 3002
 mise demo:go         # port 8080
 ```
 

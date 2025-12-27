@@ -100,8 +100,8 @@ run = "cd demo/vanillajs && pnpm dev"
 alias = "dv"
 
 [tasks."demo:rails"]
-description = "🚀 Rails Demo - http://localhost:3000"
-run = "cd demo/rails && bundle exec rails server"
+description = "🚀 Rails Demo - http://localhost:3002"
+run = "cd demo/rails && bundle exec rails server -p 3002"
 alias = "drails"
 
 [tasks."demo:go"]
@@ -120,7 +120,7 @@ echo "📦 Available Demos:"
 echo ""
 echo "  React      → mise demo:react    (port 3000)"
 echo "  Vanilla JS → mise demo:vanilla  (port 3001)"
-echo "  Rails      → mise demo:rails    (port 3000)"
+echo "  Rails      → mise demo:rails    (port 3002)"
 echo "  Go         → mise demo:go       (port 8080)"
 echo ""
 echo "💡 Tip: Setup Rails/Go demos first with 'mise demo:setup'"

@@ -171,9 +171,9 @@ import '@web-components-samples/lit';
 
 ### 基本情報
 
-- **ポート**: 3000
+- **ポート**: 3002
 - **技術スタック**: Rails 8 + ERB Templates
-- **起動方法**: `mise demo:rails` または `cd demo/rails && bundle exec rails server`
+- **起動方法**: `mise demo:rails` または `cd demo/rails && bundle exec rails server -p 3002`
 
 ### 前提条件
 
