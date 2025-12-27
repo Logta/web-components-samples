@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as ReactDOMClient from 'react-dom/client';
 import reactToWebComponent from 'react-to-webcomponent';
 import styles from './react-counter.module.css';
+import cssText from './react-counter.module.css?inline';
 
 interface CounterComponentProps {
   count?: number;
@@ -14,6 +15,17 @@ function CounterComponent({ count: initialCount = 0 }: CounterComponentProps) {
   useEffect(() => {
     setCount(initialCount);
   }, [initialCount]);
+
+  // CSSをグローバルに注入（一度だけ）
+  useEffect(() => {
+    const styleId = 'react-counter-styles';
+    if (!document.getElementById(styleId)) {
+      const styleElement = document.createElement('style');
+      styleElement.id = styleId;
+      styleElement.textContent = cssText;
+      document.head.appendChild(styleElement);
+    }
+  }, []);
 
   return (
     <div className={styles.container}>
