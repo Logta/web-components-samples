@@ -23,6 +23,26 @@ declare namespace React {
         React.HTMLAttributes<HTMLElement> & { count?: number },
         HTMLElement
       >;
+      'vanilla-modal': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { isOpen?: boolean; title?: string; description?: string },
+        HTMLElement
+      >;
+      'react-modal': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { isOpen?: boolean; title?: string; description?: string },
+        HTMLElement
+      >;
+      'lit-modal': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { open?: boolean; title?: string; description?: string },
+        HTMLElement
+      >;
+      'preact-modal': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { isOpen?: boolean; title?: string; description?: string },
+        HTMLElement
+      >;
+      'svelte-modal': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { isOpen?: boolean; title?: string; description?: string },
+        HTMLElement
+      >;
     }
   }
 }

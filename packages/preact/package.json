@@ -17,6 +17,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.9",
     "preact": "^10.28.1",
     "preact-custom-element": "^4.6.0"
   },

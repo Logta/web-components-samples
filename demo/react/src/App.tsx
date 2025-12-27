@@ -26,6 +26,17 @@ function App() {
         <svelte-counter count={0}></svelte-counter>
       </div>
 
+      <h2>Modal Components</h2>
+      <p>各フレームワークで実装されたモーダルコンポーネントのデモです。</p>
+
+      <div className="modals-grid">
+        <vanilla-modal></vanilla-modal>
+        <react-modal></react-modal>
+        <lit-modal></lit-modal>
+        <preact-modal></preact-modal>
+        <svelte-modal></svelte-modal>
+      </div>
+
       <div className="info">
         <h3>使い方</h3>
         <p>各カウンターの + / - ボタンをクリックして、カウンターを操作できます。</p>

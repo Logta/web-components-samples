@@ -20,6 +20,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.9",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-to-webcomponent": "^2.0.1"

@@ -12,7 +12,7 @@
 | フレームワーク | アプローチ | ライブラリ | 理由 |
 |--------------|----------|----------|------|
 | React | Headless UI | `@headlessui/react` | 実務標準、アクセシビリティ完備 |
-| Preact | Headless UI (compat経由) | `@headlessui/react` + `preact/compat` | React互換性、軽量 |
+| Preact | ネイティブ `<dialog>` | なし | 軽量、型の問題回避 |
 | Svelte | Headless UI | `svelte-headlessui` | Svelteネイティブ、型安全 |
 | Vanilla | ネイティブ `<dialog>` | なし | ブラウザ標準、依存関係なし |
 | Lit | ネイティブ `<dialog>` | なし | Web Components標準 |
@@ -159,55 +159,85 @@ if (!customElements.get('react-modal')) {
 
 ---
 
-### 2. Preact - Headless UI (compat経由)
+### 2. Preact - ネイティブ `<dialog>`
 
-**パッケージ**: `@headlessui/react` + `preact/compat`
+**依存関係**: なし（Preactのみ）
 
-#### インストール
-
-```bash
-cd packages/preact
-pnpm add @headlessui/react
-```
-
-#### vite.config.ts設定
-
-```typescript
-import { defineConfig } from 'vite';
-import preact from '@preact/preset-vite';
-
-export default defineConfig({
-  plugins: [preact()],
-  resolve: {
-    alias: {
-      'react': 'preact/compat',
-      'react-dom': 'preact/compat',
-    },
-  },
-});
-```
+**理由**: Headless UI（React）とPreactの型の不一致により、ネイティブ`<dialog>`を採用。軽量性を保ちつつアクセシビリティを確保。
 
 #### 基本実装
 
-Reactとほぼ同じコードが動作：
-
 ```tsx
-import { Dialog, Transition } from '@headlessui/react';
-import { h, Fragment } from 'preact';
-import { useState } from 'preact/hooks';
+import { useState, useEffect, useRef } from 'preact/hooks';
+import register from 'preact-custom-element';
 
-interface ModalProps {
+interface ModalComponentProps {
   isOpen?: boolean;
-  onClose?: () => void;
+  title?: string;
+  description?: string;
 }
 
-function PreactModal({ isOpen = false, onClose = () => {} }: ModalProps) {
+function ModalComponent({
+  isOpen: initialIsOpen = false,
+  title = 'Preact Modal',
+  description = 'This is a modal dialog built with Preact and native HTML <dialog> element.'
+}: ModalComponentProps) {
+  const [isOpen, setIsOpen] = useState(initialIsOpen);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  // isOpen propが変更されたら状態を更新
+  useEffect(() => {
+    setIsOpen(initialIsOpen);
+  }, [initialIsOpen]);
+
+  // isOpenの変更に応じてdialogを開閉
+  useEffect(() => {
+    if (dialogRef.current) {
+      if (isOpen) {
+        dialogRef.current.showModal();
+      } else {
+        dialogRef.current.close();
+      }
+    }
+  }, [isOpen]);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function handleBackdropClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const rect = target.getBoundingClientRect();
+
+    // ダイアログ要素自体がクリックされた場合（コンテンツ外）
+    if (
+      event.clientX < rect.left ||
+      event.clientX > rect.right ||
+      event.clientY < rect.top ||
+      event.clientY > rect.bottom
+    ) {
+      closeModal();
+    }
+  }
+
   return (
-    <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="modal-overlay" onClose={onClose}>
-        {/* React版とほぼ同じ */}
-      </Dialog>
-    </Transition>
+    <div>
+      <button type="button" onClick={openModal}>
+        Open Preact Modal
+      </button>
+
+      <dialog ref={dialogRef} onClose={closeModal} onClick={handleBackdropClick}>
+        <div>
+          <h3>{title}</h3>
+          <p>{description}</p>
+          <button type="button" onClick={closeModal}>Close</button>
+        </div>
+      </dialog>
+    </div>
   );
 }
 ```
@@ -215,15 +245,23 @@ function PreactModal({ isOpen = false, onClose = () => {} }: ModalProps) {
 #### Web Component化
 
 ```tsx
-import { customElement } from 'preact-custom-element';
+import register from 'preact-custom-element';
 
-customElement('preact-modal', PreactModal, ['isOpen', 'onClose']);
+register(ModalComponent, 'preact-modal', ['isOpen', 'title', 'description'], { shadow: false });
 ```
+
+#### 主な機能
+
+- ✅ Preact軽量性維持（3KB）
+- ✅ ネイティブ `<dialog>` の全機能
+- ✅ `useRef` でdialog要素参照
+- ✅ `useEffect` で開閉状態管理
+- ✅ 型の問題なし
 
 #### 注意点
 
-- ⚠️ 一部のHeadless UI機能に制限がある場合あり
-- ⚠️ バンドルサイズに注意（preact/compatを含む）
+- **Headless UIを使わない理由**: `@headlessui/react`とPreactの型の不一致により、TypeScriptエラーが発生。preact/compatを使用しても型エラーが解決しないため、ネイティブ`<dialog>`を採用。
+- **メリット**: バンドルサイズを最小限に抑え、Preactの軽量性を活かせる。
 
 ---
 
@@ -715,11 +753,23 @@ describe('Modal Component', () => {
 ## まとめ
 
 **実務に寄せた実装方針**:
-- React/Preact/Svelte → **Headless UI** で実装（アクセシビリティ自動処理）
-- Vanilla/Lit → **ネイティブ `<dialog>`** で実装（軽量、標準）
+- **React/Svelte** → **Headless UI** で実装（アクセシビリティ自動処理）
+- **Vanilla/Lit/Preact** → **ネイティブ `<dialog>`** で実装（軽量、標準）
+
+**実装結果**:
+- ✅ React Modal - Headless UI (@headlessui/react)
+- ✅ Vanilla Modal - ネイティブ `<dialog>`
+- ✅ Lit Modal - ネイティブ `<dialog>` + Litリアクティブ
+- ✅ Preact Modal - ネイティブ `<dialog>` (型の問題回避のため)
+- ✅ Svelte Modal - svelte-headlessui
+
+**Preact で Headless UI を使わなかった理由**:
+- `@headlessui/react` と Preact の型の不一致
+- `preact/compat` を使用しても TypeScript エラーが解決しない
+- ネイティブ `<dialog>` を採用することで、バンドルサイズを最小限に抑え、Preact の軽量性を活かせる
 
 **次のステップ**:
-1. React Modalから実装開始
-2. Vanilla/Lit Modalで `<dialog>` の使い方を学ぶ
+1. ✅ 全フレームワークのModal実装完了
+2. 各demoアプリにモーダルを追加
 3. 各フレームワーク間でスタイルを統一
 4. アクセシビリティテスト実施
