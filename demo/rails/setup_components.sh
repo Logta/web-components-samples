@@ -16,11 +16,12 @@ mkdir -p public/components
 echo "Copying bundled components..."
 
 # 各コンポーネントをコピー
-cp ../../packages/vanilla/dist/my-counter.js public/components/vanilla.js
+cp ../../packages/vanilla/dist/index.js public/components/vanilla.js
 cp ../../packages/react/dist/bundle/react-counter.js public/components/react.js
 cp ../../packages/react/dist/bundle/react-counter.css public/components/web-components-samples.css 2>/dev/null || true
 cp ../../packages/lit/dist/bundle/lit-counter.js public/components/lit.js
-cp ../../packages/preact/dist/preact-counter.js public/components/preact.js
+cp ../../packages/preact/dist/index.js public/components/preact.js
+cp ../../packages/preact/dist/index.css public/components/preact.css 2>/dev/null || true
 cp ../../packages/svelte/dist/bundle/svelte-counter.js public/components/svelte.js
 
 echo ""
