@@ -20,8 +20,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "svelte": "^5.46.1",
-    "svelte-headlessui": "^0.0.46"
+    "@melt-ui/svelte": "^0.86.6",
+    "svelte": "^5.46.1"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^6.2.1",
