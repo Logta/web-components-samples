@@ -1,80 +1,61 @@
 <svelte:options customElement="svelte-modal" />
 
 <script lang="ts">
-  export let isOpen = false;
-  export let title = 'Svelte Modal';
-  export let description = 'This is a modal dialog built with Svelte and native HTML <dialog> element.';
+  import { createDialog, melt } from '@melt-ui/svelte';
 
-  let dialog: HTMLDialogElement;
+  let {
+    title = $bindable('Svelte Modal'),
+    description = $bindable('This is a modal dialog built with Svelte and Melt UI.')
+  } = $props();
 
-  $: if (dialog) {
-    if (isOpen) {
-      dialog.showModal();
-    } else {
-      dialog.close();
-    }
-  }
-
-  function close() {
-    isOpen = false;
-  }
-
-  function open() {
-    isOpen = true;
-  }
-
-  function handleBackdropClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    const rect = target.getBoundingClientRect();
-
-    // ダイアログ要素自体がクリックされた場合（コンテンツ外）
-    if (
-      event.clientX < rect.left ||
-      event.clientX > rect.right ||
-      event.clientY < rect.top ||
-      event.clientY > rect.bottom
-    ) {
-      close();
-    }
-  }
+  const {
+    elements: { trigger, overlay, content, title: titleEl, description: descriptionEl, close, portalled },
+    states: { open }
+  } = createDialog({
+    forceVisible: true,
+  });
 </script>
 
 <div class="container">
-  <button type="button" class="open-button" on:click={open}>
+  <button type="button" class="open-button" use:melt={$trigger}>
     Open Svelte Modal
   </button>
 
-  <dialog bind:this={dialog} on:close={close} on:click={handleBackdropClick}>
-    <div class="modal-panel">
-      <div class="modal-header">
-        <h3 class="modal-title">{title}</h3>
-      </div>
+  {#if $open}
+    <div use:melt={$portalled}>
+      <div use:melt={$overlay} class="overlay"></div>
+      <div use:melt={$content} class="modal-content">
+        <div class="modal-header">
+          <h3 use:melt={$titleEl} class="modal-title">{title}</h3>
+        </div>
 
-      <div class="modal-body">
-        <p class="modal-description">{description}</p>
+        <div class="modal-body">
+          <p use:melt={$descriptionEl} class="modal-description">{description}</p>
 
-        <div class="modal-content">
-          <p>
-            This modal demonstrates Svelte + native &lt;dialog&gt; integration:
-          </p>
-          <ul>
-            <li>✅ Svelte reactive ($:)</li>
-            <li>✅ Native &lt;dialog&gt; accessibility</li>
-            <li>✅ Automatic focus trap</li>
-            <li>✅ ESC key to close (native)</li>
-            <li>✅ Click outside to close</li>
-            <li>✅ ::backdrop pseudo-element</li>
-          </ul>
+          <div class="feature-list">
+            <p>
+              This modal demonstrates Svelte + Melt UI integration:
+            </p>
+            <ul>
+              <li>✅ Melt UI headless components</li>
+              <li>✅ Svelte 5 runes ($bindable, $state)</li>
+              <li>✅ Automatic accessibility (ARIA)</li>
+              <li>✅ Automatic focus trap</li>
+              <li>✅ ESC key to close</li>
+              <li>✅ Click outside to close</li>
+              <li>✅ Smooth animations</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="close-button" use:melt={$close}>
+            Close
+          </button>
         </div>
       </div>
-
-      <div class="modal-actions">
-        <button type="button" class="close-button" on:click={close}>
-          Close
-        </button>
-      </div>
     </div>
-  </dialog>
+  {/if}
 </div>
 
 <style>
@@ -105,30 +86,42 @@
     outline-offset: 2px;
   }
 
-  /* Dialog Element */
-  :global(dialog) {
-    border: none;
-    border-radius: 12px;
-    padding: 0;
-    max-width: 28rem;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Overlay */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.2s ease-out;
   }
 
-  :global(dialog::backdrop) {
-    background-color: rgba(0, 0, 0, 0.5);
-    animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Modal Content */
+  .modal-content {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 50;
+    transform: translate(-50%, -50%);
+    max-width: 28rem;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    background-color: white;
+    padding: 1.5rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   /* Animations */
   @keyframes slideIn {
     from {
       opacity: 0;
-      transform: scale(0.95);
+      transform: translate(-50%, -48%) scale(0.95);
     }
     to {
       opacity: 1;
-      transform: scale(1);
+      transform: translate(-50%, -50%) scale(1);
     }
   }
 
@@ -139,12 +132,6 @@
     to {
       opacity: 1;
     }
-  }
-
-  /* Modal Panel */
-  .modal-panel {
-    padding: 1.5rem;
-    background-color: white;
   }
 
   /* Modal Header */
@@ -167,27 +154,27 @@
   .modal-description {
     font-size: 0.875rem;
     color: #6b7280;
-    margin-bottom: 1rem;
+    margin: 0 0 1rem 0;
   }
 
-  .modal-content {
+  .feature-list {
     margin-top: 1rem;
   }
 
-  .modal-content p {
+  .feature-list p {
     margin: 0 0 0.75rem 0;
     color: #374151;
     line-height: 1.6;
   }
 
-  .modal-content ul {
+  .feature-list ul {
     margin: 0;
     padding-left: 1.5rem;
     color: #374151;
     line-height: 1.8;
   }
 
-  .modal-content li {
+  .feature-list li {
     margin-bottom: 0.25rem;
   }
 
@@ -222,11 +209,8 @@
 
   /* Responsive */
   @media (max-width: 640px) {
-    :global(dialog) {
+    .modal-content {
       max-width: 90vw;
-    }
-
-    .modal-panel {
       padding: 1.25rem;
     }
 
