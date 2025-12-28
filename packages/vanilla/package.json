@@ -2,13 +2,13 @@
   "name": "@web-components-samples/vanilla",
   "version": "1.0.0",
   "type": "module",
-  "main": "./dist/my-counter.js",
-  "module": "./dist/my-counter.js",
-  "types": "./dist/my-counter.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/my-counter.d.ts",
-      "default": "./dist/my-counter.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "scripts": {

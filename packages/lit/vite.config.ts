@@ -3,9 +3,9 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   build: {
     lib: {
-      entry: 'src/lit-counter.ts',
+      entry: 'src/index.ts',
       formats: ['es'],
-      fileName: 'lit-counter',
+      fileName: 'index',
     },
     rollupOptions: {
       external: ['lit'],

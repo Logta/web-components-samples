@@ -14,7 +14,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/svelte-counter.ts'),
       formats: ['es'],
-      fileName: 'svelte-counter',
+      fileName: 'index',
     },
   },
 });

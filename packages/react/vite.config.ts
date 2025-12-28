@@ -5,9 +5,9 @@ export default defineConfig({
   plugins: [react()],
   build: {
     lib: {
-      entry: 'src/react-counter.tsx',
+      entry: 'src/index.ts',
       formats: ['es'],
-      fileName: 'react-counter',
+      fileName: 'index',
     },
     rollupOptions: {
       external: ['react', 'react-dom'],

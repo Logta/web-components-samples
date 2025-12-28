@@ -2,13 +2,13 @@
   "name": "@web-components-samples/svelte",
   "version": "1.0.0",
   "type": "module",
-  "main": "./dist/svelte-counter.js",
-  "module": "./dist/svelte-counter.js",
-  "types": "./dist/svelte-counter.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/svelte-counter.d.ts",
-      "import": "./dist/svelte-counter.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     },
     "./bundle": {
       "import": "./dist/bundle/svelte-counter.js"

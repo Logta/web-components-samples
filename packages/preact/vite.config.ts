@@ -8,7 +8,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/preact-counter.tsx'),
       formats: ['es'],
-      fileName: 'preact-counter',
+      fileName: 'index',
     },
   },
 });

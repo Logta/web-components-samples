@@ -2,13 +2,13 @@
   "name": "@web-components-samples/lit",
   "version": "1.0.0",
   "type": "module",
-  "main": "./dist/lit-counter.js",
-  "module": "./dist/lit-counter.js",
-  "types": "./dist/lit-counter.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/lit-counter.d.ts",
-      "default": "./dist/lit-counter.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "scripts": {

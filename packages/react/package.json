@@ -2,13 +2,13 @@
   "name": "@web-components-samples/react",
   "version": "1.0.0",
   "type": "module",
-  "main": "./dist/react-counter.js",
-  "module": "./dist/react-counter.js",
-  "types": "./dist/react-counter.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/react-counter.d.ts",
-      "default": "./dist/react-counter.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./bundle": {
       "import": "./dist/bundle/react-counter.js"
