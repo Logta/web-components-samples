@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [preact()],
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/preact-counter.tsx'),
+      entry: resolve(__dirname, 'src/index.ts'),
       formats: ['es'],
       fileName: 'index',
     },

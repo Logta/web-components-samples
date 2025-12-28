@@ -1,11 +1,19 @@
 <svelte:options customElement="svelte-modal" />
 
 <script lang="ts">
-  import { Dialog, DialogOverlay, DialogTitle, Transition, TransitionChild } from 'svelte-headlessui';
-
   export let isOpen = false;
   export let title = 'Svelte Modal';
-  export let description = 'This is a modal dialog built with svelte-headlessui.';
+  export let description = 'This is a modal dialog built with Svelte and native HTML <dialog> element.';
+
+  let dialog: HTMLDialogElement;
+
+  $: if (dialog) {
+    if (isOpen) {
+      dialog.showModal();
+    } else {
+      dialog.close();
+    }
+  }
 
   function close() {
     isOpen = false;
@@ -14,6 +22,21 @@
   function open() {
     isOpen = true;
   }
+
+  function handleBackdropClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const rect = target.getBoundingClientRect();
+
+    // ダイアログ要素自体がクリックされた場合（コンテンツ外）
+    if (
+      event.clientX < rect.left ||
+      event.clientX > rect.right ||
+      event.clientY < rect.top ||
+      event.clientY > rect.bottom
+    ) {
+      close();
+    }
+  }
 </script>
 
 <div class="container">
@@ -21,63 +44,37 @@
     Open Svelte Modal
   </button>
 
-  <Transition show={isOpen}>
-    <Dialog on:close={close} class="modal-overlay">
-      <TransitionChild
-        enter="transition-opacity ease-out duration-300"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity ease-in duration-200"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      >
-        <DialogOverlay class="backdrop" />
-      </TransitionChild>
+  <dialog bind:this={dialog} on:close={close} on:click={handleBackdropClick}>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h3 class="modal-title">{title}</h3>
+      </div>
 
-      <div class="modal-container">
-        <div class="modal-wrapper">
-          <TransitionChild
-            enter="transition-all ease-out duration-300"
-            enterFrom="opacity-0 scale-95"
-            enterTo="opacity-100 scale-100"
-            leave="transition-all ease-in duration-200"
-            leaveFrom="opacity-100 scale-100"
-            leaveTo="opacity-0 scale-95"
-          >
-            <div class="modal-panel">
-              <div class="modal-header">
-                <DialogTitle class="modal-title">{title}</DialogTitle>
-              </div>
+      <div class="modal-body">
+        <p class="modal-description">{description}</p>
 
-              <div class="modal-body">
-                <p class="modal-description">{description}</p>
-
-                <div class="modal-content">
-                  <p>
-                    This modal demonstrates svelte-headlessui integration:
-                  </p>
-                  <ul>
-                    <li>✅ Svelte-native Headless UI</li>
-                    <li>✅ Automatic accessibility (ARIA attributes)</li>
-                    <li>✅ Focus trap management</li>
-                    <li>✅ ESC key to close</li>
-                    <li>✅ Click outside to close</li>
-                    <li>✅ Smooth transitions</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="modal-actions">
-                <button type="button" class="close-button" on:click={close}>
-                  Close
-                </button>
-              </div>
-            </div>
-          </TransitionChild>
+        <div class="modal-content">
+          <p>
+            This modal demonstrates Svelte + native &lt;dialog&gt; integration:
+          </p>
+          <ul>
+            <li>✅ Svelte reactive ($:)</li>
+            <li>✅ Native &lt;dialog&gt; accessibility</li>
+            <li>✅ Automatic focus trap</li>
+            <li>✅ ESC key to close (native)</li>
+            <li>✅ Click outside to close</li>
+            <li>✅ ::backdrop pseudo-element</li>
+          </ul>
         </div>
       </div>
-    </Dialog>
-  </Transition>
+
+      <div class="modal-actions">
+        <button type="button" class="close-button" on:click={close}>
+          Close
+        </button>
+      </div>
+    </div>
+  </dialog>
 </div>
 
 <style>
@@ -108,87 +105,46 @@
     outline-offset: 2px;
   }
 
-  /* Modal Overlay */
-  :global(.modal-overlay) {
-    position: relative;
-    z-index: 50;
+  /* Dialog Element */
+  :global(dialog) {
+    border: none;
+    border-radius: 12px;
+    padding: 0;
+    max-width: 28rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Backdrop */
-  :global(.backdrop) {
-    position: fixed;
-    inset: 0;
+  :global(dialog::backdrop) {
     background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Transitions */
-  :global(.transition-opacity) {
-    transition-property: opacity;
+  /* Animations */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
-  :global(.transition-all) {
-    transition-property: all;
-  }
-
-  :global(.ease-out) {
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  :global(.ease-in) {
-    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
-  }
-
-  :global(.duration-300) {
-    transition-duration: 300ms;
-  }
-
-  :global(.duration-200) {
-    transition-duration: 200ms;
-  }
-
-  :global(.opacity-0) {
-    opacity: 0;
-  }
-
-  :global(.opacity-100) {
-    opacity: 1;
-  }
-
-  :global(.scale-95) {
-    transform: scale(0.95);
-  }
-
-  :global(.scale-100) {
-    transform: scale(1);
-  }
-
-  /* Modal Container */
-  .modal-container {
-    position: fixed;
-    inset: 0;
-    overflow-y: auto;
-  }
-
-  .modal-wrapper {
-    display: flex;
-    min-height: 100%;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    text-align: center;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   /* Modal Panel */
   .modal-panel {
-    width: 100%;
-    max-width: 28rem;
-    transform: scale(1);
-    overflow: hidden;
-    border-radius: 12px;
-    background-color: white;
     padding: 1.5rem;
-    text-align: left;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    background-color: white;
   }
 
   /* Modal Header */
@@ -196,7 +152,7 @@
     margin-bottom: 1rem;
   }
 
-  :global(.modal-title) {
+  .modal-title {
     font-size: 1.5rem;
     font-weight: 700;
     color: #111827;
@@ -266,12 +222,15 @@
 
   /* Responsive */
   @media (max-width: 640px) {
-    .modal-panel {
+    :global(dialog) {
       max-width: 90vw;
+    }
+
+    .modal-panel {
       padding: 1.25rem;
     }
 
-    :global(.modal-title) {
+    .modal-title {
       font-size: 1.25rem;
     }
   }
