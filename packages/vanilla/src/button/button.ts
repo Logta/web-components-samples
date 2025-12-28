@@ -4,7 +4,7 @@ class VanillaButton extends HTMLElement {
   declare shadowRoot: ShadowRoot;
 
   static get observedAttributes(): string[] {
-    return ['label', 'variant', 'size', 'disabled'];
+    return ['label', 'variant', 'size', 'disabled', 'onbuttonclick'];
   }
 
   constructor() {
@@ -22,10 +22,22 @@ class VanillaButton extends HTMLElement {
     if (button) {
       button.addEventListener('click', () => {
         if (!this.disabled) {
+          // カスタムイベントを発行
           this.dispatchEvent(new CustomEvent('button-click', {
             bubbles: true,
             composed: true,
           }));
+
+          // onbuttonclick属性が設定されている場合は実行
+          const onbuttonclickAttr = this.getAttribute('onbuttonclick');
+          if (onbuttonclickAttr) {
+            try {
+              const fn = new Function(onbuttonclickAttr);
+              fn();
+            } catch (e) {
+              console.error('Error executing onbuttonclick:', e);
+            }
+          }
         }
       });
     }

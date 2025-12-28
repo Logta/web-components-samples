@@ -9,7 +9,7 @@ interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'success' | 'danger';
   size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
-  onClick?: () => void;
+  onbuttonclick?: string;
 }
 
 function ReactButton({
@@ -17,7 +17,7 @@ function ReactButton({
   variant = 'primary',
   size = 'medium',
   disabled = false,
-  onClick
+  onbuttonclick
 }: ButtonProps) {
   // CSSをグローバルに注入（一度だけ）
   useEffect(() => {
@@ -30,6 +30,17 @@ function ReactButton({
     }
   }, []);
 
+  const handleClick = () => {
+    if (!disabled && onbuttonclick) {
+      try {
+        const fn = new Function(onbuttonclick);
+        fn();
+      } catch (e) {
+        console.error('Error executing onbuttonclick:', e);
+      }
+    }
+  };
+
   const buttonClasses = [
     styles.button,
     styles[variant],
@@ -40,7 +51,7 @@ function ReactButton({
     <button
       className={buttonClasses}
       disabled={disabled}
-      onClick={onClick}
+      onClick={handleClick}
       type="button"
     >
       {label}

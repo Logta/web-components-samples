@@ -8,13 +8,15 @@ interface ButtonProps {
   variant?: string;
   size?: string;
   disabled?: boolean;
+  onbuttonclick?: string;
 }
 
 function PreactButton({
   label = 'Button',
   variant = 'primary',
   size = 'medium',
-  disabled = false
+  disabled = false,
+  onbuttonclick
 }: ButtonProps) {
   // CSSをグローバルに注入（一度だけ）
   useEffect(() => {
@@ -27,6 +29,18 @@ function PreactButton({
     }
   }, []);
 
+  const handleClick = () => {
+    if (!disabled && onbuttonclick) {
+      // グローバルスコープの関数を実行
+      try {
+        const fn = new Function(onbuttonclick);
+        fn();
+      } catch (e) {
+        console.error('Error executing onbuttonclick:', e);
+      }
+    }
+  };
+
   const buttonClasses = [
     styles.button,
     styles[variant as keyof typeof styles] || styles.primary,
@@ -38,12 +52,13 @@ function PreactButton({
       className={buttonClasses}
       disabled={disabled}
       type="button"
+      onClick={handleClick}
     >
       {label}
     </button>
   );
 }
 
-register(PreactButton, 'preact-button', ['label', 'variant', 'size', 'disabled'], { shadow: false });
+register(PreactButton, 'preact-button', ['label', 'variant', 'size', 'disabled', 'onbuttonclick'], { shadow: false });
 
 export default PreactButton;

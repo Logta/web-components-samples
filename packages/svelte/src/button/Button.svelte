@@ -5,7 +5,8 @@
     label = $bindable('Button'),
     variant = $bindable('primary'),
     size = $bindable('medium'),
-    disabled = $bindable(false)
+    disabled = $bindable(false),
+    onbuttonclick = $bindable('')
   } = $props();
 
   function getButtonClasses() {
@@ -16,12 +17,24 @@
     }
     return classes.join(' ');
   }
+
+  function handleClick() {
+    if (!disabled && onbuttonclick) {
+      try {
+        const fn = new Function(onbuttonclick);
+        fn();
+      } catch (e) {
+        console.error('Error executing onbuttonclick:', e);
+      }
+    }
+  }
 </script>
 
 <button
   class={getButtonClasses()}
   {disabled}
   type="button"
+  onclick={handleClick}
 >
   {label}
 </button>
