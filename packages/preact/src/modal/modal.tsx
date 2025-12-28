@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'preact/hooks';
 import register from 'preact-custom-element';
-import styles from './preact-modal.module.css';
-import cssText from './preact-modal.module.css?inline';
+import styles from './modal.module.css';
+import cssText from './modal.module.css?inline';
 
 interface ModalComponentProps {
   isOpen?: boolean;

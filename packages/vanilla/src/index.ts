@@ -1,9 +1,9 @@
 // カウンターコンポーネント
-import './my-counter';
+import './counter/counter';
 
 // モーダルコンポーネント
-import './vanilla-modal';
+import './modal/modal';
 
 // すべてのコンポーネントをエクスポート
-export { default as MyCounter } from './my-counter';
-export { default as VanillaModal } from './vanilla-modal';
+export { default as MyCounter } from './counter/counter';
+export { default as VanillaModal } from './modal/modal';

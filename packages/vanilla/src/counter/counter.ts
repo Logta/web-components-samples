@@ -1,4 +1,4 @@
-import styles from './my-counter.css?inline';
+import styles from './counter.css?inline';
 
 class MyCounter extends HTMLElement {
   private _count: number = 0;

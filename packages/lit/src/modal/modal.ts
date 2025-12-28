@@ -1,6 +1,6 @@
 import { LitElement, html, css, unsafeCSS } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import styles from './lit-modal.css?inline';
+import styles from './modal.css?inline';
 
 @customElement('lit-modal')
 export class LitModal extends LitElement {

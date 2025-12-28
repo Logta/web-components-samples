@@ -1,9 +1,9 @@
 // カウンターコンポーネント
-import './preact-counter';
+import './counter/counter';
 
 // モーダルコンポーネント
-import './preact-modal';
+import './modal/modal';
 
 // すべてのコンポーネントをエクスポート
-export { default as PreactCounter } from './preact-counter';
-export { default as PreactModal } from './preact-modal';
+export { default as PreactCounter } from './counter/counter';
+export { default as PreactModal } from './modal/modal';

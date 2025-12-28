@@ -1,5 +1,5 @@
 // カウンターコンポーネント
-import './svelte-counter';
+import './counter/counter';
 
 // モーダルコンポーネント
-import './svelte-modal.svelte';
+import './modal/Modal.svelte';

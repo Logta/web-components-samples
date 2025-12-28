@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'preact/hooks';
 import register from 'preact-custom-element';
-import styles from './preact-counter.module.css';
-import cssText from './preact-counter.module.css?inline';
+import styles from './counter.module.css';
+import cssText from './counter.module.css?inline';
 
 interface CounterProps {
   count?: number;

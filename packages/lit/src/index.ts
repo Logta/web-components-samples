@@ -1,9 +1,9 @@
 // カウンターコンポーネント
-import './lit-counter';
+import './counter/counter';
 
 // モーダルコンポーネント
-import './lit-modal';
+import './modal/modal';
 
 // すべてのコンポーネントをエクスポート
-export { LitCounter } from './lit-counter';
-export { LitModal } from './lit-modal';
+export { LitCounter } from './counter/counter';
+export { LitModal } from './modal/modal';

@@ -1,4 +1,4 @@
-import styles from './vanilla-modal.css?inline';
+import styles from './modal.css?inline';
 
 class VanillaModal extends HTMLElement {
   private dialog: HTMLDialogElement | null = null;

@@ -12,9 +12,9 @@ export default defineConfig({
     outDir: resolve(__dirname, 'dist/bundle'),
     emptyOutDir: true,
     lib: {
-      entry: resolve(__dirname, 'src/react-counter.tsx'),
+      entry: resolve(__dirname, 'src/index.ts'),
       formats: ['es'],
-      fileName: 'react-counter',
+      fileName: 'index',
     },
     rollupOptions: {
       // 依存関係を external にしない（すべてバンドル）

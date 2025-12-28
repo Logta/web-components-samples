@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import * as ReactDOMClient from 'react-dom/client';
 import reactToWebComponent from 'react-to-webcomponent';
-import styles from './react-counter.module.css';
-import cssText from './react-counter.module.css?inline';
+import styles from './counter.module.css';
+import cssText from './counter.module.css?inline';
 
 interface CounterComponentProps {
   count?: number;

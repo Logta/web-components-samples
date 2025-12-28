@@ -17,9 +17,9 @@ echo "Copying bundled components..."
 
 # 各コンポーネントをコピー
 cp ../../packages/vanilla/dist/index.js static/components/vanilla.js
-cp ../../packages/react/dist/bundle/react-counter.js static/components/react.js
-cp ../../packages/react/dist/bundle/react-counter.css static/components/web-components-samples.css 2>/dev/null || true
-cp ../../packages/lit/dist/bundle/lit-counter.js static/components/lit.js
+cp ../../packages/react/dist/bundle/index.js static/components/react.js
+cp ../../packages/react/dist/bundle/index.css static/components/web-components-samples.css 2>/dev/null || true
+cp ../../packages/lit/dist/bundle/index.js static/components/lit.js
 cp ../../packages/preact/dist/index.js static/components/preact.js
 cp ../../packages/preact/dist/index.css static/components/preact.css 2>/dev/null || true
 cp ../../packages/svelte/dist/bundle/index.js static/components/svelte.js

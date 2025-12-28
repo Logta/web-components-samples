@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
-import './react-counter.tsx';
+import './counter.tsx';
 
 interface ReactCounterProps {
   count: number;

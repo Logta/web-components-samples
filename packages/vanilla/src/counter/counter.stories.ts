@@ -1,14 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
-import './lit-counter.ts';
-import type { LitCounter } from './lit-counter.ts';
+import './counter.ts';
 
-interface LitCounterProps {
+interface MyCounterProps {
   count: number;
 }
 
-const meta: Meta<LitCounterProps> = {
-  title: 'Components/Lit Counter',
-  component: 'lit-counter',
+const meta: Meta<MyCounterProps> = {
+  title: 'Components/Vanilla Counter',
+  component: 'my-counter',
   tags: ['autodocs'],
   argTypes: {
     count: {
@@ -19,14 +18,14 @@ const meta: Meta<LitCounterProps> = {
 };
 
 export default meta;
-type Story = StoryObj<LitCounterProps>;
+type Story = StoryObj<MyCounterProps>;
 
 export const Default: Story = {
   args: {
     count: 0,
   },
-  render: (args: LitCounterProps) => {
-    const element = document.createElement('lit-counter') as LitCounter;
+  render: (args: MyCounterProps) => {
+    const element = document.createElement('my-counter') as HTMLElement & { count: number };
     element.count = args.count;
     return element;
   },
@@ -36,8 +35,8 @@ export const WithInitialValue: Story = {
   args: {
     count: 10,
   },
-  render: (args: LitCounterProps) => {
-    const element = document.createElement('lit-counter') as LitCounter;
+  render: (args: MyCounterProps) => {
+    const element = document.createElement('my-counter') as HTMLElement & { count: number };
     element.count = args.count;
     return element;
   },
@@ -47,8 +46,8 @@ export const NegativeValue: Story = {
   args: {
     count: -5,
   },
-  render: (args: LitCounterProps) => {
-    const element = document.createElement('lit-counter') as LitCounter;
+  render: (args: MyCounterProps) => {
+    const element = document.createElement('my-counter') as HTMLElement & { count: number };
     element.count = args.count;
     return element;
   },

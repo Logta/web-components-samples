@@ -1,6 +1,6 @@
 import { css, html, LitElement, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
-import styles from './lit-counter.css?inline';
+import styles from './counter.css?inline';
 
 export class LitCounter extends LitElement {
   static styles = css`${unsafeCSS(styles)}`;

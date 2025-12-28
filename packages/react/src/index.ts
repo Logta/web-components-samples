@@ -1,9 +1,9 @@
 // カウンターコンポーネント
-import './react-counter';
+import './counter/counter';
 
 // モーダルコンポーネント
-import './react-modal';
+import './modal/modal';
 
 // すべてのコンポーネントをエクスポート
-export { default as ReactCounter } from './react-counter';
-export { default as ReactModal } from './react-modal';
+export { default as ReactCounter } from './counter/counter';
+export { default as ReactModal } from './modal/modal';

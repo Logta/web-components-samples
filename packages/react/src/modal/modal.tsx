@@ -2,8 +2,8 @@ import React, { useState, useEffect, Fragment } from 'react';
 import * as ReactDOMClient from 'react-dom/client';
 import reactToWebComponent from 'react-to-webcomponent';
 import { Dialog, Transition } from '@headlessui/react';
-import styles from './react-modal.module.css';
-import cssText from './react-modal.module.css?inline';
+import styles from './modal.module.css';
+import cssText from './modal.module.css?inline';
 
 interface ModalComponentProps {
   isOpen?: boolean;
