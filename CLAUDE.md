@@ -261,6 +261,13 @@ mise clean              # ビルド成果物削除
 - **原因**: `react-to-webcomponent` はデフォルトで `observedAttributes` を設定しない
 - **詳細**: [docs/troubleshooting/react-webcomponent-props.md](docs/troubleshooting/react-webcomponent-props.md)
 
+#### 問題 8: Dropdown でクリックしても選択肢が表示されない
+
+- **状況**: React と Svelte の Dropdown でボタンをクリックしても選択肢が一瞬表示されて即座に閉じる
+- **解決策**: `event.stopPropagation()` でイベントバブリングを停止
+- **原因**: ボタンクリックイベントが document の click リスナーに伝播し、`handleClickOutside` が発火
+- **詳細**: [docs/troubleshooting/dropdown-event-propagation.md](docs/troubleshooting/dropdown-event-propagation.md)
+
 ### トラブルシューティング文書の追加方法
 
 新しい問題に遭遇した場合、以下のテンプレートに従ってドキュメントを作成してください：

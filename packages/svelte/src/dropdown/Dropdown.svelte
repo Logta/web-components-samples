@@ -18,29 +18,36 @@
 
   $effect(() => {
     // options propの変更を監視し、parsedOptionsを更新
+    let newOptions: DropdownOption[] = [];
+
     if (typeof options === 'string') {
       try {
         const parsed = JSON.parse(options);
-        parsedOptions = Array.isArray(parsed) ? parsed : [];
+        newOptions = Array.isArray(parsed) ? parsed : [];
       } catch (e) {
         console.error('Failed to parse options JSON:', e);
-        parsedOptions = [];
+        newOptions = [];
       }
     } else if (Array.isArray(options)) {
-      parsedOptions = options;
-    } else {
-      parsedOptions = [];
+      newOptions = options;
+    }
+
+    // 内容が実際に変更された場合のみ更新（無限ループ防止）
+    if (JSON.stringify(parsedOptions) !== JSON.stringify(newOptions)) {
+      parsedOptions = newOptions;
     }
   });
 
-  function handleToggle() {
+  function handleToggle(event: MouseEvent) {
     if (!disabled) {
+      event.stopPropagation(); // 外部のクリックイベントリスナーに伝播しない
       isOpen = !isOpen;
     }
   }
 
-  function handleSelect(option: DropdownOption) {
+  function handleSelect(event: MouseEvent, option: DropdownOption) {
     if (!disabled) {
+      event.stopPropagation(); // 外部のクリックイベントリスナーに伝播しない
       selected = option.value;
       isOpen = false;
     }
@@ -85,7 +92,7 @@
       {#each parsedOptions as option}
         <div
           class="dropdown__item {option.value === selected ? 'dropdown__item--selected' : ''}"
-          onclick={() => handleSelect(option)}
+          onclick={(e) => handleSelect(e, option)}
         >
           {option.label}
         </div>

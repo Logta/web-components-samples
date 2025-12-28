@@ -47,6 +47,10 @@
     *   `react-to-webcomponent`でHTML属性がReact propsに渡されない問題の解決。
     *   `reactToWebComponent()`の`props`オプションの設定方法。
 
+8.  **[Dropdownのイベント伝播問題](./troubleshooting/dropdown-event-propagation.md)**
+    *   ReactとSvelteのDropdownでクリックしても選択肢が表示されない問題。
+    *   イベントバブリングと`event.stopPropagation()`の使用方法。
+
 ## 🗂️ New Project Documentation Structure
 
 ```
@@ -61,6 +65,7 @@ web-components-samples/
 │   │   ├── analysis-bundle-size.md
 │   │   └── explanation-react-css-injection.md
 │   └── troubleshooting/
+│       ├── dropdown-event-propagation.md
 │       ├── preact-attribute-type-conversion.md
 │       ├── process-env.md
 │       ├── react-css-not-applied.md
@@ -91,6 +96,7 @@ web-components-samples/
 - **Svelte のモジュール解決エラー** → [トラブルシューティング #5](./troubleshooting/svelte-module-resolution.md)
 - **Preact の数値が文字列連結される** → [トラブルシューティング #6](./troubleshooting/preact-attribute-type-conversion.md)
 - **React の属性が props に渡されない** → [トラブルシューティング #7](./troubleshooting/react-webcomponent-props.md)
+- **Dropdown をクリックしても選択肢が表示されない** → [トラブルシューティング #8](./troubleshooting/dropdown-event-propagation.md)
 
 ### よくある質問
 
@@ -115,6 +121,10 @@ web-components-samples/
 - [#3: React TypeScript エラー](./troubleshooting/react-typescript-error.md)
 - [#6: Preact 属性の型変換問題](./troubleshooting/preact-attribute-type-conversion.md)
 - [#7: React Web Component Props](./troubleshooting/react-webcomponent-props.md)
+
+### イベント処理関連
+
+- [#8: Dropdown イベント伝播問題](./troubleshooting/dropdown-event-propagation.md)
 
 ### スタイリング関連
 

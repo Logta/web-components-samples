@@ -1,13 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import './dropdown.ts';
 
-interface DropdownOption {
-  label: string;
-  value: string;
-}
-
 interface SvelteDropdownProps {
-  options: DropdownOption[];
+  options: string; // JSON string
   selected: string;
   placeholder: string;
   disabled: boolean;
@@ -34,8 +29,8 @@ const meta: Meta<SvelteDropdownProps> = {
   tags: ['autodocs'],
   argTypes: {
     options: {
-      control: 'object', // Change control type to object
-      description: 'Array of options',
+      control: 'text',
+      description: 'JSON string of options array',
     },
     selected: {
       control: 'text',
@@ -57,68 +52,76 @@ type Story = StoryObj<SvelteDropdownProps>;
 
 export const Default: Story = {
   args: {
-    options: fruitOptions,
+    options: JSON.stringify(fruitOptions),
     selected: '',
     placeholder: 'Select a fruit',
     disabled: false,
   },
   render: (args: SvelteDropdownProps) => {
-    const element = document.createElement('svelte-dropdown') as any; // Use 'any' for now due to complex type casting
-    element.options = args.options;
-    element.selected = args.selected;
-    element.placeholder = args.placeholder;
-    element.disabled = args.disabled;
+    const element = document.createElement('svelte-dropdown') as HTMLElement;
+    element.setAttribute('options', args.options);
+    element.setAttribute('selected', args.selected);
+    element.setAttribute('placeholder', args.placeholder);
+    if (args.disabled) {
+      element.setAttribute('disabled', '');
+    }
     return element;
   },
 };
 
 export const WithSelection: Story = {
   args: {
-    options: fruitOptions,
+    options: JSON.stringify(fruitOptions),
     selected: 'banana',
     placeholder: 'Select a fruit',
     disabled: false,
   },
   render: (args: SvelteDropdownProps) => {
-    const element = document.createElement('svelte-dropdown') as any;
-    element.options = args.options;
-    element.selected = args.selected;
-    element.placeholder = args.placeholder;
-    element.disabled = args.disabled;
+    const element = document.createElement('svelte-dropdown') as HTMLElement;
+    element.setAttribute('options', args.options);
+    element.setAttribute('selected', args.selected);
+    element.setAttribute('placeholder', args.placeholder);
+    if (args.disabled) {
+      element.setAttribute('disabled', '');
+    }
     return element;
   },
 };
 
 export const Colors: Story = {
   args: {
-    options: colorOptions,
+    options: JSON.stringify(colorOptions),
     selected: '',
     placeholder: 'Choose a color',
     disabled: false,
   },
   render: (args: SvelteDropdownProps) => {
-    const element = document.createElement('svelte-dropdown') as any;
-    element.options = args.options;
-    element.selected = args.selected;
-    element.placeholder = args.placeholder;
-    element.disabled = args.disabled;
+    const element = document.createElement('svelte-dropdown') as HTMLElement;
+    element.setAttribute('options', args.options);
+    element.setAttribute('selected', args.selected);
+    element.setAttribute('placeholder', args.placeholder);
+    if (args.disabled) {
+      element.setAttribute('disabled', '');
+    }
     return element;
   },
 };
 
 export const Disabled: Story = {
   args: {
-    options: fruitOptions,
+    options: JSON.stringify(fruitOptions),
     selected: 'apple',
     placeholder: 'Select a fruit',
     disabled: true,
   },
   render: (args: SvelteDropdownProps) => {
-    const element = document.createElement('svelte-dropdown') as any;
-    element.options = args.options;
-    element.selected = args.selected;
-    element.placeholder = args.placeholder;
-    element.disabled = args.disabled;
+    const element = document.createElement('svelte-dropdown') as HTMLElement;
+    element.setAttribute('options', args.options);
+    element.setAttribute('selected', args.selected);
+    element.setAttribute('placeholder', args.placeholder);
+    if (args.disabled) {
+      element.setAttribute('disabled', '');
+    }
     return element;
   },
 };
