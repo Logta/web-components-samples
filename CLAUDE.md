@@ -254,6 +254,13 @@ mise clean              # ビルド成果物削除
 - **特徴**: `preact-custom-element`は軽量性重視で自動型変換を行わない
 - **詳細**: [docs/troubleshootings/06-preact-attribute-type-conversion.md](docs/troubleshootings/06-preact-attribute-type-conversion.md)
 
+#### 問題 7: React Web Component で HTML 属性が props に渡されない
+
+- **状況**: Storybook や HTML で属性を設定しても React コンポーネントの props に渡されない
+- **解決策**: `reactToWebComponent()` の第4引数に `{ props: {...} }` オプションを指定
+- **原因**: `react-to-webcomponent` はデフォルトで `observedAttributes` を設定しない
+- **詳細**: [docs/troubleshooting/react-webcomponent-props.md](docs/troubleshooting/react-webcomponent-props.md)
+
 ### トラブルシューティング文書の追加方法
 
 新しい問題に遭遇した場合、以下のテンプレートに従ってドキュメントを作成してください：

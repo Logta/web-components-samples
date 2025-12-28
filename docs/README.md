@@ -43,6 +43,10 @@
 6.  **[Preactの属性型変換](./troubleshooting/preact-attribute-type-conversion.md)**
     *   Preactカウンターで数値が文字列として連結される問題（例: 0 -> 01 -> 011）の修正。
 
+7.  **[ReactのWeb Component Props](./troubleshooting/react-webcomponent-props.md)**
+    *   `react-to-webcomponent`でHTML属性がReact propsに渡されない問題の解決。
+    *   `reactToWebComponent()`の`props`オプションの設定方法。
+
 ## 🗂️ New Project Documentation Structure
 
 ```
@@ -62,6 +66,7 @@ web-components-samples/
 │       ├── react-css-not-applied.md
 │       ├── react-dependencies.md
 │       ├── react-typescript-error.md
+│       ├── react-webcomponent-props.md
 │       └── svelte-module-resolution.md
 └── ... (other project files)
 
@@ -80,11 +85,12 @@ web-components-samples/
 問題の症状に応じて、該当するトラブルシューティングガイドを参照してください：
 
 - **"specifier 'react' は露出していますが..."** → [トラブルシューティング #1](./01-react-dependencies.md)
-- **"process is not defined"** → [トラブルシューティング #2](./02-process-env.md)
-- **TypeScript の型エラー** → [トラブルシューティング #3](./03-react-typescript-error.md)
-- **スタイルが適用されない** → [トラブルシューティング #4](./04-react-css-not-applied.md)
-- **Svelte のモジュール解決エラー** → [トラブルシューティング #5](./05-svelte-internal-module-resolution.md)
-- **Preact の数値が文字列連結される** → [トラブルシューティング #6](./06-preact-attribute-type-conversion.md)
+- **"process is not defined"** → [トラブルシューティング #2](./troubleshooting/process-env.md)
+- **TypeScript の型エラー** → [トラブルシューティング #3](./troubleshooting/react-typescript-error.md)
+- **スタイルが適用されない** → [トラブルシューティング #4](./troubleshooting/react-css-not-applied.md)
+- **Svelte のモジュール解決エラー** → [トラブルシューティング #5](./troubleshooting/svelte-module-resolution.md)
+- **Preact の数値が文字列連結される** → [トラブルシューティング #6](./troubleshooting/preact-attribute-type-conversion.md)
+- **React の属性が props に渡されない** → [トラブルシューティング #7](./troubleshooting/react-webcomponent-props.md)
 
 ### よくある質問
 
@@ -106,8 +112,9 @@ web-components-samples/
 
 ### TypeScript/型エラー関連
 
-- [#3: React TypeScript エラー](./03-react-typescript-error.md)
-- [#6: Preact 属性の型変換問題](./06-preact-attribute-type-conversion.md)
+- [#3: React TypeScript エラー](./troubleshooting/react-typescript-error.md)
+- [#6: Preact 属性の型変換問題](./troubleshooting/preact-attribute-type-conversion.md)
+- [#7: React Web Component Props](./troubleshooting/react-webcomponent-props.md)
 
 ### スタイリング関連
 

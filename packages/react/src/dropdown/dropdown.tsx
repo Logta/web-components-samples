@@ -42,19 +42,27 @@ function ReactDropdown({
 
   // Update parsedOptions when options prop changes
   useEffect(() => {
+    let newOptions: DropdownOption[] = [];
+
     if (typeof options === 'string') {
       try {
         const parsed = JSON.parse(options);
-        setParsedOptions(Array.isArray(parsed) ? parsed : []);
+        newOptions = Array.isArray(parsed) ? parsed : [];
       } catch (e) {
         console.error('Failed to parse options JSON:', e);
-        setParsedOptions([]);
+        newOptions = [];
       }
     } else if (Array.isArray(options)) {
-      setParsedOptions(options);
-    } else {
-      setParsedOptions([]);
+      newOptions = options;
     }
+
+    // 内容が実際に変更された場合のみ更新（無限ループ防止）
+    setParsedOptions(prev => {
+      if (JSON.stringify(prev) === JSON.stringify(newOptions)) {
+        return prev;
+      }
+      return newOptions;
+    });
   }, [options]);
 
   // selected propが変更されたら状態を更新
@@ -83,14 +91,16 @@ function ReactDropdown({
     };
   }, [isOpen]);
 
-  const handleToggle = () => {
+  const handleToggle = (e: React.MouseEvent) => {
     if (!disabled) {
+      e.stopPropagation(); // 外部のクリックイベントリスナーに伝播しない
       setIsOpen(!isOpen);
     }
   };
 
-  const handleSelect = (option: DropdownOption) => {
+  const handleSelect = (e: React.MouseEvent, option: DropdownOption) => {
     if (!disabled) {
+      e.stopPropagation(); // 外部のクリックイベントリスナーに伝播しない
       setSelectedValue(option.value);
       setIsOpen(false);
       if (onChange) {
@@ -122,7 +132,7 @@ function ReactDropdown({
             <div
               key={option.value}
               className={`${styles.item} ${option.value === selectedValue ? styles.itemSelected : ''}`}
-              onClick={() => handleSelect(option)}
+              onClick={(e) => handleSelect(e, option)}
             >
               {option.label}
             </div>
@@ -133,7 +143,19 @@ function ReactDropdown({
   );
 }
 
-const ReactDropdownElement = reactToWebComponent(ReactDropdown, React, ReactDOMClient);
+const ReactDropdownElement = reactToWebComponent(
+  ReactDropdown,
+  React,
+  ReactDOMClient,
+  {
+    props: {
+      options: 'string', // HTML属性として文字列を受け取る
+      selected: 'string',
+      placeholder: 'string',
+      disabled: 'boolean',
+    }
+  }
+);
 
 if (!customElements.get('react-dropdown')) {
   customElements.define('react-dropdown', ReactDropdownElement);
