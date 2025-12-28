@@ -17,9 +17,9 @@ export default defineConfig({
     emptyOutDir: true,
     cssCodeSplit: false,
     lib: {
-      entry: resolve(__dirname, 'src/SvelteCounter.svelte'),
+      entry: resolve(__dirname, 'src/index.ts'),
       formats: ['es'],
-      fileName: 'svelte-counter',
+      fileName: 'index',
     },
     rollupOptions: {
       output: {

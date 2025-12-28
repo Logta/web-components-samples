@@ -22,7 +22,7 @@ cp ../../packages/react/dist/bundle/react-counter.css public/components/web-comp
 cp ../../packages/lit/dist/bundle/lit-counter.js public/components/lit.js
 cp ../../packages/preact/dist/index.js public/components/preact.js
 cp ../../packages/preact/dist/index.css public/components/preact.css 2>/dev/null || true
-cp ../../packages/svelte/dist/bundle/svelte-counter.js public/components/svelte.js
+cp ../../packages/svelte/dist/bundle/index.js public/components/svelte.js
 
 echo ""
 echo "✅ Setup complete! Web Components are now available in public/components/"
