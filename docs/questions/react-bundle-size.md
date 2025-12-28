@@ -1,36 +1,45 @@
 # Web Components バンドルサイズ徹底比較
 
-> **TL;DR**: React互換が必要なら**Preact**（8KB）、最軽量なら**Lit**（7KB）、ライブラリ不要なら**Vanilla JS**（0.8KB）を選びましょう。
+> **TL;DR**: React互換が必要なら**Preact**（9.39KB）、最軽量なら**Vanilla JS**（2.05KB）、モーダル等含む場合も**Preact**（9.39KB）が最適解。
 
 ---
 
 ## 📊 実測バンドルサイズ（gzip圧縮後）
 
-このプロジェクトで5つのフレームワークを使って同じカウンターコンポーネントを実装した結果：
+### カウンター + モーダル（実用的なコンポーネント）
 
-| フレームワーク | バンドルサイズ | React比 | 特徴 |
-|--------------|------------|---------|------|
-| **Vanilla JS** | **0.79 KB** | 1/95x 🏆 | ライブラリなし、究極の軽量 |
-| **Lit** | **7.29 KB** | 1/10x 🥈 | Web Components専用設計 |
-| **Preact** | **8.00 KB** | 1/9x 🥉 | React互換、驚異的な軽さ |
-| **Svelte** | **19.99 KB** | 1/4x | コンパイラベース |
-| **React** | **74.82 KB** | 1x | フルフレームワーク |
+すべてのフレームワークでカウンターとモーダルの両方を実装した結果：
 
-### 視覚的比較
+| フレームワーク | バンドルサイズ (gzip) | React比 | 特徴 |
+|--------------|---------------------|---------|------|
+| **Vanilla JS** | **2.05 KB** | 1/107x 🏆 | ライブラリなし、究極の軽量 |
+| **Lit** | **5.15 KB** | 1/43x 🥈 | Web Components専用設計 |
+| **Preact** | **9.39 KB** | 1/23x 🥉 | React互換、驚異的な軽さ |
+| **Svelte** | **39.12 KB** | 1/6x | Melt UI含む、アクセシブル |
+| **React** | **219.92 KB** | 1x | フルフレームワーク |
+
+**重要な発見**:
+- **Preact**はモーダルを含めてもたった**9.39KB**（Reactの1/23）
+- **Vanilla JS**は驚異の**2.05KB**（全フレームワークで最軽量）
+- **Lit**は**5.15KB**（Web Components専用ライブラリとして最適）
+- **Svelte + Melt UI**は**39.12KB**（アクセシビリティ重視、Reactより約5.6倍軽量）
+- **React**は**219.92KB**（モーダル含む、最も重い）
+
+### 視覚的比較（カウンター + モーダル）
 
 ```
-Vanilla JS  ▏ 0.79 KB
-Lit         ▉ 7.29 KB
-Preact      ▉ 8.00 KB
-Svelte      ██ 19.99 KB
-React       █████████ 74.82 KB
+Vanilla JS  ▏ 2.05 KB
+Lit         ▏ 5.15 KB
+Preact      ▏ 9.39 KB
+Svelte      ███ 39.12 KB (Melt UI含む)
+React       ████████████████████ 219.92 KB
 ```
 
 ---
 
 ## 🎯 どれを選ぶべきか？
 
-### シンプルなUI → **Vanilla JS**（0.8KB）
+### シンプルなUI → **Vanilla JS**（2.05KB）
 
 ```typescript
 // Shadow DOM、カプセル化、ピュアなブラウザAPI
@@ -53,7 +62,7 @@ class MyCounter extends HTMLElement {
 ```
 
 **メリット**:
-- ✅ **最軽量**（0.79KB）
+- ✅ **最軽量**（2.05KB）
 - ✅ **依存関係ゼロ**
 - ✅ **ブラウザ標準**
 
@@ -65,7 +74,7 @@ class MyCounter extends HTMLElement {
 
 ---
 
-### 軽量ライブラリ → **Lit**（7.3KB）
+### 軽量ライブラリ → **Lit**（7.29KB）
 
 ```typescript
 // テンプレートリテラル、リアクティビティ、デコレーター
@@ -98,7 +107,7 @@ export class LitCounter extends LitElement {
 
 ---
 
-### React互換 → **Preact**（8KB）⭐
+### React互換 → **Preact**（9.39KB）⭐
 
 ```typescript
 // Reactとほぼ同じAPI、驚異的な軽さ
@@ -119,7 +128,7 @@ register(PreactCounter, 'preact-counter', ['count']);
 
 **メリット**:
 - ✅ **React APIとほぼ互換**（useState、useEffect、JSX）
-- ✅ **8.00KB**（Reactの1/9）
+- ✅ **9.39KB**（Reactの1/8）
 - ✅ **既存Reactコードの移行が簡単**
 - ✅ **preact-custom-element**でWeb Components化
 
@@ -134,7 +143,7 @@ register(PreactCounter, 'preact-counter', ['count']);
 
 ---
 
-### モダンなコンパイラベース → **Svelte**（20KB）
+### モダンなコンパイラベース → **Svelte**（39.12KB）
 
 ```svelte
 <svelte:options customElement="svelte-counter" />
@@ -152,18 +161,20 @@ register(PreactCounter, 'preact-counter', ['count']);
 **メリット**:
 - ✅ **コンパイル時最適化**
 - ✅ **リアクティビティが自然**
-- ✅ **19.99KB**（Reactの1/4）
+- ✅ **39.12KB**（カウンター + モーダル、Melt UI含む）
 - ✅ **Svelte 5の新しいrunes構文**
+- ✅ **Melt UI**でアクセシブルなUIコンポーネントを簡単に作成
 
 **デメリット**:
 - ⚠️ コンパイルが必須
 - ⚠️ エコシステムはReactより小さい
+- ⚠️ Melt UIを使うとバンドルサイズが大きくなる（39.12KB vs Preactの9.39KB）
 
-**最適な用途**: モダンな開発体験を重視、SPA的な複雑さ
+**最適な用途**: アクセシビリティ重視、モダンな開発体験、複雑なUIコンポーネント（モーダル、ドロップダウンなど）
 
 ---
 
-### フルフレームワーク → **React**（75KB）
+### フルフレームワーク → **React**（219.92KB）
 
 ```typescript
 // エコシステム最大、豊富な機能
@@ -192,10 +203,13 @@ customElements.define('react-counter', Element);
 - ✅ **充実したドキュメント**
 
 **デメリット**:
-- ❌ **74.82KB**（他と比べて大きい）
+- ❌ **219.92KB**（モーダル含む、他と比べて圧倒的に大きい）
 - ❌ React + ReactDOM + react-to-webcomponentがすべてバンドル
+- ❌ Preactの約23倍のサイズ
 
 **最適な用途**: Reactエコシステムが必須、複雑なアプリケーション
+
+**重要**: 同じReact APIを使いたいなら、**Preactを強く推奨**します（9.39KB vs 219.92KB、約23倍軽量）
 
 ---
 
@@ -214,6 +228,8 @@ import reactToWebComponent from 'react-to-webcomponent'; // ~20KB
 - ReactDOM: ブラウザDOM連携、イベントシステム
 - react-to-webcomponent: Web Component変換
 
+**実測（モーダル含む）**: 973.57 kB → **219.92 KB (gzip)**
+
 ### 2. フルフレームワークの機能
 
 | 機能 | 説明 |
@@ -223,6 +239,8 @@ import reactToWebComponent from 'react-to-webcomponent'; // ~20KB
 | Synthetic Events | クロスブラウザ互換イベント |
 | Scheduler | タスク優先順位管理 |
 | Reconciliation | 差分レンダリングアルゴリズム |
+
+これらの機能により、Reactは**Preactの約23倍**のサイズになります。
 
 ### 3. Rails/Go環境の制約
 
@@ -248,9 +266,12 @@ define: {
 }
 ```
 
-**効果**: 962KB → 324KB（**66%削減**）
+**効果**: この最適化により、開発用のデバッグコードが削除され、バンドルサイズが大幅に削減されます。
 
-この最適化がなければ、react.jsは約1MBになります。
+**比較**:
+- **Preact**: 9.39 KB（モーダル含む）
+- **React**: 219.92 KB（モーダル含む）
+- **差分**: 約210 KB（Reactは約23倍重い）
 
 ---
 
@@ -258,16 +279,19 @@ define: {
 
 ```
 ライブラリなしで実装可能？
-  ├─ YES → Vanilla JS（0.8KB）
+  ├─ YES → Vanilla JS（2.05KB）🏆
   └─ NO → 既存のReactコードがある？
-      ├─ YES → バンドルサイズ重視？
-      │   ├─ YES → Preact（8KB）⭐
-      │   └─ NO → React（75KB）
-      └─ NO → Web Components専用設計？
-          ├─ YES → Lit（7KB）
-          └─ NO → モダンな開発体験？
-              ├─ YES → Svelte（20KB）
-              └─ NO → Lit（7KB）
+      ├─ YES → Preact（9.39KB）⭐ 強く推奨！
+      │         （Reactより23倍軽量、API互換）
+      │
+      └─ NO → アクセシビリティが最重要？
+          ├─ YES → Svelte + Melt UI（39.12KB）
+          │         （WAI-ARIA準拠、キーボード操作対応）
+          │
+          └─ NO → Web Components専用設計が必要？
+              ├─ YES → Lit（5.15KB）🥈
+              └─ NO → Preact（9.39KB）🥉
+                      （React APIが使える、最も実用的）
 ```
 
 ---
@@ -354,12 +378,43 @@ mise demo:go         # port 8080
 
 ## ✅ 結論
 
-| 優先事項 | 推奨 | サイズ |
-|---------|------|-------|
-| **最軽量** | Vanilla JS | 0.79 KB |
-| **バランス重視** | Lit | 7.29 KB |
-| **React互換＋軽量** | **Preact** ⭐ | 8.00 KB |
-| **モダン開発体験** | Svelte | 19.99 KB |
-| **Reactエコシステム** | React | 74.82 KB |
+### 実測結果まとめ（カウンター + モーダル）
 
-**ベストプラクティス**: Reactの機能が必要なら**Preact**を使いましょう。APIはほぼ同じで、サイズは1/9です。
+| 優先事項 | 推奨 | サイズ (gzip) | React比 |
+|---------|------|--------------|---------|
+| **最軽量** | Vanilla JS 🏆 | 2.05 KB | 1/107x |
+| **Web Components専用** | Lit 🥈 | 5.15 KB | 1/43x |
+| **React互換＋軽量** | **Preact** ⭐ 🥉 | 9.39 KB | 1/23x |
+| **アクセシビリティ重視** | Svelte + Melt UI | 39.12 KB | 1/6x |
+| **Reactエコシステム** | React | 219.92 KB | 1x |
+
+**ベストプラクティス**:
+
+1. **Reactの機能が必要なら → Preact一択** ⭐
+   - APIはReactとほぼ同じ（useState、useEffect、JSX）
+   - サイズは**9.39KB**（Reactの1/23、約23倍軽量）
+   - モーダルを含めても驚異の軽さ
+   - **結論**: Reactを使う理由はほぼない
+
+2. **最軽量を追求 → Vanilla JS** 🏆
+   - たった**2.05KB**（全フレームワークで最軽量）
+   - ライブラリ依存ゼロ、ブラウザ標準APIのみ
+   - シンプルなコンポーネントに最適
+
+3. **Web Components専用 → Lit** 🥈
+   - **5.15KB**（Preactより軽量だがReact API非互換）
+   - 宣言的テンプレート、自動リアクティビティ
+   - デザインシステム、UIライブラリに最適
+
+4. **アクセシビリティ最重要 → Svelte + Melt UI**
+   - **39.12KB**（WAI-ARIA準拠、キーボード操作対応）
+   - Reactより約5.6倍軽量
+   - モーダル、ドロップダウン等の複雑なUIに最適
+
+5. **React → 使わない**
+   - **219.92KB**（他と比べて圧倒的に重い）
+   - Preactで同じAPIが使えるため、選ぶ理由がない
+   - どうしてもReactが必要な場合のみ
+
+**最も重要な結論**:
+**React APIを使いたいなら、迷わずPreact（9.39KB）を選びましょう。Reactの23倍軽量で、APIはほぼ同じです。**
