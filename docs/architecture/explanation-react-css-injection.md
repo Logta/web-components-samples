@@ -344,6 +344,6 @@ useEffect(() => {
 
 ## 関連ドキュメント
 
-- [CLAUDE.md](../CLAUDE.md#4-react-web-componentのcss注入) - プロジェクトガイド
-- [.claude/rules/packages.md](../.claude/rules/packages.md#packagesreact) - パッケージ仕様
-- [.claude/rules/demo.md](../.claude/rules/demo.md) - デモ仕様
+- [GEMINI.md](../GEMINI.md#4-react-web-componentのcss注入) - プロジェクトガイド
+- [.gemini/rules/packages.md](../.gemini/rules/packages.md#packagesreact) - パッケージ仕様
+- [.gemini/rules/demo.md](../.gemini/rules/demo.md) - デモ仕様

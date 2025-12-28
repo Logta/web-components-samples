@@ -1,4 +1,4 @@
-# トラブルシューティング #6: Preact Web Componentの属性型変換問題
+# Preact Web Componentの属性型変換問題
 
 ## 問題の概要
 
@@ -267,6 +267,6 @@ function CounterComponent({ count: initialCount = 0 }: CounterComponentProps) {
 
 ## 関連ドキュメント
 
-- [CLAUDE.md - 重要な設計判断と制約](../CLAUDE.md)
-- [packages/README.md - パッケージ仕様](../.claude/rules/packages.md)
+- [GEMINI.md - 重要な設計判断と制約](../GEMINI.md)
+- [packages/README.md - パッケージ仕様](../.gemini/rules/packages.md)
 - [preact-custom-element公式ドキュメント](https://github.com/preactjs/preact-custom-element)

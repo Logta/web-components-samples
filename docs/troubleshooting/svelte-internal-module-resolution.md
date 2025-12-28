@@ -1,4 +1,4 @@
-# トラブルシューティング #5: Svelte内部モジュール解決エラー
+# Svelte内部モジュール解決エラー
 
 ## 問題の概要
 
@@ -197,7 +197,7 @@ demo/rails/public/components/  （または demo/go/static/components/）
 
 ## 関連ドキュメント
 
-- [packages.md](../.claude/rules/packages.md) - Svelteパッケージの仕様
-- [demo.md](../.claude/rules/demo.md) - Rails/Go demoの仕様
+- [packages.md](../.gemini/rules/packages.md) - Svelteパッケージの仕様
+- [demo.md](../.gemini/rules/demo.md) - Rails/Go demoの仕様
 - [Svelte 5 Internal Module Resolution Issue](https://github.com/sveltejs/svelte/issues/8869)
 - [Vite Library Mode with Svelte 5](https://github.com/vitejs/vite/discussions/6198)

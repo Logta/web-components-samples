@@ -139,7 +139,7 @@ register(PreactCounter, 'preact-counter', ['count']);
 **最適な用途**: Reactエコシステムを活用したい、バンドルサイズも重視
 
 **注意**: 属性の型変換は手動で行う必要があります
-→ [トラブルシューティング #6: Preact属性の型変換](../troubleshootings/06-preact-attribute-type-conversion.md)
+→ [トラブルシューティング #6: Preact属性の型変換](../troubleshooting/preact-attribute-type-conversion.md)
 
 ---
 
@@ -366,13 +366,13 @@ mise demo:go         # port 8080
 ## 🔗 関連ドキュメント
 
 ### トラブルシューティング
-- [#1: React依存関係の解決](../troubleshootings/01-react-dependencies.md)
-- [#2: process.env未定義エラー](../troubleshootings/02-process-env.md)
-- [#6: Preact属性の型変換問題](../troubleshootings/06-preact-attribute-type-conversion.md)
+- [#1: React依存関係の解決](../troubleshooting/react-dependencies.md)
+- [#2: process.env未定義エラー](../troubleshooting/process-env.md)
+- [#6: Preact属性の型変換問題](../troubleshooting/preact-attribute-type-conversion.md)
 
 ### 仕様
-- [パッケージ仕様](../../.claude/rules/packages.md)
-- [デモ仕様](../../.claude/rules/demo.md)
+- [パッケージ仕様](../../.gemini/rules/packages.md)
+- [デモ仕様](../../.gemini/rules/demo.md)
 
 ---
 

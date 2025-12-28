@@ -1,4 +1,4 @@
-# トラブルシューティング #3: React Web Component の TypeScript エラー
+# React Web Component の TypeScript エラー
 
 ## 問題の概要
 
@@ -246,6 +246,6 @@ class ReactWebComponent extends HTMLElement {
 
 ## 関連ドキュメント
 
-- [CLAUDE.md](../CLAUDE.md#1-react-web-component-実装)
-- [packages/react仕様](../.claude/rules/packages.md#packagesreact)
+- [GEMINI.md](../GEMINI.md#1-react-web-component-実装)
+- [packages/react仕様](../.gemini/rules/packages.md#packagesreact)
 - [react-to-webcomponent公式ドキュメント](https://github.com/bitovi/react-to-webcomponent)

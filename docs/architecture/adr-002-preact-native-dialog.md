@@ -278,7 +278,7 @@ export default ModalComponent;
 
 この経緯を実装方針ドキュメントに反映しました：
 
-**[docs/implementation-policy/modal-components.md](../implementation-policy/modal-components.md)**
+**[ADR-001: Modal Implementation Strategy](./adr-001-modal-implementation.md)**
 
 ```markdown
 ## 実装方針サマリー
@@ -341,9 +341,9 @@ export default ModalComponent;
 
 ## 関連ドキュメント
 
-- [モーダルコンポーネント実装方針](../implementation-policy/modal-components.md)
+- [ADR-001: Modal Implementation Strategy](./adr-001-modal-implementation.md)
 - [Preact Modal実装コード](../../packages/preact/src/preact-modal.tsx)
-- [トラブルシューティング：Preact属性型変換](../troubleshooting-06-preact-attribute-type-conversion.md)
+- [Preact Attribute Type Conversion](../troubleshooting/preact-attribute-type-conversion.md)
 
 ---
 

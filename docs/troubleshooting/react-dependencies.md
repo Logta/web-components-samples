@@ -1,4 +1,4 @@
-# トラブルシューティング #1: "specifier 'react' は露出していますが、どこにも再マップされていません"
+# "specifier 'react' は露出していますが、どこにも再マップされていません"
 
 ## 問題の概要
 
@@ -174,4 +174,4 @@ Rails/Go demo（gzip圧縮後）:
 ## 関連ドキュメント
 
 - [トラブルシューティング #2: "process is not defined"](./troubleshooting-02-process-env.md)
-- [CLAUDE.md](../CLAUDE.md#2-railsgo環境のバンドル戦略)
+- [GEMINI.md](../GEMINI.md#2-railsgo環境のバンドル戦略)

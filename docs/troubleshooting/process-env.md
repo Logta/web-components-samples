@@ -1,4 +1,4 @@
-# トラブルシューティング #2: "process is not defined"
+# "process is not defined"
 
 ## 問題の概要
 
@@ -250,5 +250,5 @@ define: {
 
 ## 関連ドキュメント
 
-- [トラブルシューティング #1: React依存関係の解決](./troubleshooting-01-react-dependencies.md)
-- [CLAUDE.md](../CLAUDE.md#2-railsgo環境のバンドル戦略)
+- [トラブルシューティング #1: React依存関係の解決](./react-dependencies.md)
+- [GEMINI.md](../GEMINI.md#2-railsgo環境のバンドル戦略)

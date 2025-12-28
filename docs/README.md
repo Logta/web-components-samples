@@ -1,89 +1,70 @@
 # Web Components Samples - ドキュメント
 
-このディレクトリには、プロジェクトの技術的な詳細やトラブルシューティングガイドが含まれています。
+このディレクトリには、プロジェクトの技術的な詳細、設計上の決定、トラブルシューティングガイドが含まれています。
 
 ## 📚 目次
 
-### トラブルシューティング
+### 🏛️ 設計とアーキテクチャ
 
-プロジェクト開発中に遭遇した問題と解決策を詳しく解説しています。
+アーキテクチャ、設計上の決定、および技術的な詳細を説明するドキュメントです。
 
-1. **[トラブルシューティング #1: React 依存関係の解決](./01-react-dependencies.md)**
+1.  **[ADR-001: モーダル実装戦略](./architecture/adr-001-modal-implementation.md)**
+    *   さまざまなフレームワークでモーダルコンポーネントを実装するための意思決定プロセス。
+    *   Headless UIとネイティブ`<dialog>`の比較。
 
-   - 問題: "specifier 'react' は露出していますが、どこにも再マップされていません"
-   - Rails/Go 環境で React の依存関係が解決できない問題
-   - バンドル戦略とビルド設定の解説
+2.  **[ADR-002: Preactのネイティブダイアログへの移行](./architecture/adr-002-preact-native-dialog.md)**
+    *   型の問題により、Preactのモーダル実装がHeadless UIからネイティブ`<dialog>`要素に変更された理由。
 
-2. **[トラブルシューティング #2: process.env 未定義エラー](./02-process-env.md)**
+3.  **[分析: バンドルサイズの比較](./architecture/analysis-bundle-size.md)**
+    *   React、Lit、Svelte、Preact、およびVanilla JSでビルドされたWeb Componentsのバンドルサイズの詳細な比較。
 
-   - 問題: "process is not defined"
-   - ブラウザ環境で`process.env`が存在しない問題
-   - Vite の`define`オプションでビルド時に置換
-   - バンドルサイズの大幅削減（66%削減）
+4.  **[解説: ReactのCSS注入](./architecture/explanation-react-css-injection.md)**
+    *   ReactベースのWeb Componentが、Shadow DOMを使用する他のフレームワークと比較して、なぜCSS注入に特別なメカニズムを必要とするのかについての説明。
 
-3. **[トラブルシューティング #3: React TypeScript エラー](./03-react-typescript-error.md)**
+### 🐛 トラブルシューティング
 
-   - 問題: `reactToWebComponent()`の第 3 引数の型エラー
-   - React 19 での API 変更への対応
-   - `react-dom/client`の正しいインポート方法
+開発中に遭遇した一般的な問題の解決策。
 
-4. **[トラブルシューティング #4: React CSS が適用されない](./04-react-css-not-applied.md)**
+1.  **[Reactの依存関係解決](./troubleshooting/react-dependencies.md)**
+    *   Rails/Go環境で 'react' 指定子が再マップされない問題の解決。
 
-   - 問題: React Web Component の CSS Modules スタイルが表示されない
-   - Shadow DOM の有無による違い
-   - `?inline` import と実行時 CSS 注入の実装
+2.  **[未定義の `process.env`](./troubleshooting/process-env.md)**
+    *   ブラウザ環境で "process is not defined" エラーをViteの `define` オプションを使用して修正。
 
-5. **[トラブルシューティング #5: Svelte 内部モジュール解決エラー](./05-svelte-internal-module-resolution.md)**
+3.  **[ReactのTypeScriptエラー](./troubleshooting/react-typescript-error.md)**
+    *   React 19のAPI変更による `reactToWebComponent()` の第三引数の型エラーの処理。
 
-   - 問題: Svelte の内部モジュール解決に関するエラー
-   - ビルド設定とバンドルの問題
+4.  **[ReactのCSSが適用されない](./troubleshooting/react-css-not-applied.md)**
+    *   React Web ComponentでCSS Modulesのスタイルが表示されない理由と、`?inline` インポートでの修正方法。
 
-6. **[トラブルシューティング #6: Preact 属性の型変換問題](./06-preact-attribute-type-conversion.md)**
-   - 問題: Preact カウンターで数値が文字列連結される（0→01→011）
-   - `preact-custom-element`は自動型変換を行わない特徴
-   - `Number()`による明示的な型変換の実装
+5.  **[Svelteのモジュール解決](./troubleshooting/svelte-module-resolution.md)**
+    *   ビルドプロセス中のSvelteの内部モジュール解決に関連するエラーの解決。
 
-### 技術解説
+6.  **[Preactの属性型変換](./troubleshooting/preact-attribute-type-conversion.md)**
+    *   Preactカウンターで数値が文字列として連結される問題（例: 0 -> 01 -> 011）の修正。
 
-7. **[なぜ React Web Component だけ CSS 注入が必要なのか？](./why-react-css-injection.md)**
-   - Vanilla JS、Lit、React の 3 つのアプローチの比較
-   - Shadow DOM の仕組みと利点
-   - Vite のライブラリモードでの CSS 処理
-   - 解決策の詳細な実装方法
-
-### Q&A
-
-よくある質問と回答をまとめています。
-
-8. **[なぜ React Web Component のファイルサイズが大きいのか？](../questions/react-bundle-size.md)**
-   - React、Lit、Vanilla JS のバンドルサイズ比較
-   - React が大きい理由（React 本体 + ReactDOM + react-to-webcomponent）
-   - サイズを削減する方法（Preact、CDN、Code Splitting）
-   - ユースケース別の推奨実装
-
-## 🗂️ プロジェクト全体のドキュメント構成
+## 🗂️ New Project Documentation Structure
 
 ```
 web-components-samples/
-├── README.md                        # プロジェクト概要（日本語）
-├── README.en.md                     # プロジェクト概要（英語）
-├── CLAUDE.md                        # Claude Code用プロジェクトガイド
-├── .claude/
-│   └── rules/
-│       ├── packages.md              # パッケージの詳細仕様
-│       └── demo.md                  # デモアプリケーションの詳細仕様
-└── docs/                            # 技術ドキュメント（このディレクトリ）
-    ├── troubleshootings/
-    │   ├── README.md                # このファイル
-    │   ├── 01-react-dependencies.md
-    │   ├── 02-process-env.md
-    │   ├── 03-react-typescript-error.md
-    │   ├── 04-react-css-not-applied.md
-    │   ├── 05-svelte-internal-module-resolution.md
-    │   ├── 06-preact-attribute-type-conversion.md
-    │   └── why-react-css-injection.md
-    └── questions/
-        └── react-bundle-size.md     # Q&A: ファイルサイズについて
+├── README.md
+├── GEMINI.md
+├── docs/
+│   ├── README.md  (this file)
+│   ├── architecture/
+│   │   ├── adr-001-modal-implementation.md
+│   │   ├── adr-002-preact-native-dialog.md
+│   │   ├── analysis-bundle-size.md
+│   │   └── explanation-react-css-injection.md
+│   └── troubleshooting/
+│       ├── preact-attribute-type-conversion.md
+│       ├── process-env.md
+│       ├── react-css-not-applied.md
+│       ├── react-dependencies.md
+│       ├── react-typescript-error.md
+│       └── svelte-module-resolution.md
+└── ... (other project files)
+
 ```
 
 ## 📖 推奨される読む順番
@@ -91,7 +72,7 @@ web-components-samples/
 ### 初めての方
 
 1. [プロジェクト README](../README.md) - プロジェクト全体の概要
-2. [CLAUDE.md](../CLAUDE.md) - 重要な設計判断と制約
+2. [GEMINI.md](../GEMINI.md) - 重要な設計判断と制約
 3. [なぜ React Web Component だけ CSS 注入が必要なのか？](./why-react-css-injection.md) - 技術的背景
 
 ### 問題に遭遇した方
@@ -111,8 +92,8 @@ web-components-samples/
 
 ### より深く理解したい方
 
-1. [.claude/rules/packages.md](../.claude/rules/packages.md) - パッケージの詳細仕様
-2. [.claude/rules/demo.md](../.claude/rules/demo.md) - デモアプリケーションの詳細仕様
+1. [.gemini/rules/packages.md](../.gemini/rules/packages.md) - パッケージの詳細仕様
+2. [.gemini/rules/demo.md](../.gemini/rules/demo.md) - デモアプリケーションの詳細仕様
 3. 各トラブルシューティングガイドの「根本原因」セクション
 
 ## 🔍 トラブルシューティングの分類
@@ -187,9 +168,9 @@ Rails/Go demo（gzip 圧縮後）:
 ### プロジェクト内ドキュメント
 
 - [プロジェクト README](../README.md)
-- [CLAUDE.md](../CLAUDE.md)
-- [パッケージ仕様](../.claude/rules/packages.md)
-- [デモ仕様](../.claude/rules/demo.md)
+- [GEMINI.md](../GEMINI.md)
+- [パッケージ仕様](../.gemini/rules/packages.md)
+- [デモ仕様](../.gemini/rules/demo.md)
 
 ## ❓ 質問やフィードバック
 

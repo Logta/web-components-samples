@@ -1,4 +1,4 @@
-# トラブルシューティング #4: React Web Component のスタイルが適用されない
+# React Web Component のスタイルが適用されない
 
 ## 問題の概要
 
@@ -415,6 +415,6 @@ function CounterComponent() {
 
 ## 関連ドキュメント
 
-- [なぜReact Web ComponentだけCSS注入が必要なのか？](./why-react-css-injection.md)
-- [CLAUDE.md](../CLAUDE.md#4-react-web-componentのcss注入)
-- [packages/react仕様](../.claude/rules/packages.md#packagesreact)
+- [なぜReact Web ComponentだけCSS注入が必要なのか？](../architecture/explanation-react-css-injection.md)
+- [GEMINI.md](../GEMINI.md#4-react-web-componentのcss注入)
+- [packages/react仕様](../.gemini/rules/packages.md#packagesreact)
