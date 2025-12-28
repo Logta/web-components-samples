@@ -48,7 +48,7 @@ export const Default: Story = {
 export const CustomTitle: Story = {
   args: {
     isOpen: false,
-    title: 'Custom Modal Title',
+    title: "Custom Modal Title",
     description: 'This is a modal dialog built with Headless UI for React.',
   },
   render: (args: ReactModalProps) => {
