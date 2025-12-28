@@ -37,6 +37,20 @@ function App() {
         <svelte-modal></svelte-modal>
       </div>
 
+      <h2>Dropdown Components</h2>
+      <p>各フレームワークで実装されたドロップダウンコンポーネントのデモです。</p>
+
+      <div className="dropdowns-grid">
+        <react-dropdown
+          options='[{"label": "React", "value": "react"}, {"label": "Svelte", "value": "svelte"}, {"label": "Vue", "value": "vue"}]'
+          placeholder="React Dropdown"
+        ></react-dropdown>
+        <svelte-dropdown
+          options='[{"label": "Svelte", "value": "svelte"}, {"label": "React", "value": "react"}, {"label": "Solid", "value": "solid"}]'
+          placeholder="Svelte Dropdown"
+        ></svelte-dropdown>
+      </div>
+
       <div className="info">
         <h3>使い方</h3>
         <p>各カウンターの + / - ボタンをクリックして、カウンターを操作できます。</p>

@@ -10,7 +10,7 @@ export interface DropdownOption {
 }
 
 interface DropdownProps {
-  options?: string; // JSON string
+  options?: string | DropdownOption[]; // JSON string or array
   selected?: string;
   placeholder?: string;
   disabled?: boolean;
@@ -18,7 +18,7 @@ interface DropdownProps {
 }
 
 function ReactDropdown({
-  options: optionsJson = '[]',
+  options = [],
   selected = '',
   placeholder = 'Select an option',
   disabled = false,
@@ -40,35 +40,45 @@ function ReactDropdown({
     }
   }, []);
 
-  // Parse options JSON
+  // Update parsedOptions when options prop changes
   useEffect(() => {
-    try {
-      const opts = typeof optionsJson === 'string' ? JSON.parse(optionsJson) : optionsJson;
-      setParsedOptions(opts);
-    } catch (e) {
-      console.error('Invalid options JSON:', e);
+    if (typeof options === 'string') {
+      try {
+        const parsed = JSON.parse(options);
+        setParsedOptions(Array.isArray(parsed) ? parsed : []);
+      } catch (e) {
+        console.error('Failed to parse options JSON:', e);
+        setParsedOptions([]);
+      }
+    } else if (Array.isArray(options)) {
+      setParsedOptions(options);
+    } else {
       setParsedOptions([]);
     }
-  }, [optionsJson]);
+  }, [options]);
 
-  // Update selected value when prop changes
+  // selected propが変更されたら状態を更新
   useEffect(() => {
     setSelectedValue(selected);
   }, [selected]);
 
   // Handle click outside
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
 
-    if (isOpen) {
+    // 次のフレームでイベントリスナーを追加（現在のクリックイベントが処理された後）
+    const timeoutId = setTimeout(() => {
       document.addEventListener('click', handleClickOutside);
-    }
+    }, 0);
 
     return () => {
+      clearTimeout(timeoutId);
       document.removeEventListener('click', handleClickOutside);
     };
   }, [isOpen]);

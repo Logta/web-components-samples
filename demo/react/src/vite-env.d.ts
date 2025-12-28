@@ -43,6 +43,14 @@ declare namespace React {
         React.HTMLAttributes<HTMLElement> & { isOpen?: boolean; title?: string; description?: string },
         HTMLElement
       >;
+      'react-dropdown': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { options?: string; selected?: string; placeholder?: string; disabled?: boolean; },
+        HTMLElement
+      >;
+      'svelte-dropdown': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { options?: string; selected?: string; placeholder?: string; disabled?: boolean; },
+        HTMLElement
+      >;
     }
   }
 }

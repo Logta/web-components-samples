@@ -7,7 +7,7 @@
   }
 
   let {
-    options = $bindable('[]'),
+    options = $bindable<string | DropdownOption[]>([]),
     selected = $bindable(''),
     placeholder = $bindable('Select an option'),
     disabled = $bindable(false)
@@ -17,19 +17,21 @@
   let parsedOptions = $state<DropdownOption[]>([]);
 
   $effect(() => {
-    try {
-      parsedOptions = JSON.parse(options);
-    } catch (e) {
+    // options propの変更を監視し、parsedOptionsを更新
+    if (typeof options === 'string') {
+      try {
+        const parsed = JSON.parse(options);
+        parsedOptions = Array.isArray(parsed) ? parsed : [];
+      } catch (e) {
+        console.error('Failed to parse options JSON:', e);
+        parsedOptions = [];
+      }
+    } else if (Array.isArray(options)) {
+      parsedOptions = options;
+    } else {
       parsedOptions = [];
     }
   });
-
-  function handleClickOutside(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.dropdown')) {
-      isOpen = false;
-    }
-  }
 
   function handleToggle() {
     if (!disabled) {
@@ -48,9 +50,16 @@
     const selectedOpt = parsedOptions.find(opt => opt.value === selected);
     return selectedOpt ? selectedOpt.label : placeholder;
   }
-
+  
+  // 外側クリックでドロップダウンを閉じる処理
+  let dropdownElement: HTMLDivElement;
   $effect(() => {
     if (isOpen) {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (dropdownElement && !dropdownElement.contains(event.target as Node)) {
+          isOpen = false;
+        }
+      };
       document.addEventListener('click', handleClickOutside);
       return () => {
         document.removeEventListener('click', handleClickOutside);
@@ -59,7 +68,7 @@
   });
 </script>
 
-<div class="dropdown">
+<div class="dropdown" bind:this={dropdownElement}>
   <button
     class="dropdown__button {disabled ? 'dropdown__button--disabled' : ''}"
     onclick={handleToggle}

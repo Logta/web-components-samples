@@ -1,5 +1,6 @@
 import type { StorybookConfig } from '@storybook/web-components-vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
+import react from '@vitejs/plugin-react';
 import type { UserConfig } from 'vite';
 
 const config: StorybookConfig = {
@@ -13,6 +14,7 @@ const config: StorybookConfig = {
     return {
       ...config,
       plugins: [
+        react(),
         ...(config.plugins || []),
         svelte({
           compilerOptions: {
