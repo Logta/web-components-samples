@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import * as ReactDOMClient from 'react-dom/client';
-import reactToWebComponent from 'react-to-webcomponent';
+import r2wc from '@r2wc/react-to-web-component';
 import styles from './dropdown.module.css';
 import cssText from './dropdown.module.css?inline';
 
@@ -10,15 +9,15 @@ export interface DropdownOption {
 }
 
 interface DropdownProps {
-  options?: string | DropdownOption[]; // JSON string or array
+  options?: string; // JSON string
   selected?: string;
   placeholder?: string;
-  disabled?: boolean;
+  disabled?: boolean; // @r2wc handles boolean attributes
   onChange?: (value: string, option: DropdownOption) => void;
 }
 
 function ReactDropdown({
-  options = [],
+  options = '[]',
   selected = '',
   placeholder = 'Select an option',
   disabled = false,
@@ -27,7 +26,36 @@ function ReactDropdown({
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(selected);
   const [parsedOptions, setParsedOptions] = useState<DropdownOption[]>([]);
+  const [isDisabled, setIsDisabled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // @r2wc が disabled 属性を正しく渡さないため、直接属性をチェック
+  useEffect(() => {
+    // Web Component 要素を取得
+    const container = dropdownRef.current?.closest('react-dropdown');
+    if (!container) return;
+
+    // 初期状態をチェック
+    setIsDisabled(container.hasAttribute('disabled'));
+
+    // 属性の変更を監視
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'disabled') {
+          setIsDisabled(container.hasAttribute('disabled'));
+        }
+      });
+    });
+
+    observer.observe(container, { attributes: true });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // デバッグ用ログ
+  useEffect(() => {
+    console.log('ReactDropdown disabled state:', { disabled, isDisabled });
+  }, [disabled, isDisabled]);
 
   // CSSをグローバルに注入（一度だけ）
   useEffect(() => {
@@ -44,16 +72,12 @@ function ReactDropdown({
   useEffect(() => {
     let newOptions: DropdownOption[] = [];
 
-    if (typeof options === 'string') {
-      try {
-        const parsed = JSON.parse(options);
-        newOptions = Array.isArray(parsed) ? parsed : [];
-      } catch (e) {
-        console.error('Failed to parse options JSON:', e);
-        newOptions = [];
-      }
-    } else if (Array.isArray(options)) {
-      newOptions = options;
+    try {
+      const parsed = JSON.parse(options);
+      newOptions = Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      console.error('Failed to parse options JSON:', e);
+      newOptions = [];
     }
 
     // 内容が実際に変更された場合のみ更新（無限ループ防止）
@@ -69,6 +93,11 @@ function ReactDropdown({
   useEffect(() => {
     setSelectedValue(selected);
   }, [selected]);
+
+  // disabled propの変更を監視（デバッグ用）
+  useEffect(() => {
+    console.log('disabled prop changed:', { disabled, isDisabled });
+  }, [disabled, isDisabled]);
 
   // Handle click outside
   useEffect(() => {
@@ -92,14 +121,14 @@ function ReactDropdown({
   }, [isOpen]);
 
   const handleToggle = (e: React.MouseEvent) => {
-    if (!disabled) {
+    if (!isDisabled) {
       e.stopPropagation(); // 外部のクリックイベントリスナーに伝播しない
       setIsOpen(!isOpen);
     }
   };
 
   const handleSelect = (e: React.MouseEvent, option: DropdownOption) => {
-    if (!disabled) {
+    if (!isDisabled) {
       e.stopPropagation(); // 外部のクリックイベントリスナーに伝播しない
       setSelectedValue(option.value);
       setIsOpen(false);
@@ -116,9 +145,9 @@ function ReactDropdown({
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
       <button
-        className={`${styles.button} ${disabled ? styles.buttonDisabled : ''}`}
+        className={`${styles.button} ${isDisabled ? styles.buttonDisabled : ''}`}
         onClick={handleToggle}
-        disabled={disabled}
+        disabled={isDisabled}
         type="button"
       >
         <span className={isPlaceholder ? styles.placeholder : ''}>
@@ -143,19 +172,14 @@ function ReactDropdown({
   );
 }
 
-const ReactDropdownElement = reactToWebComponent(
-  ReactDropdown,
-  React,
-  ReactDOMClient,
-  {
-    props: {
-      options: 'string', // HTML属性として文字列を受け取る
-      selected: 'string',
-      placeholder: 'string',
-      disabled: 'boolean',
-    }
+const ReactDropdownElement = r2wc(ReactDropdown, {
+  props: {
+    options: 'string',
+    selected: 'string',
+    placeholder: 'string',
+    disabled: 'boolean',
   }
-);
+});
 
 if (!customElements.get('react-dropdown')) {
   customElements.define('react-dropdown', ReactDropdownElement);

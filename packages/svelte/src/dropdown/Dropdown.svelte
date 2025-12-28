@@ -10,8 +10,14 @@
     options = $bindable<string | DropdownOption[]>([]),
     selected = $bindable(''),
     placeholder = $bindable('Select an option'),
-    disabled = $bindable(false)
+    disabled = $bindable<string | boolean>(false)
   } = $props();
+
+  // HTML属性として渡されるdisabledをbooleanに変換
+  // Web Componentsでは、disabled属性が存在する場合は空文字列または'true'が渡される
+  let isDisabled = $derived<boolean>(
+    typeof disabled === 'boolean' ? disabled : (disabled === 'true' || disabled === '')
+  );
 
   let isOpen = $state(false);
   let parsedOptions = $state<DropdownOption[]>([]);
@@ -39,14 +45,14 @@
   });
 
   function handleToggle(event: MouseEvent) {
-    if (!disabled) {
+    if (!isDisabled) {
       event.stopPropagation(); // 外部のクリックイベントリスナーに伝播しない
       isOpen = !isOpen;
     }
   }
 
   function handleSelect(event: MouseEvent, option: DropdownOption) {
-    if (!disabled) {
+    if (!isDisabled) {
       event.stopPropagation(); // 外部のクリックイベントリスナーに伝播しない
       selected = option.value;
       isOpen = false;
@@ -77,9 +83,9 @@
 
 <div class="dropdown" bind:this={dropdownElement}>
   <button
-    class="dropdown__button {disabled ? 'dropdown__button--disabled' : ''}"
+    class="dropdown__button {isDisabled ? 'dropdown__button--disabled' : ''}"
     onclick={handleToggle}
-    {disabled}
+    disabled={isDisabled}
     type="button"
   >
     <span class="{!parsedOptions.find(opt => opt.value === selected) ? 'dropdown__placeholder' : ''}">
