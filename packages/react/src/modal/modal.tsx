@@ -1,6 +1,5 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import * as ReactDOMClient from 'react-dom/client';
-import reactToWebComponent from 'react-to-webcomponent';
+import { useState, useEffect, Fragment } from 'react';
+import r2wc from '@r2wc/react-to-web-component';
 import { Dialog, Transition } from '@headlessui/react';
 import styles from './modal.module.css';
 import cssText from './modal.module.css?inline';
@@ -123,8 +122,14 @@ function ModalComponent({
   );
 }
 
-// react-to-webcomponentを使ってWeb Componentを作成
-const ReactModalElement = reactToWebComponent(ModalComponent, React, ReactDOMClient);
+// @r2wc/react-to-web-componentを使ってWeb Componentを作成
+const ReactModalElement = r2wc(ModalComponent, {
+  props: {
+    isOpen: 'boolean',
+    title: 'string',
+    description: 'string',
+  }
+});
 
 // Web Componentとして定義
 if (!customElements.get('react-modal')) {

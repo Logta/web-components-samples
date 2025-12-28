@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import * as ReactDOMClient from 'react-dom/client';
-import reactToWebComponent from 'react-to-webcomponent';
+import { useEffect, useRef, useState } from 'react';
+import r2wc from '@r2wc/react-to-web-component';
 import styles from './button.module.css';
 import cssText from './button.module.css?inline';
 
@@ -16,9 +15,34 @@ function ReactButton({
   label = 'Button',
   variant = 'primary',
   size = 'medium',
-  disabled = false,
   onbuttonclick
 }: ButtonProps) {
+  const [isDisabled, setIsDisabled] = useState(false);
+  const buttonContainerRef = useRef<HTMLDivElement>(null);
+
+  // @r2wc が disabled 属性を正しく渡さないため、直接属性をチェック
+  useEffect(() => {
+    // Web Component 要素を取得
+    const container = buttonContainerRef.current?.closest('react-button');
+    if (!container) return;
+
+    // 初期状態をチェック
+    setIsDisabled(container.hasAttribute('disabled'));
+
+    // 属性の変更を監視
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'disabled') {
+          setIsDisabled(container.hasAttribute('disabled'));
+        }
+      });
+    });
+
+    observer.observe(container, { attributes: true });
+
+    return () => observer.disconnect();
+  }, []);
+
   // CSSをグローバルに注入（一度だけ）
   useEffect(() => {
     const styleId = 'react-button-styles';
@@ -31,7 +55,7 @@ function ReactButton({
   }, []);
 
   const handleClick = () => {
-    if (!disabled && onbuttonclick) {
+    if (!isDisabled && onbuttonclick) {
       try {
         const fn = new Function(onbuttonclick);
         fn();
@@ -48,18 +72,28 @@ function ReactButton({
   ].filter(Boolean).join(' ');
 
   return (
-    <button
-      className={buttonClasses}
-      disabled={disabled}
-      onClick={handleClick}
-      type="button"
-    >
-      {label}
-    </button>
+    <div ref={buttonContainerRef}>
+      <button
+        className={buttonClasses}
+        disabled={isDisabled}
+        onClick={handleClick}
+        type="button"
+      >
+        {label}
+      </button>
+    </div>
   );
 }
 
-const ReactButtonElement = reactToWebComponent(ReactButton, React, ReactDOMClient);
+const ReactButtonElement = r2wc(ReactButton, {
+  props: {
+    label: 'string',
+    variant: 'string',
+    size: 'string',
+    disabled: 'boolean',
+    onbuttonclick: 'string',
+  }
+});
 
 if (!customElements.get('react-button')) {
   customElements.define('react-button', ReactButtonElement);

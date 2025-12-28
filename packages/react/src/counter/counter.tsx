@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import * as ReactDOMClient from 'react-dom/client';
-import reactToWebComponent from 'react-to-webcomponent';
+import { useEffect, useState } from 'react';
+import r2wc from '@r2wc/react-to-web-component';
 import styles from './counter.module.css';
 import cssText from './counter.module.css?inline';
 
@@ -43,8 +42,12 @@ function CounterComponent({ count: initialCount = 0 }: CounterComponentProps) {
   );
 }
 
-// react-to-webcomponentを使ってWeb Componentを作成
-const ReactCounterElement = reactToWebComponent(CounterComponent, React, ReactDOMClient);
+// @r2wc/react-to-web-componentを使ってWeb Componentを作成
+const ReactCounterElement = r2wc(CounterComponent, {
+  props: {
+    count: 'number',
+  }
+});
 
 // Web Componentとして定義
 if (!customElements.get('react-counter')) {
