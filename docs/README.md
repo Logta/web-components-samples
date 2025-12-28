@@ -51,6 +51,11 @@
     *   ReactとSvelteのDropdownでクリックしても選択肢が表示されない問題。
     *   イベントバブリングと`event.stopPropagation()`の使用方法。
 
+9.  **[Dropdownのdisabled属性が効かない](./troubleshooting/dropdown-disabled-attribute.md)**
+    *   ReactとSvelteのDropdownで`disabled`属性が認識されない問題。
+    *   Web ComponentsのBoolean属性の仕様と`@r2wc`ライブラリの問題。
+    *   MutationObserverを使った解決方法。
+
 ## 🗂️ New Project Documentation Structure
 
 ```
@@ -72,7 +77,8 @@ web-components-samples/
 │       ├── react-dependencies.md
 │       ├── react-typescript-error.md
 │       ├── react-webcomponent-props.md
-│       └── svelte-module-resolution.md
+│       ├── svelte-module-resolution.md
+│       └── dropdown-disabled-attribute.md
 └── ... (other project files)
 
 ```
@@ -97,6 +103,7 @@ web-components-samples/
 - **Preact の数値が文字列連結される** → [トラブルシューティング #6](./troubleshooting/preact-attribute-type-conversion.md)
 - **React の属性が props に渡されない** → [トラブルシューティング #7](./troubleshooting/react-webcomponent-props.md)
 - **Dropdown をクリックしても選択肢が表示されない** → [トラブルシューティング #8](./troubleshooting/dropdown-event-propagation.md)
+- **Dropdown の disabled 属性が効かない** → [トラブルシューティング #9](./troubleshooting/dropdown-disabled-attribute.md)
 
 ### よくある質問
 
@@ -125,6 +132,7 @@ web-components-samples/
 ### イベント処理関連
 
 - [#8: Dropdown イベント伝播問題](./troubleshooting/dropdown-event-propagation.md)
+- [#9: Dropdown disabled 属性問題](./troubleshooting/dropdown-disabled-attribute.md)
 
 ### スタイリング関連
 
