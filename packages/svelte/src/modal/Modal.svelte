@@ -5,7 +5,8 @@
 
   let {
     title = $bindable('Svelte Modal'),
-    description = $bindable('This is a modal dialog built with Svelte and Melt UI.')
+    description = $bindable('This is a modal dialog built with Svelte and Melt UI.'),
+    onbuttonclick = $bindable('')
   } = $props();
 
   const {
@@ -13,6 +14,18 @@
     states: { open }
   } = createDialog({
     forceVisible: true,
+    onOpenChange: ({ next }) => {
+      // モーダルが開いた時にonbuttonclickを実行
+      if (next && onbuttonclick) {
+        try {
+          const fn = new Function(onbuttonclick);
+          fn();
+        } catch (e) {
+          console.error('Error executing onbuttonclick:', e);
+        }
+      }
+      return next;
+    }
   });
 </script>
 

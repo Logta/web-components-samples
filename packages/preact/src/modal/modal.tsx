@@ -7,12 +7,14 @@ interface ModalComponentProps {
   isOpen?: boolean;
   title?: string;
   description?: string;
+  onbuttonclick?: string;
 }
 
 function ModalComponent({
   isOpen: initialIsOpen = false,
   title = 'Preact Modal',
-  description = 'This is a modal dialog built with Preact and native HTML <dialog> element.'
+  description = 'This is a modal dialog built with Preact and native HTML <dialog> element.',
+  onbuttonclick
 }: ModalComponentProps) {
   const [isOpen, setIsOpen] = useState(initialIsOpen);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -46,6 +48,16 @@ function ModalComponent({
 
   function openModal() {
     setIsOpen(true);
+
+    // onbuttonclick属性が設定されている場合は実行
+    if (onbuttonclick) {
+      try {
+        const fn = new Function(onbuttonclick);
+        fn();
+      } catch (e) {
+        console.error('Error executing onbuttonclick:', e);
+      }
+    }
   }
 
   function closeModal() {
@@ -122,6 +134,6 @@ function ModalComponent({
 }
 
 // preact-custom-elementを使ってWeb Componentを作成
-register(ModalComponent, 'preact-modal', ['isOpen', 'title', 'description'], { shadow: false });
+register(ModalComponent, 'preact-modal', ['isOpen', 'title', 'description', 'onbuttonclick'], { shadow: false });
 
 export default ModalComponent;

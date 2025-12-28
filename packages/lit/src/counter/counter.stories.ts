@@ -53,3 +53,25 @@ export const NegativeValue: Story = {
     return element;
   },
 };
+
+export const LargeValue: Story = {
+  args: {
+    count: 100,
+  },
+  render: (args: LitCounterProps) => {
+    const element = document.createElement('lit-counter') as LitCounter;
+    element.count = args.count;
+    return element;
+  },
+};
+
+export const Zero: Story = {
+  args: {
+    count: 0,
+  },
+  render: (args: LitCounterProps) => {
+    const element = document.createElement('lit-counter') as LitCounter;
+    element.count = args.count;
+    return element;
+  },
+};

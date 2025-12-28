@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
-import './Modal.svelte';
+import './modal.ts';
 
 interface SvelteModalProps {
   title: string;

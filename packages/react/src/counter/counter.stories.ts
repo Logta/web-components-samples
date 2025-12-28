@@ -52,3 +52,25 @@ export const NegativeValue: Story = {
     return element;
   },
 };
+
+export const LargeValue: Story = {
+  args: {
+    count: 100,
+  },
+  render: (args: ReactCounterProps) => {
+    const element = document.createElement('react-counter');
+    element.setAttribute('count', args.count.toString());
+    return element;
+  },
+};
+
+export const Zero: Story = {
+  args: {
+    count: 0,
+  },
+  render: (args: ReactCounterProps) => {
+    const element = document.createElement('react-counter');
+    element.setAttribute('count', args.count.toString());
+    return element;
+  },
+};
