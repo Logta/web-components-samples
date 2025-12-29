@@ -8,12 +8,14 @@ interface ModalComponentProps {
   isOpen?: boolean;
   title?: string;
   description?: string;
+  children?: React.ReactNode;
 }
 
 function ModalComponent({
   isOpen: initialIsOpen = false,
   title = 'React Modal',
-  description = 'This is a modal dialog built with Headless UI for React.'
+  description = 'This is a modal dialog built with Headless UI for React.',
+  children
 }: ModalComponentProps) {
   const [isOpen, setIsOpen] = useState(initialIsOpen);
 
@@ -84,23 +86,27 @@ function ModalComponent({
                   </div>
 
                   <div className={styles.modalBody}>
-                    <Dialog.Description className={styles.modalDescription}>
-                      {description}
-                    </Dialog.Description>
+                    {children || (
+                      <>
+                        <Dialog.Description className={styles.modalDescription}>
+                          {description}
+                        </Dialog.Description>
 
-                    <div className={styles.modalContent}>
-                      <p>
-                        This modal demonstrates Headless UI integration in a React Web Component.
-                        It features:
-                      </p>
-                      <ul>
-                        <li>✅ Automatic accessibility (ARIA attributes)</li>
-                        <li>✅ Focus trap management</li>
-                        <li>✅ ESC key to close</li>
-                        <li>✅ Click outside to close</li>
-                        <li>✅ Smooth transitions</li>
-                      </ul>
-                    </div>
+                        <div className={styles.modalContent}>
+                          <p>
+                            This modal demonstrates Headless UI integration in a React Web Component.
+                            It features:
+                          </p>
+                          <ul>
+                            <li>✅ Automatic accessibility (ARIA attributes)</li>
+                            <li>✅ Focus trap management</li>
+                            <li>✅ ESC key to close</li>
+                            <li>✅ Click outside to close</li>
+                            <li>✅ Smooth transitions</li>
+                          </ul>
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   <div className={styles.modalActions}>

@@ -43,22 +43,25 @@
       </div>
 
       <div class="modal-body">
-        <p use:melt={$descriptionEl} class="modal-description">{description}</p>
+        <slot name="content">
+          <!-- デフォルトコンテンツ -->
+          <p use:melt={$descriptionEl} class="modal-description">{description}</p>
 
-        <div class="feature-list">
-          <p>
-            This modal demonstrates Svelte + Melt UI integration:
-          </p>
-          <ul>
-            <li>✅ Melt UI headless components</li>
-            <li>✅ Svelte 5 runes ($bindable, $state)</li>
-            <li>✅ Automatic accessibility (ARIA)</li>
-            <li>✅ Automatic focus trap</li>
-            <li>✅ ESC key to close</li>
-            <li>✅ Click outside to close</li>
-            <li>✅ Smooth animations</li>
-          </ul>
-        </div>
+          <div class="feature-list">
+            <p>
+              This modal demonstrates Svelte + Melt UI integration:
+            </p>
+            <ul>
+              <li>✅ Melt UI headless components</li>
+              <li>✅ Svelte 5 runes ($bindable, $state)</li>
+              <li>✅ Automatic accessibility (ARIA)</li>
+              <li>✅ Automatic focus trap</li>
+              <li>✅ ESC key to close</li>
+              <li>✅ Click outside to close</li>
+              <li>✅ Smooth animations</li>
+            </ul>
+          </div>
+        </slot>
       </div>
 
       <div class="modal-actions">

@@ -85,23 +85,26 @@ class VanillaModal extends HTMLElement {
             </div>
 
             <div class="modal-body">
-              <p class="modal-description">
-                This is a modal dialog built with native HTML &lt;dialog&gt; element.
-              </p>
-
-              <div class="modal-content">
-                <p>
-                  This modal demonstrates the native &lt;dialog&gt; element features:
+              <slot name="content">
+                <!-- デフォルトコンテンツ -->
+                <p class="modal-description">
+                  This is a modal dialog built with native HTML &lt;dialog&gt; element.
                 </p>
-                <ul>
-                  <li>✅ Built-in accessibility (ARIA attributes)</li>
-                  <li>✅ Automatic focus trap</li>
-                  <li>✅ ESC key to close (native)</li>
-                  <li>✅ Click outside to close</li>
-                  <li>✅ ::backdrop pseudo-element</li>
-                  <li>✅ Zero dependencies</li>
-                </ul>
-              </div>
+
+                <div class="modal-content">
+                  <p>
+                    This modal demonstrates the native &lt;dialog&gt; element features:
+                  </p>
+                  <ul>
+                    <li>✅ Built-in accessibility (ARIA attributes)</li>
+                    <li>✅ Automatic focus trap</li>
+                    <li>✅ ESC key to close (native)</li>
+                    <li>✅ Click outside to close</li>
+                    <li>✅ ::backdrop pseudo-element</li>
+                    <li>✅ Zero dependencies</li>
+                  </ul>
+                </div>
+              </slot>
             </div>
 
             <div class="modal-actions">

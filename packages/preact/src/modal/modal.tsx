@@ -8,13 +8,15 @@ interface ModalComponentProps {
   title?: string;
   description?: string;
   onbuttonclick?: string;
+  children?: any;
 }
 
 function ModalComponent({
   isOpen: initialIsOpen = false,
   title = 'Preact Modal',
   description = 'This is a modal dialog built with Preact and native HTML <dialog> element.',
-  onbuttonclick
+  onbuttonclick,
+  children
 }: ModalComponentProps) {
   const [isOpen, setIsOpen] = useState(initialIsOpen);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -101,21 +103,25 @@ function ModalComponent({
           </div>
 
           <div className={styles.modalBody}>
-            <p className={styles.modalDescription}>{description}</p>
+            {children || (
+              <>
+                <p className={styles.modalDescription}>{description}</p>
 
-            <div className={styles.modalContent}>
-              <p>
-                This modal demonstrates Preact + native &lt;dialog&gt; integration:
-              </p>
-              <ul>
-                <li>✅ Preact lightweight (3KB)</li>
-                <li>✅ Native &lt;dialog&gt; accessibility</li>
-                <li>✅ Automatic focus trap</li>
-                <li>✅ ESC key to close (native)</li>
-                <li>✅ Click outside to close</li>
-                <li>✅ ::backdrop pseudo-element</li>
-              </ul>
-            </div>
+                <div className={styles.modalContent}>
+                  <p>
+                    This modal demonstrates Preact + native &lt;dialog&gt; integration:
+                  </p>
+                  <ul>
+                    <li>✅ Preact lightweight (3KB)</li>
+                    <li>✅ Native &lt;dialog&gt; accessibility</li>
+                    <li>✅ Automatic focus trap</li>
+                    <li>✅ ESC key to close (native)</li>
+                    <li>✅ Click outside to close</li>
+                    <li>✅ ::backdrop pseudo-element</li>
+                  </ul>
+                </div>
+              </>
+            )}
           </div>
 
           <div className={styles.modalActions}>
