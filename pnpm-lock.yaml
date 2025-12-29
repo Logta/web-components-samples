@@ -20,6 +20,9 @@ importers:
       '@biomejs/biome':
         specifier: ^2.3.10
         version: 2.3.10
+      '@melt-ui/pp':
+        specifier: ^0.3.2
+        version: 0.3.2(@melt-ui/svelte@0.86.6(svelte@5.46.1))(svelte@5.46.1)
       '@storybook/web-components':
         specifier: 10.1.10
         version: 10.1.10(lit@3.3.2)(storybook@10.1.10(@testing-library/dom@10.4.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))

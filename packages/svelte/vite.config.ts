@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { resolve } from 'node:path';
+import { preprocessMeltUI } from '@melt-ui/pp';
 
 export default defineConfig({
   plugins: [
@@ -8,6 +9,7 @@ export default defineConfig({
       compilerOptions: {
         customElement: true,
       },
+      preprocess: [preprocessMeltUI()],
     }),
   ],
   build: {

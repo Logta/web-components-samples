@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { resolve } from 'node:path';
+import { preprocessMeltUI } from '@melt-ui/pp';
 
 // すべての依存関係を含むバンドルビルド（Rails/Go用）
 export default defineConfig({
@@ -10,6 +11,7 @@ export default defineConfig({
         customElement: true,
       },
       emitCss: false,
+      preprocess: [preprocessMeltUI()],
     }),
   ],
   build: {

@@ -10,10 +10,11 @@
   } = $props();
 
   const {
-    elements: { trigger, overlay, content, title: titleEl, description: descriptionEl, close, portalled },
+    elements: { trigger, overlay, content, title: titleEl, description: descriptionEl, close },
     states: { open }
   } = createDialog({
     forceVisible: true,
+    portal: null, // Shadow DOM内に留める
     onOpenChange: ({ next }) => {
       // モーダルが開いた時にonbuttonclickを実行
       if (next && onbuttonclick) {
@@ -35,37 +36,35 @@
   </button>
 
   {#if $open}
-    <div use:melt={$portalled}>
-      <div use:melt={$overlay} class="overlay"></div>
-      <div use:melt={$content} class="modal-content">
-        <div class="modal-header">
-          <h3 use:melt={$titleEl} class="modal-title">{title}</h3>
-        </div>
+    <div use:melt={$overlay} class="overlay"></div>
+    <div use:melt={$content} class="modal-content">
+      <div class="modal-header">
+        <h3 use:melt={$titleEl} class="modal-title">{title}</h3>
+      </div>
 
-        <div class="modal-body">
-          <p use:melt={$descriptionEl} class="modal-description">{description}</p>
+      <div class="modal-body">
+        <p use:melt={$descriptionEl} class="modal-description">{description}</p>
 
-          <div class="feature-list">
-            <p>
-              This modal demonstrates Svelte + Melt UI integration:
-            </p>
-            <ul>
-              <li>✅ Melt UI headless components</li>
-              <li>✅ Svelte 5 runes ($bindable, $state)</li>
-              <li>✅ Automatic accessibility (ARIA)</li>
-              <li>✅ Automatic focus trap</li>
-              <li>✅ ESC key to close</li>
-              <li>✅ Click outside to close</li>
-              <li>✅ Smooth animations</li>
-            </ul>
-          </div>
+        <div class="feature-list">
+          <p>
+            This modal demonstrates Svelte + Melt UI integration:
+          </p>
+          <ul>
+            <li>✅ Melt UI headless components</li>
+            <li>✅ Svelte 5 runes ($bindable, $state)</li>
+            <li>✅ Automatic accessibility (ARIA)</li>
+            <li>✅ Automatic focus trap</li>
+            <li>✅ ESC key to close</li>
+            <li>✅ Click outside to close</li>
+            <li>✅ Smooth animations</li>
+          </ul>
         </div>
+      </div>
 
-        <div class="modal-actions">
-          <button type="button" class="close-button" use:melt={$close}>
-            Close
-          </button>
-        </div>
+      <div class="modal-actions">
+        <button type="button" class="close-button" use:melt={$close}>
+          Close
+        </button>
       </div>
     </div>
   {/if}
@@ -113,7 +112,7 @@
     position: fixed;
     left: 50%;
     top: 50%;
-    z-index: 50;
+    z-index: 51;
     transform: translate(-50%, -50%);
     max-width: 28rem;
     width: 90%;
