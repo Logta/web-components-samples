@@ -7,6 +7,7 @@ interface LitDropdownProps {
   selected: string;
   placeholder: string;
   disabled: boolean;
+  onvaluechange?: string;
 }
 
 const fruitOptions = [
@@ -44,6 +45,10 @@ const meta: Meta<LitDropdownProps> = {
     disabled: {
       control: 'boolean',
       description: 'Disabled state',
+    },
+    onvaluechange: {
+      control: 'text',
+      description: 'JavaScript code to execute when value changes (receives value and option parameters)',
     },
   },
 };
@@ -108,6 +113,65 @@ export const Disabled: Story = {
     selected: 'apple',
     placeholder: 'Select a fruit',
     disabled: true,
+  },
+  render: (args: LitDropdownProps) => {
+    const element = document.createElement('lit-dropdown') as LitDropdown;
+    element.options = args.options;
+    element.selected = args.selected;
+    element.placeholder = args.placeholder;
+    element.disabled = args.disabled;
+    return element;
+  },
+};
+
+export const WithCallback: Story = {
+  args: {
+    options: JSON.stringify(fruitOptions),
+    selected: '',
+    placeholder: 'Select a fruit',
+    disabled: false,
+    onvaluechange: "alert('You selected: ' + value + ' (' + option.label + ')')",
+  },
+  render: (args: LitDropdownProps) => {
+    const element = document.createElement('lit-dropdown') as LitDropdown;
+    element.options = args.options;
+    element.selected = args.selected;
+    element.placeholder = args.placeholder;
+    element.disabled = args.disabled;
+    if (args.onvaluechange) {
+      element.onvaluechange = args.onvaluechange;
+    }
+    return element;
+  },
+};
+
+export const WithConsoleLog: Story = {
+  args: {
+    options: JSON.stringify(colorOptions),
+    selected: '',
+    placeholder: 'Choose a color',
+    disabled: false,
+    onvaluechange: "console.log('Selected value:', value, 'Option:', option)",
+  },
+  render: (args: LitDropdownProps) => {
+    const element = document.createElement('lit-dropdown') as LitDropdown;
+    element.options = args.options;
+    element.selected = args.selected;
+    element.placeholder = args.placeholder;
+    element.disabled = args.disabled;
+    if (args.onvaluechange) {
+      element.onvaluechange = args.onvaluechange;
+    }
+    return element;
+  },
+};
+
+export const WithInitialSelection: Story = {
+  args: {
+    options: JSON.stringify(fruitOptions),
+    selected: 'orange',
+    placeholder: 'Select a fruit',
+    disabled: false,
   },
   render: (args: LitDropdownProps) => {
     const element = document.createElement('lit-dropdown') as LitDropdown;
