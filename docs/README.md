@@ -21,6 +21,9 @@
 4.  **[解説: ReactのCSS注入](./architecture/explanation-react-css-injection.md)**
     *   ReactベースのWeb Componentが、Shadow DOMを使用する他のフレームワークと比較して、なぜCSS注入に特別なメカニズムを必要とするのかについての説明。
 
+5.  **[解説: フレームワークによるスロットの扱い](./architecture/explanation-framework-slot-handling.md)**
+    *   `preact-custom-element` と `react-to-webcomponent` における子要素とスロットの扱いの違いについて。
+
 ### 🐛 トラブルシューティング
 
 開発中に遭遇した一般的な問題の解決策。
