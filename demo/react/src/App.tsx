@@ -18,6 +18,7 @@ function App() {
       <h1>Web Components in React Demo</h1>
       <p>このデモでは、React環境で5つの異なるWeb Componentsを使用しています。</p>
 
+      <h2>Counter Components</h2>
       <div className="counters-grid">
         <my-counter count={0}></my-counter>
         <react-counter count={0}></react-counter>
@@ -27,8 +28,6 @@ function App() {
       </div>
 
       <h2>Modal Components</h2>
-      <p>各フレームワークで実装されたモーダルコンポーネントのデモです。</p>
-
       <div className="modals-grid">
         <vanilla-modal></vanilla-modal>
         <react-modal></react-modal>
@@ -37,16 +36,35 @@ function App() {
         <svelte-modal></svelte-modal>
       </div>
 
-      <h2>Dropdown Components</h2>
-      <p>各フレームワークで実装されたドロップダウンコンポーネントのデモです。</p>
+      <h2>Button Components</h2>
+      <div className="buttons-grid">
+        <vanilla-button label="Vanilla Button"></vanilla-button>
+        <react-button label="React Button"></react-button>
+        <lit-button label="Lit Button"></lit-button>
+        <preact-button label="Preact Button"></preact-button>
+        <svelte-button label="Svelte Button"></svelte-button>
+      </div>
 
+      <h2>Dropdown Components</h2>
       <div className="dropdowns-grid">
+        <vanilla-dropdown
+          options='[{"label": "Option 1", "value": "1"}, {"label": "Option 2", "value": "2"}, {"label": "Option 3", "value": "3"}]'
+          placeholder="Vanilla Dropdown"
+        ></vanilla-dropdown>
         <react-dropdown
           options='[{"label": "React", "value": "react"}, {"label": "Svelte", "value": "svelte"}, {"label": "Vue", "value": "vue"}]'
           placeholder="React Dropdown"
         ></react-dropdown>
+        <lit-dropdown
+          options='[{"label": "Lit", "value": "lit"}, {"label": "Fast", "value": "fast"}, {"label": "Stencil", "value": "stencil"}]'
+          placeholder="Lit Dropdown"
+        ></lit-dropdown>
+        <preact-dropdown
+          options='[{"label": "Preact", "value": "preact"}, {"label": "React", "value": "react"}, {"label": "Inferno", "value": "inferno"}]'
+          placeholder="Preact Dropdown"
+        ></preact-dropdown>
         <svelte-dropdown
-          options='[{"label": "Svelte", "value": "svelte"}, {"label": "React", "value": "react"}, {"label": "Solid", "value": "solid"}]'
+          options='[{"label": "Svelte", "value": "svelte"}, {"label": "SolidJS", "value": "solid"}, {"label": "Qwik", "value": "qwik"}]'
           placeholder="Svelte Dropdown"
         ></svelte-dropdown>
       </div>

@@ -3,6 +3,7 @@
     <h1>{{.Title}}</h1>
     <p>{{.Description}}</p>
 
+    <h2 style="color: #3498db; margin-top: 2rem; margin-bottom: 1rem;">Counter Components</h2>
     <div class="counters-grid">
         <my-counter count="0"></my-counter>
         <react-counter count="0"></react-counter>
@@ -11,9 +12,46 @@
         <svelte-counter count="0"></svelte-counter>
     </div>
 
-    <div style="margin-top: 2rem; padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1);">
-        <h2 style="color: #3498db; margin-bottom: 1rem;">Svelte Modal Component</h2>
+    <h2 style="color: #3498db; margin-bottom: 1rem;">Modal Components</h2>
+    <div class="modals-grid">
+        <vanilla-modal></vanilla-modal>
+        <react-modal></react-modal>
+        <lit-modal></lit-modal>
+        <preact-modal></preact-modal>
         <svelte-modal></svelte-modal>
+    </div>
+
+    <h2 style="color: #3498db; margin-bottom: 1rem;">Button Components</h2>
+    <div class="buttons-grid">
+        <vanilla-button label="Vanilla Button"></vanilla-button>
+        <react-button label="React Button"></react-button>
+        <lit-button label="Lit Button"></lit-button>
+        <preact-button label="Preact Button"></preact-button>
+        <svelte-button label="Svelte Button"></svelte-button>
+    </div>
+
+    <h2 style="color: #3498db; margin-bottom: 1rem;">Dropdown Components</h2>
+    <div class="dropdowns-grid">
+        <vanilla-dropdown
+            options='[{"label": "Option 1", "value": "1"}, {"label": "Option 2", "value": "2"}, {"label": "Option 3", "value": "3"}]'
+            placeholder="Vanilla Dropdown"
+        ></vanilla-dropdown>
+        <react-dropdown
+            options='[{"label": "React", "value": "react"}, {"label": "Svelte", "value": "svelte"}, {"label": "Vue", "value": "vue"}]'
+            placeholder="React Dropdown"
+        ></react-dropdown>
+        <lit-dropdown
+            options='[{"label": "Lit", "value": "lit"}, {"label": "Fast", "value": "fast"}, {"label": "Stencil", "value": "stencil"}]'
+            placeholder="Lit Dropdown"
+        ></lit-dropdown>
+        <preact-dropdown
+            options='[{"label": "Preact", "value": "preact"}, {"label": "React", "value": "react"}, {"label": "Inferno", "value": "inferno"}]'
+            placeholder="Preact Dropdown"
+        ></preact-dropdown>
+        <svelte-dropdown
+            options='[{"label": "Svelte", "value": "svelte"}, {"label": "SolidJS", "value": "solid"}, {"label": "Qwik", "value": "qwik"}]'
+            placeholder="Svelte Dropdown"
+        ></svelte-dropdown>
     </div>
 
     <div class="info">

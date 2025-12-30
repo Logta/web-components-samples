@@ -43,12 +43,44 @@ declare namespace React {
         React.HTMLAttributes<HTMLElement> & { isOpen?: boolean; title?: string; description?: string },
         HTMLElement
       >;
+      'vanilla-button': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { label?: string; variant?: string; size?: string; disabled?: boolean },
+        HTMLElement
+      >;
+      'react-button': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { label?: string; variant?: string; size?: string; disabled?: boolean },
+        HTMLElement
+      >;
+      'lit-button': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { label?: string; variant?: string; size?: string; disabled?: boolean },
+        HTMLElement
+      >;
+      'preact-button': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { label?: string; variant?: string; size?: string; disabled?: boolean },
+        HTMLElement
+      >;
+      'svelte-button': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { label?: string; variant?: string; size?: string; disabled?: boolean },
+        HTMLElement
+      >;
+      'vanilla-dropdown': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { options?: string; selected?: string; placeholder?: string; disabled?: boolean },
+        HTMLElement
+      >;
       'react-dropdown': React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement> & { options?: string; selected?: string; placeholder?: string; disabled?: boolean; },
+        React.HTMLAttributes<HTMLElement> & { options?: string; selected?: string; placeholder?: string; disabled?: boolean },
+        HTMLElement
+      >;
+      'lit-dropdown': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { options?: string; selected?: string; placeholder?: string; disabled?: boolean },
+        HTMLElement
+      >;
+      'preact-dropdown': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { options?: string; selected?: string; placeholder?: string; disabled?: boolean },
         HTMLElement
       >;
       'svelte-dropdown': React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement> & { options?: string; selected?: string; placeholder?: string; disabled?: boolean; },
+        React.HTMLAttributes<HTMLElement> & { options?: string; selected?: string; placeholder?: string; disabled?: boolean },
         HTMLElement
       >;
     }
