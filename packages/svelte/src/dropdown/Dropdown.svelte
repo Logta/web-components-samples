@@ -10,7 +10,8 @@
     options = $bindable<string | DropdownOption[]>([]),
     selected = $bindable(''),
     placeholder = $bindable('Select an option'),
-    disabled = $bindable<string | boolean>(false)
+    disabled = $bindable<string | boolean>(false),
+    onvaluechange = $bindable('')
   } = $props();
 
   // HTML属性として渡されるdisabledをbooleanに変換
@@ -56,6 +57,16 @@
       event.stopPropagation(); // 外部のクリックイベントリスナーに伝播しない
       selected = option.value;
       isOpen = false;
+
+      // onvaluechange属性が設定されている場合は実行
+      if (onvaluechange) {
+        try {
+          const fn = new Function('value', 'option', onvaluechange);
+          fn(option.value, option);
+        } catch (e) {
+          console.error('Error executing onvaluechange:', e);
+        }
+      }
     }
   }
 

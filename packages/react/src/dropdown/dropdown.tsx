@@ -13,6 +13,7 @@ interface DropdownProps {
   selected?: string;
   placeholder?: string;
   disabled?: boolean; // @r2wc handles boolean attributes
+  onvaluechange?: string; // JavaScript code to execute
   onChange?: (value: string, option: DropdownOption) => void;
 }
 
@@ -21,6 +22,7 @@ function ReactDropdown({
   selected = '',
   placeholder = 'Select an option',
   disabled = false,
+  onvaluechange = '',
   onChange
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -135,6 +137,16 @@ function ReactDropdown({
       if (onChange) {
         onChange(option.value, option);
       }
+
+      // onvaluechange属性が設定されている場合は実行
+      if (onvaluechange) {
+        try {
+          const fn = new Function('value', 'option', onvaluechange);
+          fn(option.value, option);
+        } catch (e) {
+          console.error('Error executing onvaluechange:', e);
+        }
+      }
     }
   };
 
@@ -178,6 +190,7 @@ const ReactDropdownElement = r2wc(ReactDropdown, {
     selected: 'string',
     placeholder: 'string',
     disabled: 'boolean',
+    onvaluechange: 'string',
   }
 });
 

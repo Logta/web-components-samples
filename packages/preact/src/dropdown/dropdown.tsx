@@ -13,13 +13,15 @@ interface DropdownProps {
   selected?: string;
   placeholder?: string;
   disabled?: boolean;
+  onvaluechange?: string;
 }
 
 function PreactDropdown({
   options: optionsJson = '[]',
   selected = '',
   placeholder = 'Select an option',
-  disabled = false
+  disabled = false,
+  onvaluechange = ''
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(selected);
@@ -80,6 +82,16 @@ function PreactDropdown({
     if (!disabled) {
       setSelectedValue(option.value);
       setIsOpen(false);
+
+      // onvaluechange属性が設定されている場合は実行
+      if (onvaluechange) {
+        try {
+          const fn = new Function('value', 'option', onvaluechange);
+          fn(option.value, option);
+        } catch (e) {
+          console.error('Error executing onvaluechange:', e);
+        }
+      }
     }
   };
 
@@ -117,6 +129,6 @@ function PreactDropdown({
   );
 }
 
-register(PreactDropdown, 'preact-dropdown', ['options', 'selected', 'placeholder', 'disabled'], { shadow: false });
+register(PreactDropdown, 'preact-dropdown', ['options', 'selected', 'placeholder', 'disabled', 'onvaluechange'], { shadow: false });
 
 export default PreactDropdown;

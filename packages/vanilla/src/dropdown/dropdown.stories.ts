@@ -6,6 +6,7 @@ interface VanillaDropdownProps {
   selected: string;
   placeholder: string;
   disabled: boolean;
+  onvaluechange?: string;
 }
 
 const fruitOptions = [
@@ -43,6 +44,10 @@ const meta: Meta<VanillaDropdownProps> = {
     disabled: {
       control: 'boolean',
       description: 'Disabled state',
+    },
+    onvaluechange: {
+      control: 'text',
+      description: 'JavaScript code to execute when value changes (receives value and option parameters)',
     },
   },
 };
@@ -121,6 +126,52 @@ export const Disabled: Story = {
     element.setAttribute('placeholder', args.placeholder);
     if (args.disabled) {
       element.setAttribute('disabled', '');
+    }
+    return element;
+  },
+};
+
+export const WithCallback: Story = {
+  args: {
+    options: JSON.stringify(fruitOptions),
+    selected: '',
+    placeholder: 'Select a fruit',
+    disabled: false,
+    onvaluechange: "alert('You selected: ' + value + ' (' + option.label + ')')",
+  },
+  render: (args: VanillaDropdownProps) => {
+    const element = document.createElement('vanilla-dropdown') as HTMLElement & VanillaDropdownProps;
+    element.setAttribute('options', args.options);
+    element.setAttribute('selected', args.selected);
+    element.setAttribute('placeholder', args.placeholder);
+    if (args.disabled) {
+      element.setAttribute('disabled', '');
+    }
+    if (args.onvaluechange) {
+      element.setAttribute('onvaluechange', args.onvaluechange);
+    }
+    return element;
+  },
+};
+
+export const WithConsoleLog: Story = {
+  args: {
+    options: JSON.stringify(colorOptions),
+    selected: '',
+    placeholder: 'Choose a color',
+    disabled: false,
+    onvaluechange: "console.log('Selected value:', value, 'Option:', option)",
+  },
+  render: (args: VanillaDropdownProps) => {
+    const element = document.createElement('vanilla-dropdown') as HTMLElement & VanillaDropdownProps;
+    element.setAttribute('options', args.options);
+    element.setAttribute('selected', args.selected);
+    element.setAttribute('placeholder', args.placeholder);
+    if (args.disabled) {
+      element.setAttribute('disabled', '');
+    }
+    if (args.onvaluechange) {
+      element.setAttribute('onvaluechange', args.onvaluechange);
     }
     return element;
   },

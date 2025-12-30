@@ -12,7 +12,7 @@ class VanillaDropdown extends HTMLElement {
   declare shadowRoot: ShadowRoot;
 
   static get observedAttributes(): string[] {
-    return ['options', 'selected', 'placeholder', 'disabled'];
+    return ['options', 'selected', 'placeholder', 'disabled', 'onvaluechange'];
   }
 
   constructor() {
@@ -59,6 +59,17 @@ class VanillaDropdown extends HTMLElement {
             bubbles: true,
             composed: true,
           }));
+
+          // onvaluechange属性が設定されている場合は実行
+          const onvaluechange = this.getAttribute('onvaluechange');
+          if (onvaluechange) {
+            try {
+              const fn = new Function('value', 'option', onvaluechange);
+              fn(this._selectedValue, this._options[index]);
+            } catch (e) {
+              console.error('Error executing onvaluechange:', e);
+            }
+          }
         }
       });
     });
