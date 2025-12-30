@@ -154,6 +154,20 @@ declare namespace React {
 }
 ```
 
+### 7. Preact/Reactにおけるスロットの扱い
+
+**必須**: `preact-custom-element` と `react-to-webcomponent` の `children`/`slot` の扱いの違いを理解すること。
+
+-   **Preact**: `preact-custom-element` は `props.children` をWeb Componentのネイティブスロットに **自動的** にマッピングします。実装は直感的です。
+-   **React**: `react-to-webcomponent` は `children` を自動的にはマッピングしません。スロットを利用するには、`useEffect` でDOMから要素を取得し、ReactのStateに組み込む **手動** の実装が必要です。
+
+**理由**:
+
+- 各ライブラリの設計思想の違いによるものです。PreactはWeb標準に近く、Reactはすべてを自身のV-DOM内で管理しようとします。
+- この違いを知らないと、特にReactで期待通りに `children` が表示されず、混乱を招く可能性があります。
+
+詳細は [docs/architecture/explanation-framework-slot-handling.md](docs/architecture/explanation-framework-slot-handling.md) を参照してください。
+
 ## プロジェクト構造
 
 ```
@@ -253,6 +267,12 @@ mise clean              # ビルド成果物削除
 - **解決策**: `Number()`で明示的に数値変換
 - **特徴**: `preact-custom-element`は軽量性重視で自動型変換を行わない
 - **詳細**: [docs/troubleshooting/preact-attribute-type-conversion.md](docs/troubleshooting/preact-attribute-type-conversion.md)
+
+#### 問題 7: Reactコンポーネントで `children` が表示されない（スロット問題）
+
+- **状況**: ReactをWeb Component化した際に、`<my-react-component>ここにコンテンツ</my-react-component>` のように子要素を渡しても表示されない。
+- **解決策**: Reactではスロットは自動でマッピングされないため、手動で実装する必要がある。`useEffect` を使ってDOMからスロット要素を取得し、Stateにセットする。
+- **詳細**: [docs/architecture/explanation-framework-slot-handling.md](docs/architecture/explanation-framework-slot-handling.md)
 
 ### トラブルシューティング文書の追加方法
 

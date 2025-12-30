@@ -137,7 +137,8 @@ packages/react/
 - **React Component**: 通常のReactコンポーネントとして実装
 - **Web Component変換**: `reactToWebComponent()` でWeb Componentに変換
 - **React 19対応**: `react-dom/client` の `createRoot` APIを使用
-- **CSS Modules**: スコープ付きスタイリング
+- **手動でのスロット実装**: スロットを利用するには、`useEffect` などでDOMからスロット要素を検出し、ReactのStateに組み込む追加実装が必要です。
+- **CSS Modules**: スкоープ付きスタイリング
 - **CSS注入**: `?inline` importでCSSをJSバンドルに含め、実行時にグローバルに注入
 - **プロパティ監視**: `useEffect` で `count` propの変更を監視
 
@@ -220,6 +221,12 @@ const Element = reactToWebComponent(Component, React, ReactDOM);
 import * as ReactDOMClient from 'react-dom/client';
 const Element = reactToWebComponent(Component, React, ReactDOMClient);
 ```
+
+**`children` は自動的にスロットにマッピングされない**
+
+`preact-custom-element` とは異なり、`react-to-webcomponent` は `props.children` を自動的にスロットに変換しません。スロットを使用するには、`useEffect` などを用いて手動でDOMからスロット要素を検出し、ReactのStateに組み込む必要があります。
+
+詳細は [docs/architecture/explanation-framework-slot-handling.md](../../docs/architecture/explanation-framework-slot-handling.md) を参照してください。
 
 ---
 
@@ -467,6 +474,7 @@ packages/preact/
 
 - **軽量React代替**: Preactは3KBの軽量React互換ライブラリ
 - **preact-custom-element**: Web Component変換ライブラリ
+- **透過的なスロットマッピング**: `props.children` や `<slot>` タグが自動的にWeb Componentのネイティブスロットにマッピングされます。
 - **Shadow DOMなし**: `{ shadow: false }` で通常のDOMとして実装
 - **CSS Modules**: スコープ付きスタイリング
 - **CSS注入**: `?inline` importでCSSをJSバンドルに含め、実行時にグローバルに注入

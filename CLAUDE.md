@@ -15,12 +15,12 @@
 ### トラブルシューティングドキュメント
 
 - @docs/ - 技術ドキュメントとトラブルシューティングガイド
-  - 新しい問題に遭遇した場合、docs/troubleshooting-\*.md として追加
+  - 新しい問題に遭遇した場合、docs/troubleshooting/ディレクトリに `[問題の要約].md` として追加
   - 詳細は「過去に遭遇した問題と解決策」セクションのテンプレートを参照
 
 ## プロジェクト概要
 
-5つの異なるアプローチ（Vanilla JS、React、Lit、Svelte、Preact）でWeb Componentsを作成し、4つの異なる環境（React、VanillaJS、Rails、Go）で使用するサンプルプロジェクト。
+5 つの異なるアプローチ（Vanilla JS、React、Lit、Svelte、Preact）で Web Components を作成し、4 つの異なる環境（React、VanillaJS、Rails、Go）で使用するサンプルプロジェクト。
 
 ## 重要な設計判断と制約
 
@@ -154,6 +154,20 @@ declare namespace React {
 }
 ```
 
+### 7. Preact/React におけるスロットの扱い
+
+**必須**: `preact-custom-element` と `react-to-webcomponent` の `children`/`slot` の扱いの違いを理解すること。
+
+- **Preact**: `preact-custom-element` は `props.children` を Web Component のネイティブスロットに **自動的** にマッピングします。実装は直感的です。
+- **React**: `react-to-webcomponent` は `children` を自動的にはマッピングしません。スロットを利用するには、`useEffect` で DOM から要素を取得し、React の State に組み込む **手動** の実装が必要です。
+
+**理由**:
+
+- 各ライブラリの設計思想の違いによるものです。Preact は Web 標準に近く、React はすべてを自身の V-DOM 内で管理しようとします。
+- この違いを知らないと、特に React で期待通りに `children` が表示されず、混乱を招く可能性があります。
+
+詳細は [docs/architecture/explanation-framework-slot-handling.md](docs/architecture/explanation-framework-slot-handling.md) を参照してください。
+
 ## プロジェクト構造
 
 ```
@@ -220,26 +234,26 @@ mise clean              # ビルド成果物削除
 
 - **状況**: Rails/Go demo で React 依存関係が解決されない
 - **解決策**: `bundle-components.config.ts`で外部依存を含めずにすべてバンドル
-- **詳細**: [docs/troubleshootings/01-react-dependencies.md](docs/troubleshooting-01-react-dependencies.md)
+- **詳細**: [docs/troubleshooting/react-dependencies.md](docs/troubleshooting/react-dependencies.md)
 
 #### 問題 2: "process is not defined"
 
 - **状況**: ブラウザで`process.env`が未定義
 - **解決策**: Vite 設定の`define`オプションでビルド時に置換
 - **効果**: バンドルサイズ 66%削減（962KB → 324KB）
-- **詳細**: [docs/troubleshootings/02-process-env.md](docs/troubleshooting-02-process-env.md)
+- **詳細**: [docs/troubleshooting/process-env.md](docs/troubleshooting/process-env.md)
 
 #### 問題 3: React Web Component の TypeScript エラー
 
 - **状況**: `reactToWebComponent()`の第 3 引数の型エラー
 - **解決策**: `import * as ReactDOMClient from 'react-dom/client'`を使用
-- **詳細**: [docs/troubleshootings/03-react-typescript-error.md](docs/troubleshooting-03-react-typescript-error.md)
+- **詳細**: [docs/troubleshooting/react-typescript-error.md](docs/troubleshooting/react-typescript-error.md)
 
 #### 問題 4: React Web Component のスタイルが適用されない
 
 - **状況**: Rails/Go demo で React コンポーネントの CSS Modules スタイルが表示されない
 - **解決策**: `?inline` import で CSS を JS バンドルに含め、`useEffect`で実行時に注入
-- **詳細**: [docs/troubleshootings/04-react-css-not-applied.md](docs/troubleshooting-04-react-css-not-applied.md)
+- **詳細**: [docs/troubleshooting/react-css-not-applied.md](docs/troubleshooting/react-css-not-applied.md)
 
 #### 問題 5: Lit Web Component が表示されない（空白になる）
 
@@ -252,28 +266,20 @@ mise clean              # ビルド成果物削除
 - **状況**: Preact カウンターで `+` を押すと 0→01→011→0111 となる
 - **解決策**: `Number()`で明示的に数値変換
 - **特徴**: `preact-custom-element`は軽量性重視で自動型変換を行わない
-- **詳細**: [docs/troubleshootings/06-preact-attribute-type-conversion.md](docs/troubleshootings/06-preact-attribute-type-conversion.md)
+- **詳細**: [docs/troubleshooting/preact-attribute-type-conversion.md](docs/troubleshooting/preact-attribute-type-conversion.md)
 
-#### 問題 7: React Web Component で HTML 属性が props に渡されない
+#### 問題 7: React コンポーネントで `children` が表示されない（スロット問題）
 
-- **状況**: Storybook や HTML で属性を設定しても React コンポーネントの props に渡されない
-- **解決策**: `reactToWebComponent()` の第4引数に `{ props: {...} }` オプションを指定
-- **原因**: `react-to-webcomponent` はデフォルトで `observedAttributes` を設定しない
-- **詳細**: [docs/troubleshooting/react-webcomponent-props.md](docs/troubleshooting/react-webcomponent-props.md)
-
-#### 問題 8: Dropdown でクリックしても選択肢が表示されない
-
-- **状況**: React と Svelte の Dropdown でボタンをクリックしても選択肢が一瞬表示されて即座に閉じる
-- **解決策**: `event.stopPropagation()` でイベントバブリングを停止
-- **原因**: ボタンクリックイベントが document の click リスナーに伝播し、`handleClickOutside` が発火
-- **詳細**: [docs/troubleshooting/dropdown-event-propagation.md](docs/troubleshooting/dropdown-event-propagation.md)
+- **状況**: React を Web Component 化した際に、`<my-react-component>ここにコンテンツ</my-react-component>` のように子要素を渡しても表示されない。
+- **解決策**: React ではスロットは自動でマッピングされないため、手動で実装する必要がある。`useEffect` を使って DOM からスロット要素を取得し、State にセットする。
+- **詳細**: [docs/architecture/explanation-framework-slot-handling.md](docs/architecture/explanation-framework-slot-handling.md)
 
 ### トラブルシューティング文書の追加方法
 
 新しい問題に遭遇した場合、以下のテンプレートに従ってドキュメントを作成してください：
 
 ```markdown
-# トラブルシューティング #N: [問題のタイトル]
+# トラブルシューティング: [問題のタイトル]
 
 ## 問題の概要
 
@@ -338,17 +344,12 @@ mise clean              # ビルド成果物削除
 ### トラブルシューティング・技術解説
 
 - **[docs/README.md](docs/README.md)**: ドキュメントインデックス
-- **[docs/troubleshooting-01-react-dependencies.md](docs/troubleshooting-01-react-dependencies.md)**: React 依存関係の解決
-- **[docs/troubleshooting-02-process-env.md](docs/troubleshooting-02-process-env.md)**: process.env 未定義エラー
-- **[docs/troubleshooting-03-react-typescript-error.md](docs/troubleshooting-03-react-typescript-error.md)**: React TypeScript エラー
-- **[docs/troubleshooting-04-react-css-not-applied.md](docs/troubleshooting-04-react-css-not-applied.md)**: React CSS が適用されない
-- **[docs/why-react-css-injection.md](docs/why-react-css-injection.md)**: なぜ React だけ CSS 注入が必要なのか
 
 ## 技術スタック
 
-- **パッケージマネージャー**: pnpm 10.12.3
+- **パッケージマネージャー**: pnpm
 - **Node.js**: 24.3.0
-- **ビルドツール**: Vite 7.3.0
+- **ビルドツール**: Vite
 - **TypeScript**: Strict mode
 - **React**: 19.2.3
 - **Lit**: 3.2.2
