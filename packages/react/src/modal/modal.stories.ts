@@ -86,14 +86,14 @@ export const WithCustomContent: Story = {
     element.setAttribute('isOpen', args.isOpen.toString());
     element.setAttribute('title', args.title);
 
-    // カスタムコンテンツを innerHTML で注入（React は children prop として処理）
+    // カスタムコンテンツを slot="content" で注入
     element.innerHTML = `
-      <div style="padding: 1rem; border: 2px dashed #06b6d4; background: #ecfeff; border-radius: 0.5rem;">
+      <div slot="content" style="padding: 1rem; border: 2px dashed #06b6d4; background: #ecfeff; border-radius: 0.5rem;">
         <h4 style="margin: 0 0 0.5rem 0; color: #0e7490;">
-          🎨 Custom Content via <code style="background: #fff; padding: 0.125rem 0.375rem; border-radius: 0.25rem; border: 1px solid #67e8f9;">children</code> prop
+          🎨 Custom Content via <code style="background: #fff; padding: 0.125rem 0.375rem; border-radius: 0.25rem; border: 1px solid #67e8f9;">slot="content"</code>
         </h4>
         <p style="margin: 0 0 0.75rem 0; color: #155e75; font-size: 0.875rem;">
-          ✅ This content is passed as <strong>children</strong> to React component!
+          ✅ This content is <strong>slotted</strong> into the modal body!
         </p>
         <div style="background: #fff; padding: 1rem; border-radius: 0.5rem; border: 1px solid #67e8f9;">
           <p style="margin: 0 0 0.5rem 0; color: #374151; font-weight: 600;">
