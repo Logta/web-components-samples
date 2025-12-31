@@ -1,53 +1,113 @@
 # Web Components Samples
 
-このリポジトリは、Web Componentsをさまざまな環境で構築するサンプルプロジェクトです。
+[![Storybook](https://raw.githubusercontent.com/storybooks/brand/main/badge/badge-storybook.svg)](https://t-kik/web-components-samples.vercel.app/)
 
-## 構成
+このリポジトリは、5つの異なる技術（Vanilla JS, React, Lit, Svelte, Preact）でWeb Componentsを構築し、4つの異なるWebアプリケーション環境（純粋なJS, React, Ruby on Rails, Go）でそれらを利用するための包括的なサンプル集です。
 
-- **pnpm workspace**: モノレポ構成
-- **Vite**: ビルドツール
-- **3つのパッケージ**:
-  - `packages/vanilla`: Vanilla JavaScriptで構築したWeb Component
-  - `packages/lit`: Litで構築したWeb Component
-  - `packages/react`: Reactで構築したWeb Component
+すべてのコンポーネントは [**Storybookでライブデモ**](https://t-kik/web-components-samples.vercel.app/) を確認できます。
 
-## セットアップ
+## プロジェクト構造
+
+- **`packages/`**: 5つの異なるアプローチで実装されたWeb Component群。
+- **`demo/`**: 4つの異なる技術スタックでこれらのコンポーネントを利用するデモアプリケーション。
+- **`.storybook/`**: コンポーネントの分離開発とカタログ化のためのStorybook環境。
+- **`docs/`**: 設計上の決定（ADR）やトラブルシューティングガイドなどのドキュメント。
+- **`GEMINI.md`**: AI（Gemini）がこのプロジェクトを理解し、サポートするためのガイドライン。
+
+## クイックスタート
+
+### 前提条件
+
+タスクランナーとして [mise](https://mise.jdx.dev/) の利用を推奨します。
 
 ```bash
+# miseをインストール（Homebrewの場合）
+brew install mise
+```
+
+### 1. 依存関係のインストール
+
+```bash
+# 推奨
+mise install
+
+# またはpnpmを直接使用
 pnpm install
 ```
 
-## 開発
+### 2. ビルド
 
-全パッケージを同時に開発モードで起動:
-
-```bash
-pnpm dev
-```
-
-個別パッケージの開発:
+すべてのWeb Componentパッケージをビルドします。
 
 ```bash
-cd packages/vanilla && pnpm dev
-cd packages/lit && pnpm dev
-cd packages/react && pnpm dev
+mise build
 ```
 
-## ビルド
+### 3. デモの実行
 
-全パッケージをビルド:
+利用可能なデモの一覧は `mise demo:list` で確認できます。
 
 ```bash
-pnpm build
+# Reactデモを起動 (http://localhost:3000)
+mise demo:react
+
+# Vanilla JSデモを起動 (http://localhost:3001)
+mise demo:vanilla
 ```
 
-## 各パッケージの説明
+RailsやGoのデモを実行する前に、セットアップタスクが必要です。
 
-### Vanilla JS (`packages/vanilla`)
-純粋なJavaScriptでWeb Componentを実装。Custom Elements APIを直接使用。
+```bash
+# Rails/Goデモのセットアップ（初回のみ）
+mise demo:setup
 
-### Lit (`packages/lit`)
-Litフレームワークを使用してWeb Componentを実装。宣言的なテンプレートとリアクティブプロパティを提供。
+# Railsデモを起動 (http://localhost:3002)
+mise demo:rails
 
-### React (`packages/react`)
-Reactで構築したコンポーネントをWeb Componentとしてラップして公開。
+# Goデモを起動 (http://localhost:8080)
+mise demo:go
+```
+
+## パッケージ一覧 (`packages/`)
+
+5つの異なるフレームワーク/ライブラリで同じコンポーネント（カウンター、ボタン等）を実装しています。
+
+- `@web-components-samples/vanilla`
+- `@web-components-samples/react`
+- `@web-components-samples/lit`
+- `@web-components-samples/svelte`
+- `@web-components-samples/preact`
+
+詳細は **[パッケージ仕様書](.gemini/rules/packages.md)** を参照してください。
+
+## デモアプリケーション一覧 (`demo/`)
+
+各Web Componentを異なるフロントエンド/バックエンド環境で利用するサンプルです。
+
+- **`react/`**: React + Vite (SPA)
+- **`vanillajs/`**: Vanilla JS + Vite (SPA)
+- **`rails/`**: Ruby on Rails (SSR)
+- **`go/`**: Go + html/template (SSR)
+
+詳細は **[デモ仕様書](.gemini/rules/demo.md)** を参照してください。
+
+## 主なタスク (`mise` コマンド)
+
+- `mise build`: 全パッケージのビルド
+- `mise storybook`: Storybookの起動
+- `mise demo:react`: Reactデモの起動（他のデモも同様）
+- `mise demo:setup`: バックエンドデモ（Rails/Go）のセットアップ
+- `mise fmt`: コードフォーマット
+- `mise check`: 静的解析とテスト
+- `mise help`: 利用可能な全タスクの表示
+
+## 技術スタック
+
+- **Frontend**: Web Components, TypeScript, React, Lit, Svelte, Preact, Vite, Storybook
+- **Backend**: Ruby on Rails, Go
+- **Tooling**: Node.js, pnpm, mise, Biome, TypeScript
+
+## 詳細ドキュメント
+
+- **[GEMINI.md](GEMINI.md)**: AI（Gemini）向けのプロジェクトガイドライン。設計思想や過去のトラブルシューティングについてまとめています。
+- **[docs/](docs/)**: アーキテクチャや技術的な解説ドキュメント。
