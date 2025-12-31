@@ -24,6 +24,9 @@
 5.  **[解説: フレームワークによるスロットの扱い](./architecture/explanation-framework-slot-handling.md)**
     *   `preact-custom-element` と `react-to-webcomponent` における子要素とスロットの扱いの違いについて。
 
+6.  **[ADR-003: iframeコンテンツ配信用テストサーバーの導入](./architecture/adr-003-iframe-testing-server.md)**
+    *   BunとHonoを使用したiframeコンテンツ配信用テストサーバーの設計と技術選定。
+
 ### 🐛 トラブルシューティング
 
 開発中に遭遇した一般的な問題の解決策。

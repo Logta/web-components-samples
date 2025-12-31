@@ -69,12 +69,31 @@ function App() {
         ></svelte-dropdown>
       </div>
 
+      <h2>iframe Test (Cross-Origin)</h2>
+      <p>
+        以下のiframeは別のポート（4001）で動作するiframe-serverからコンポーネントを読み込んでいます。
+        <br />
+        クロスオリジン環境でのWeb Componentsの動作を確認できます。
+      </p>
+      <div className="iframe-container">
+        <iframe
+          src="http://localhost:4001/all"
+          width="100%"
+          height="600"
+          style={{ border: '2px solid rgba(155, 89, 182, 0.3)', borderRadius: '8px' }}
+          title="iframe test - all components"
+        />
+      </div>
+
       <div className="info">
         <h3>使い方</h3>
         <p>各カウンターの + / - ボタンをクリックして、カウンターを操作できます。</p>
         <p>
           すべてのコンポーネントが標準のWeb Components
           APIを使用しているため、Reactアプリケーション内でシームレスに動作します。
+        </p>
+        <p>
+          <strong>iframe-serverを起動する:</strong> プロジェクトルートで <code>mise iframe-server</code> を実行してください。
         </p>
       </div>
     </div>
