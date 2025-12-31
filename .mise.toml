@@ -85,6 +85,10 @@ bundle exec rails db:create db:migrate
 description = "Setup Go demo (build & copy components)"
 run = "cd demo/go && ./setup_components.sh"
 
+[tasks."demo:setup-iframe"]
+description = "Setup iframe-server (build & copy components)"
+run = "cd packages/iframe-server && ./setup_components.sh"
+
 # =============================================================================
 # Demo Tasks - Development Servers
 # =============================================================================
@@ -109,6 +113,11 @@ description = "🚀 Go Demo - http://localhost:8080"
 run = "cd demo/go && go run main.go"
 alias = "dgo"
 
+[tasks."iframe-server"]
+description = "🚀 iframe Test Server - http://localhost:4001"
+run = "cd packages/iframe-server && pnpm dev"
+alias = "iframe"
+
 # =============================================================================
 # Demo Tasks - Shortcuts
 # =============================================================================
@@ -119,12 +128,13 @@ alias = "dl"
 run = """
 echo "📦 Available Demos:"
 echo ""
-echo "  React      → mise demo:react    (port 3000)"
-echo "  Vanilla JS → mise demo:vanilla  (port 3001)"
-echo "  Rails      → mise demo:rails    (port 3002)"
-echo "  Go         → mise demo:go       (port 8080)"
+echo "  React      → mise demo:react      (port 3000)"
+echo "  Vanilla JS → mise demo:vanilla    (port 3001)"
+echo "  Rails      → mise demo:rails      (port 3002)"
+echo "  Go         → mise demo:go         (port 8080)"
+echo "  iframe     → mise iframe-server   (port 4001)"
 echo ""
-echo "💡 Tip: Setup Rails/Go demos first with 'mise demo:setup'"
+echo "💡 Tip: Setup Rails/Go/iframe demos first with 'mise demo:setup'"
 echo "💡 Run multiple demos: mise demo:frontend OR mise demo:backend"
 """
 
