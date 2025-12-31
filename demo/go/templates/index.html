@@ -54,11 +54,29 @@
         ></svelte-dropdown>
     </div>
 
+    <h2 style="color: #3498db; margin-bottom: 1rem;">iframe Test (Cross-Origin)</h2>
+    <p>
+        以下のiframeは別のポート（4001）で動作するiframe-serverからコンポーネントを読み込んでいます。<br />
+        クロスオリジン環境でのWeb Componentsの動作を確認できます。
+    </p>
+    <div style="margin: 2rem 0; padding: 1rem; background: rgba(155, 89, 182, 0.05); border-radius: 8px;">
+        <iframe
+            src="http://localhost:4001/all"
+            width="100%"
+            height="600"
+            style="border: 2px solid rgba(155, 89, 182, 0.3); border-radius: 8px; display: block; width: 100%;"
+            title="iframe test - all components"
+        ></iframe>
+    </div>
+
     <div class="info">
         <h3>使い方</h3>
         <p>各カウンターの + / - ボタンをクリックして、カウンターを操作できます。</p>
         <p>Goのhtml/templateでHTMLを生成し、Web Componentsでインタラクティブ性を追加します。</p>
         <p>Goの標準ライブラリだけで、モダンなインタラクティブWebアプリケーションを構築できます。</p>
+        <p>
+            <strong>iframe-serverを起動する:</strong> プロジェクトルートで <code>mise iframe-server</code> を実行してください。
+        </p>
     </div>
 </div>
 {{end}}

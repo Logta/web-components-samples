@@ -70,3 +70,15 @@ h1 {
   text-align: left;
   margin: 0.5rem 0;
 }
+
+.iframe-container {
+  margin: 2rem 0;
+  padding: 1rem;
+  background: rgba(155, 89, 182, 0.05);
+  border-radius: 8px;
+}
+
+.iframe-container iframe {
+  display: block;
+  width: 100%;
+}
