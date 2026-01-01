@@ -1,5 +1,5 @@
 import { LitElement } from 'lit';
-import { tailwindStyles } from '../styles/tailwind';
+import { tailwindStyles } from './styles/tailwind';
 
 /**
  * Tailwind CSSが適用されたベースエレメント

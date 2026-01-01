@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
-import './lit-tailwind-counter.ts';
-import type { LitTailwindCounter } from './lit-tailwind-counter.ts';
+import './counter.ts';
+import type { LitTailwindCounter } from './counter.ts';
 
 interface LitTailwindCounterProps {
   count: number;
