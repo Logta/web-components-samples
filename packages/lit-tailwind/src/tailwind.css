@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@theme {
+  /* カスタムテーマ設定（必要に応じて追加） */
+  --font-family-display: "Inter", "system-ui", "sans-serif";
+  --color-brand-primary: #8b5cf6;
+  --color-brand-secondary: #ec4899;
+}

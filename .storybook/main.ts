@@ -12,10 +12,19 @@ const config: StorybookConfig = {
     options: {},
   },
   async viteFinal(config) {
+    // Tailwind CSS v4プラグインの動的インポート
+    let tailwindcss;
+    try {
+      tailwindcss = (await import('@tailwindcss/vite')).default;
+    } catch (e) {
+      console.warn('Tailwind CSS v4 plugin not found, skipping...');
+    }
+
     return {
       ...config,
       plugins: [
         ...(config.plugins || []),
+        ...(tailwindcss ? [tailwindcss()] : []),
         react(),
         svelte({
           compilerOptions: {
