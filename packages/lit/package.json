@@ -8,7 +8,17 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./react": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./lit": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     }
   },
   "scripts": {
@@ -17,9 +27,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "lit": "^3.1.0"
+    "lit": "^3.1.0",
+    "@lit/react": "^1.0.5"
   },
   "devDependencies": {
-    "vite": "catalog:"
+    "vite": "catalog:",
+    "react": "^18.2.0",
+    "@types/react": "^18.2.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
   }
 }
