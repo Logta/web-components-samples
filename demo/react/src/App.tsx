@@ -1,73 +1,125 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
-// Web Componentsをインポート
+// React コンポーネントをインポート
+import { Counter, Button, Dropdown, Modal } from '@web-components-samples/lit';
+import { TailwindCounter } from '@web-components-samples/lit-tailwind';
+
+// Web Componentsをインポート（従来のサンプル用）
 import '@web-components-samples/vanilla';
 import '@web-components-samples/react';
-import '@web-components-samples/lit';
 import '@web-components-samples/preact';
 import '@web-components-samples/svelte';
 
 function App() {
+  const [count, setCount] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState('');
+
   useEffect(() => {
-    console.log('Web Components loaded in React environment');
+    console.log('React Components with @lit/react loaded');
   }, []);
+
+  const dropdownOptions = [
+    { label: 'React', value: 'react' },
+    { label: 'Lit', value: 'lit' },
+    { label: 'Vue', value: 'vue' },
+    { label: 'Svelte', value: 'svelte' },
+  ];
+
+  const handleButtonClick = (variant: string) => {
+    alert(`${variant} button clicked!`);
+  };
+
+  const handleDropdownChange = (event: CustomEvent<{ value: string; option: any }>) => {
+    setSelectedValue(event.detail.value);
+    console.log('Selected:', event.detail);
+  };
 
   return (
     <div className="app">
-      <h1>Web Components in React Demo</h1>
-      <p>このデモでは、React環境で5つの異なるWeb Componentsを使用しています。</p>
+      <h1>React + Lit Components Demo</h1>
+      <p>このデモでは、@lit/reactを使用してLitコンポーネントをReactコンポーネントとして使用しています。</p>
 
-      <h2>Counter Components</h2>
-      <div className="counters-grid">
-        <my-counter count={0}></my-counter>
-        <react-counter count={0}></react-counter>
-        <lit-counter count={0}></lit-counter>
-        <preact-counter count={0}></preact-counter>
-        <svelte-counter count={0}></svelte-counter>
-      </div>
+      <section style={{ marginBottom: '2rem' }}>
+        <h2>React Components (@lit/react)</h2>
+        
+        <h3>カウンター</h3>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }}>
+          <Counter count={count} />
+          <TailwindCounter count={count} />
+          <button onClick={() => setCount(count + 1)}>React Increment</button>
+          <button onClick={() => setCount(count - 1)}>React Decrement</button>
+        </div>
 
-      <h2>Modal Components</h2>
-      <div className="modals-grid">
-        <vanilla-modal></vanilla-modal>
-        <react-modal></react-modal>
-        <lit-modal></lit-modal>
-        <preact-modal></preact-modal>
-        <svelte-modal></svelte-modal>
-      </div>
+        <h3>ボタン</h3>
+        <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+          <Button label="Primary" variant="primary" onButtonClick={() => handleButtonClick('Primary')} />
+          <Button label="Secondary" variant="secondary" onButtonClick={() => handleButtonClick('Secondary')} />
+          <Button label="Success" variant="success" onButtonClick={() => handleButtonClick('Success')} />
+          <Button label="Danger" variant="danger" onButtonClick={() => handleButtonClick('Danger')} />
+        </div>
 
-      <h2>Button Components</h2>
-      <div className="buttons-grid">
-        <vanilla-button label="Vanilla Button"></vanilla-button>
-        <react-button label="React Button"></react-button>
-        <lit-button label="Lit Button"></lit-button>
-        <preact-button label="Preact Button"></preact-button>
-        <svelte-button label="Svelte Button"></svelte-button>
-      </div>
+        <h3>ドロップダウン</h3>
+        <div style={{ marginBottom: '1rem' }}>
+          <Dropdown 
+            options={JSON.stringify(dropdownOptions)}
+            placeholder="Select a framework"
+            selected={selectedValue}
+            onChange={handleDropdownChange}
+          />
+          <p>Selected: {selectedValue || 'None'}</p>
+        </div>
 
-      <h2>Dropdown Components</h2>
-      <div className="dropdowns-grid">
-        <vanilla-dropdown
-          options='[{"label": "Option 1", "value": "1"}, {"label": "Option 2", "value": "2"}, {"label": "Option 3", "value": "3"}]'
-          placeholder="Vanilla Dropdown"
-        ></vanilla-dropdown>
-        <react-dropdown
-          options='[{"label": "React", "value": "react"}, {"label": "Svelte", "value": "svelte"}, {"label": "Vue", "value": "vue"}]'
-          placeholder="React Dropdown"
-        ></react-dropdown>
-        <lit-dropdown
-          options='[{"label": "Lit", "value": "lit"}, {"label": "Fast", "value": "fast"}, {"label": "Stencil", "value": "stencil"}]'
-          placeholder="Lit Dropdown"
-        ></lit-dropdown>
-        <preact-dropdown
-          options='[{"label": "Preact", "value": "preact"}, {"label": "React", "value": "react"}, {"label": "Inferno", "value": "inferno"}]'
-          placeholder="Preact Dropdown"
-        ></preact-dropdown>
-        <svelte-dropdown
-          options='[{"label": "Svelte", "value": "svelte"}, {"label": "SolidJS", "value": "solid"}, {"label": "Qwik", "value": "qwik"}]'
-          placeholder="Svelte Dropdown"
-        ></svelte-dropdown>
-      </div>
+        <h3>モーダル</h3>
+        <div style={{ marginBottom: '1rem' }}>
+          <button onClick={() => setIsModalOpen(true)}>Open React Modal</button>
+          <Modal 
+            open={isModalOpen}
+            onModalClose={() => setIsModalOpen(false)}
+          />
+        </div>
+      </section>
+
+      <section style={{ marginBottom: '2rem' }}>
+        <h2>従来のWeb Components（比較用）</h2>
+        
+        <h3>Counter Components</h3>
+        <div className="counters-grid">
+          <my-counter count={0}></my-counter>
+          <react-counter count={0}></react-counter>
+          <preact-counter count={0}></preact-counter>
+          <svelte-counter count={0}></svelte-counter>
+        </div>
+
+        <h3>Button Components</h3>
+        <div className="buttons-grid">
+          <vanilla-button label="Vanilla Button"></vanilla-button>
+          <react-button label="React Button"></react-button>
+          <preact-button label="Preact Button"></preact-button>
+          <svelte-button label="Svelte Button"></svelte-button>
+        </div>
+
+        <h3>Dropdown Components</h3>
+        <div className="dropdowns-grid">
+          <vanilla-dropdown
+            options='[{"label": "Option 1", "value": "1"}, {"label": "Option 2", "value": "2"}, {"label": "Option 3", "value": "3"}]'
+            placeholder="Vanilla Dropdown"
+          ></vanilla-dropdown>
+          <react-dropdown
+            options='[{"label": "React", "value": "react"}, {"label": "Svelte", "value": "svelte"}, {"label": "Vue", "value": "vue"}]'
+            placeholder="React Dropdown"
+          ></react-dropdown>
+          <preact-dropdown
+            options='[{"label": "Preact", "value": "preact"}, {"label": "React", "value": "react"}, {"label": "Inferno", "value": "inferno"}]'
+            placeholder="Preact Dropdown"
+          ></preact-dropdown>
+          <svelte-dropdown
+            options='[{"label": "Svelte", "value": "svelte"}, {"label": "SolidJS", "value": "solid"}, {"label": "Qwik", "value": "qwik"}]'
+            placeholder="Svelte Dropdown"
+          ></svelte-dropdown>
+        </div>
+      </section>
 
       <h2>iframe Test (Cross-Origin)</h2>
       <p>
@@ -87,11 +139,21 @@ function App() {
 
       <div className="info">
         <h3>使い方</h3>
-        <p>各カウンターの + / - ボタンをクリックして、カウンターを操作できます。</p>
-        <p>
-          すべてのコンポーネントが標準のWeb Components
-          APIを使用しているため、Reactアプリケーション内でシームレスに動作します。
-        </p>
+        <h4>React コンポーネント (@lit/react)</h4>
+        <ul>
+          <li><strong>完全なTypeScript型サポート</strong>: IntelliSenseと型チェックが利用可能</li>
+          <li><strong>Reactライフサイクル統合</strong>: propsの変更が自動的に反映</li>
+          <li><strong>イベントハンドリング</strong>: React標準のイベントハンドラーとして使用可能</li>
+          <li><strong>状態管理連携</strong>: React Stateと自然に連携</li>
+        </ul>
+        
+        <h4>従来のWeb Components</h4>
+        <ul>
+          <li><strong>直接のDOM操作</strong>: HTML属性として値を設定</li>
+          <li><strong>カスタムイベント</strong>: addEventListener で対応</li>
+          <li><strong>フレームワーク非依存</strong>: どの環境でも動作</li>
+        </ul>
+
         <p>
           <strong>iframe-serverを起動する:</strong> プロジェクトルートで <code>mise iframe-server</code> を実行してください。
         </p>
