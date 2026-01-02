@@ -79,9 +79,6 @@ importers:
       '@lit/react':
         specifier: ^1.0.8
         version: 1.0.8(@types/react@18.3.27)
-      '@r2wc/react-to-web-component':
-        specifier: ^2.1.0
-        version: 2.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@web-components-samples/lit':
         specifier: workspace:*
         version: link:../../packages/lit
