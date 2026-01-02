@@ -6,4 +6,8 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  resolve: {
+    // Ensure only one instance of React, React DOM, and Lit is used
+    dedupe: ['react', 'react-dom', 'lit', '@lit/react'],
+  },
 });

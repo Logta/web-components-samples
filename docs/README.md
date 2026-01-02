@@ -27,6 +27,10 @@
 6.  **[ADR-003: iframeコンテンツ配信用テストサーバーの導入](./architecture/adr-003-iframe-testing-server.md)**
     *   BunとHonoを使用したiframeコンテンツ配信用テストサーバーの設計と技術選定。
 
+7.  **[Lit + Zag.js UIライブラリ設計仕様書](./architecture/lit-zagjs-ui-library-specification.md)**
+    *   LitとZag.jsを組み合わせたUIコンポーネントライブラリの技術仕様。
+    *   三層アーキテクチャ（Logic/View/Style）、Spread Directive、共通Baseクラス、アクセシビリティ対応の実装パターン。
+
 ### 🐛 トラブルシューティング
 
 開発中に遭遇した一般的な問題の解決策。
@@ -61,6 +65,11 @@
     *   ReactとSvelteのDropdownで`disabled`属性が認識されない問題。
     *   Web ComponentsのBoolean属性の仕様と`@r2wc`ライブラリの問題。
     *   MutationObserverを使った解決方法。
+
+10. **[Reactの複数インスタンスエラー](./troubleshooting/react-multiple-instances.md)**
+    *   React Demoで"Invalid hook call"エラーが発生する問題。
+    *   Reactの複数バージョンが共存することによる依存関係の衝突。
+    *   Vite設定の`dedupe`オプションによる解決方法。
 
 ## 🗂️ New Project Documentation Structure
 
@@ -101,7 +110,7 @@ web-components-samples/
 
 問題の症状に応じて、該当するトラブルシューティングガイドを参照してください：
 
-- **"specifier 'react' は露出していますが..."** → [トラブルシューティング #1](./01-react-dependencies.md)
+- **"specifier 'react' は露出していますが..."** → [トラブルシューティング #1](./troubleshooting/react-dependencies.md)
 - **"process is not defined"** → [トラブルシューティング #2](./troubleshooting/process-env.md)
 - **TypeScript の型エラー** → [トラブルシューティング #3](./troubleshooting/react-typescript-error.md)
 - **スタイルが適用されない** → [トラブルシューティング #4](./troubleshooting/react-css-not-applied.md)
@@ -110,6 +119,7 @@ web-components-samples/
 - **React の属性が props に渡されない** → [トラブルシューティング #7](./troubleshooting/react-webcomponent-props.md)
 - **Dropdown をクリックしても選択肢が表示されない** → [トラブルシューティング #8](./troubleshooting/dropdown-event-propagation.md)
 - **Dropdown の disabled 属性が効かない** → [トラブルシューティング #9](./troubleshooting/dropdown-disabled-attribute.md)
+- **"Invalid hook call" エラー** → [トラブルシューティング #10](./troubleshooting/react-multiple-instances.md)
 
 ### よくある質問
 
@@ -125,9 +135,10 @@ web-components-samples/
 
 ### ビルド設定関連
 
-- [#1: React 依存関係の解決](./01-react-dependencies.md)
-- [#2: process.env 未定義エラー](./02-process-env.md)
-- [#5: Svelte 内部モジュール解決エラー](./05-svelte-internal-module-resolution.md)
+- [#1: React 依存関係の解決](./troubleshooting/react-dependencies.md)
+- [#2: process.env 未定義エラー](./troubleshooting/process-env.md)
+- [#5: Svelte 内部モジュール解決エラー](./troubleshooting/svelte-module-resolution.md)
+- [#10: React 複数インスタンスエラー](./troubleshooting/react-multiple-instances.md)
 
 ### TypeScript/型エラー関連
 
@@ -142,8 +153,8 @@ web-components-samples/
 
 ### スタイリング関連
 
-- [#4: React CSS が適用されない](./04-react-css-not-applied.md)
-- [なぜ React Web Component だけ CSS 注入が必要なのか？](./why-react-css-injection.md)
+- [#4: React CSS が適用されない](./troubleshooting/react-css-not-applied.md)
+- [解説: React CSS 注入](./architecture/explanation-react-css-injection.md)
 
 ### パフォーマンス・最適化関連
 

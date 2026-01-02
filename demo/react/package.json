@@ -15,12 +15,16 @@
     "@web-components-samples/lit-tailwind": "workspace:*",
     "@web-components-samples/preact": "workspace:*",
     "@web-components-samples/svelte": "workspace:*",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "lit": "^3.1.0",
+    "@lit/react": "^1.0.8",
+    "@headlessui/react": "^2.2.9",
+    "@r2wc/react-to-web-component": "^2.1.0",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "devDependencies": {
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "^5.1.2",
     "typescript": "catalog:",
     "vite": "catalog:"

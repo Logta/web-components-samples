@@ -5,6 +5,8 @@
   "description": "Web Components samples with Vanilla JS, Lit, and React",
   "scripts": {
     "dev": "pnpm -r dev",
+    "dev:react": "pnpm --filter @demo/react dev",
+    "dev:vanilla": "pnpm --filter @demo/vanillajs dev",
     "build": "pnpm -r build",
     "preview": "pnpm -r preview",
     "storybook": "storybook dev -p 6006",
@@ -38,5 +40,15 @@
     "svelte": "^5.46.1",
     "tailwindcss": "^4.1.18",
     "typescript": "catalog:"
+  },
+  "pnpm": {
+    "packageExtensions": {
+      "@headlessui/react": {
+        "peerDependencies": {
+          "@types/react": "*",
+          "@types/react-dom": "*"
+        }
+      }
+    }
   }
 }

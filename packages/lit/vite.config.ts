@@ -8,10 +8,12 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['lit'],
+      external: ['lit', 'react', '@lit/react'],
       output: {
         globals: {
           lit: 'Lit',
+          react: 'React',
+          '@lit/react': 'LitReact',
         },
       },
     },

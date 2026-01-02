@@ -168,6 +168,44 @@ declare namespace React {
 
 詳細は [docs/architecture/explanation-framework-slot-handling.md](docs/architecture/explanation-framework-slot-handling.md) を参照してください。
 
+### 8. React の複数インスタンス問題（React Demo）
+
+**必須**: React Demo は `@lit/react` との互換性のため、React 18 を使用すること。
+
+React Demo の `package.json` でReact 18を指定：
+
+```json
+{
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5"
+  }
+}
+```
+
+React Demo の `vite.config.ts` に以下の設定を追加：
+
+```typescript
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    dedupe: ['react', 'react-dom'], // 重複を排除
+  },
+});
+```
+
+**理由**:
+
+- `@web-components-samples/lit` パッケージは `@lit/react` を使用しており、React 18 をメインサポート
+- 異なる React バージョン（React 18 と 19）が共存すると、"Invalid hook call" エラーが発生する
+- React 18 に統一することで、依存関係の衝突を回避
+
+詳細は [docs/troubleshooting/react-multiple-instances.md](docs/troubleshooting/react-multiple-instances.md) を参照してください。
+
 ## プロジェクト構造
 
 ```
@@ -273,6 +311,13 @@ mise clean              # ビルド成果物削除
 - **状況**: React を Web Component 化した際に、`<my-react-component>ここにコンテンツ</my-react-component>` のように子要素を渡しても表示されない。
 - **解決策**: React ではスロットは自動でマッピングされないため、手動で実装する必要がある。`useEffect` を使って DOM からスロット要素を取得し、State にセットする。
 - **詳細**: [docs/architecture/explanation-framework-slot-handling.md](docs/architecture/explanation-framework-slot-handling.md)
+
+#### 問題 8: React の複数インスタンスエラー（"Invalid hook call"）
+
+- **状況**: React Demo で `@web-components-samples/lit` を使用すると "Invalid hook call" エラーが発生
+- **原因**: React 18 と React 19 が共存し、複数の React インスタンスが生成される
+- **解決策**: React Demo を React 18 にダウングレードし、Vite 設定で `dedupe: ['react', 'react-dom']` を追加
+- **詳細**: [docs/troubleshooting/react-multiple-instances.md](docs/troubleshooting/react-multiple-instances.md)
 
 ### トラブルシューティング文書の追加方法
 

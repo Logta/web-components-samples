@@ -8,38 +8,45 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/react/index.js",
+      "require": "./dist/react/index.cjs"
     },
     "./react": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/react/index.js",
+      "require": "./dist/react/index.cjs"
     },
-    "./lit": {
-      "types": "./dist/counter/counter.d.ts",
-      "import": "./dist/counter/counter.js"
+    "./wc": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./bundle": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/bundle/index.js"
     }
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && vite build --config vite.config.bundle.ts",
+    "build": "tsc && pnpm build:wc && pnpm build:react && pnpm build:bundle",
+    "build:wc": "tsc && vite build",
+    "build:react": "tsc && vite build --config vite.config.react.ts",
+    "build:bundle": "tsc && vite build --config vite.config.bundle.ts",
     "preview": "vite preview"
   },
   "dependencies": {
     "lit": "^3.1.0",
-    "@lit/react": "^1.0.5"
+    "@lit/react": "^1.0.8"
   },
   "devDependencies": {
-    "vite": "^7.3.0",
-    "typescript": "^5.9.3",
+    "vite": "catalog:",
+    "typescript": "catalog:",
     "tailwindcss": "^4.1.18",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/vite": "^4.1.18",
-    "react": "^19.2.3",
-    "@types/react": "^19.2.7"
+    "react": "catalog:",
+    "@types/react": "catalog:"
   },
   "peerDependencies": {
-    "react": "^18.0.0 || ^19.0.0"
+    "react": "^18.0.0"
   }
 }

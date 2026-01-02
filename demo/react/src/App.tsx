@@ -3,7 +3,7 @@ import './App.css';
 
 // React コンポーネントをインポート
 import { Counter, Button, Dropdown, Modal } from '@web-components-samples/lit';
-import { TailwindCounter } from '@web-components-samples/lit-tailwind';
+import { TailwindCounter } from '@web-components-samples/lit-tailwind/react';
 
 // Web Componentsをインポート（従来のサンプル用）
 import '@web-components-samples/vanilla';
