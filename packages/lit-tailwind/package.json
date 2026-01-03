@@ -34,17 +34,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "lit": "^3.1.0",
-    "@lit/react": "^1.0.8"
+    "@lit/react": "^1.0.8",
+    "@zag-js/core": "^1.31.1",
+    "@zag-js/toggle": "^1.31.1",
+    "@zag-js/types": "^1.32.0",
+    "lit": "^3.1.0"
   },
   "devDependencies": {
-    "vite": "catalog:",
-    "typescript": "catalog:",
-    "tailwindcss": "^4.1.18",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/vite": "^4.1.18",
+    "@types/react": "catalog:",
     "react": "catalog:",
-    "@types/react": "catalog:"
+    "tailwindcss": "^4.1.18",
+    "typescript": "catalog:",
+    "vite": "catalog:"
   },
   "peerDependencies": {
     "react": "^18.0.0"
