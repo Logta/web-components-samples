@@ -7,7 +7,6 @@ interface LitDropdownProps {
   selected: string;
   placeholder: string;
   disabled: boolean;
-  onvaluechange?: string;
 }
 
 const fruitOptions = [
@@ -45,10 +44,6 @@ const meta: Meta<LitDropdownProps> = {
     disabled: {
       control: 'boolean',
       description: 'Disabled state',
-    },
-    onvaluechange: {
-      control: 'text',
-      description: 'JavaScript code to execute when value changes (receives value and option parameters)',
     },
   },
 };
@@ -130,7 +125,6 @@ export const WithCallback: Story = {
     selected: '',
     placeholder: 'Select a fruit',
     disabled: false,
-    onvaluechange: "alert('You selected: ' + value + ' (' + option.label + ')')",
   },
   render: (args: LitDropdownProps) => {
     const element = document.createElement('lit-dropdown') as LitDropdown;
@@ -138,9 +132,10 @@ export const WithCallback: Story = {
     element.selected = args.selected;
     element.placeholder = args.placeholder;
     element.disabled = args.disabled;
-    if (args.onvaluechange) {
-      element.onvaluechange = args.onvaluechange;
-    }
+    element.addEventListener('change', (e: Event) => {
+      const customEvent = e as CustomEvent<{ value: string; option: { label: string; value: string } }>;
+      alert('You selected: ' + customEvent.detail.value + ' (' + customEvent.detail.option.label + ')');
+    });
     return element;
   },
 };
@@ -151,7 +146,6 @@ export const WithConsoleLog: Story = {
     selected: '',
     placeholder: 'Choose a color',
     disabled: false,
-    onvaluechange: "console.log('Selected value:', value, 'Option:', option)",
   },
   render: (args: LitDropdownProps) => {
     const element = document.createElement('lit-dropdown') as LitDropdown;
@@ -159,9 +153,10 @@ export const WithConsoleLog: Story = {
     element.selected = args.selected;
     element.placeholder = args.placeholder;
     element.disabled = args.disabled;
-    if (args.onvaluechange) {
-      element.onvaluechange = args.onvaluechange;
-    }
+    element.addEventListener('change', (e: Event) => {
+      const customEvent = e as CustomEvent<{ value: string; option: { label: string; value: string } }>;
+      console.log('Selected value:', customEvent.detail.value, 'Option:', customEvent.detail.option);
+    });
     return element;
   },
 };

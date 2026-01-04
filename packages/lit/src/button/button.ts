@@ -17,26 +17,14 @@ export class LitButton extends LitElement {
   @property({ type: Boolean })
   disabled: boolean = false;
 
-  @property({ type: String })
-  onbuttonclick: string = '';
-
-  private handleClick() {
+  private handleClick(event: MouseEvent) {
     if (!this.disabled) {
       // カスタムイベントを発行
       this.dispatchEvent(new CustomEvent('button-click', {
+        detail: { originalEvent: event },
         bubbles: true,
         composed: true,
       }));
-
-      // onbuttonclick属性が設定されている場合は実行
-      if (this.onbuttonclick) {
-        try {
-          const fn = new Function(this.onbuttonclick);
-          fn();
-        } catch (e) {
-          console.error('Error executing onbuttonclick:', e);
-        }
-      }
     }
   }
 

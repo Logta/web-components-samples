@@ -22,9 +22,6 @@ export class LitDropdown extends LitElement {
   @property({ type: Boolean })
   disabled: boolean = false;
 
-  @property({ type: String })
-  onvaluechange: string = '';
-
   @state()
   private isOpen: boolean = false;
 
@@ -76,16 +73,6 @@ export class LitDropdown extends LitElement {
         bubbles: true,
         composed: true,
       }));
-
-      // onvaluechange属性が設定されている場合は実行
-      if (this.onvaluechange) {
-        try {
-          const fn = new Function('value', 'option', this.onvaluechange);
-          fn(option.value, option);
-        } catch (e) {
-          console.error('Error executing onvaluechange:', e);
-        }
-      }
     }
   }
 
