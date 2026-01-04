@@ -83,6 +83,26 @@ declare namespace React {
         React.HTMLAttributes<HTMLElement> & { options?: string; selected?: string; placeholder?: string; disabled?: boolean },
         HTMLElement
       >;
+      'lit-tailwind-counter': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { count?: number },
+        HTMLElement
+      >;
+      'lit-tailwind-button': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { label?: string; variant?: string; size?: string; disabled?: boolean },
+        HTMLElement
+      >;
+      'lit-tailwind-toggle': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { pressed?: boolean; disabled?: boolean },
+        HTMLElement
+      >;
+      'lit-tailwind-dropdown': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { options?: string; selected?: string; placeholder?: string; disabled?: boolean },
+        HTMLElement
+      >;
+      'lit-tailwind-modal': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { open?: boolean },
+        HTMLElement
+      >;
     }
   }
 }

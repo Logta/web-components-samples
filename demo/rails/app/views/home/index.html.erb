@@ -7,6 +7,7 @@
     <my-counter count="0"></my-counter>
     <react-counter count="0"></react-counter>
     <lit-counter count="0"></lit-counter>
+    <lit-tailwind-counter count="0"></lit-tailwind-counter>
     <preact-counter count="0"></preact-counter>
     <svelte-counter count="0"></svelte-counter>
   </div>
@@ -16,6 +17,7 @@
     <vanilla-modal></vanilla-modal>
     <react-modal></react-modal>
     <lit-modal></lit-modal>
+    <lit-tailwind-modal></lit-tailwind-modal>
     <preact-modal></preact-modal>
     <svelte-modal></svelte-modal>
   </div>
@@ -25,8 +27,14 @@
     <vanilla-button label="Vanilla Button"></vanilla-button>
     <react-button label="React Button"></react-button>
     <lit-button label="Lit Button"></lit-button>
+    <lit-tailwind-button label="Tailwind Button"></lit-tailwind-button>
     <preact-button label="Preact Button"></preact-button>
     <svelte-button label="Svelte Button"></svelte-button>
+  </div>
+
+  <h2 style="color: #e74c3c; margin-bottom: 1rem;">Toggle Components</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0; padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1);">
+    <lit-tailwind-toggle></lit-tailwind-toggle>
   </div>
 
   <h2 style="color: #e74c3c; margin-bottom: 1rem;">Dropdown Components</h2>
@@ -43,6 +51,10 @@
       options='[{"label": "Lit", "value": "lit"}, {"label": "Fast", "value": "fast"}, {"label": "Stencil", "value": "stencil"}]'
       placeholder="Lit Dropdown"
     ></lit-dropdown>
+    <lit-tailwind-dropdown
+      options='[{"label": "Tailwind", "value": "tailwind"}, {"label": "Bootstrap", "value": "bootstrap"}, {"label": "Material", "value": "material"}]'
+      placeholder="Tailwind Dropdown"
+    ></lit-tailwind-dropdown>
     <preact-dropdown
       options='[{"label": "Preact", "value": "preact"}, {"label": "React", "value": "react"}, {"label": "Inferno", "value": "inferno"}]'
       placeholder="Preact Dropdown"

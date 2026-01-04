@@ -1,20 +1,32 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
-// React コンポーネントをインポート
+// Lit React コンポーネントをインポート
 import { Counter, Button, Dropdown, Modal } from '@web-components-samples/lit';
-import { TailwindCounter } from '@web-components-samples/lit-tailwind/react';
+
+// Lit Tailwind React コンポーネントをインポート
+import {
+  TailwindCounter,
+  TailwindButton,
+  TailwindDropdown,
+  TailwindModal,
+  TailwindToggle
+} from '@web-components-samples/lit-tailwind/react';
 
 // Web Componentsをインポート（従来のサンプル用）
 import '@web-components-samples/vanilla';
 import '@web-components-samples/react';
 import '@web-components-samples/preact';
 import '@web-components-samples/svelte';
+import '@web-components-samples/lit-tailwind/wc';
 
 function App() {
   const [count, setCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTailwindModalOpen, setIsTailwindModalOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState('');
+  const [tailwindSelectedValue, setTailwindSelectedValue] = useState('');
+  const [togglePressed, setTogglePressed] = useState(false);
 
   useEffect(() => {
     console.log('React Components with @lit/react loaded');
@@ -36,18 +48,22 @@ function App() {
     console.log('Selected:', event.detail);
   };
 
+  const handleTailwindDropdownChange = (event: CustomEvent<{ value: string; option: any }>) => {
+    setTailwindSelectedValue(event.detail.value);
+    console.log('Tailwind Selected:', event.detail);
+  };
+
   return (
     <div className="app">
       <h1>React + Lit Components Demo</h1>
       <p>このデモでは、@lit/reactを使用してLitコンポーネントをReactコンポーネントとして使用しています。</p>
 
       <section style={{ marginBottom: '2rem' }}>
-        <h2>React Components (@lit/react)</h2>
-        
+        <h2>Lit Components (@lit/react)</h2>
+
         <h3>カウンター</h3>
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }}>
           <Counter count={count} />
-          <TailwindCounter count={count} />
           <button onClick={() => setCount(count + 1)}>React Increment</button>
           <button onClick={() => setCount(count - 1)}>React Decrement</button>
         </div>
@@ -62,7 +78,7 @@ function App() {
 
         <h3>ドロップダウン</h3>
         <div style={{ marginBottom: '1rem' }}>
-          <Dropdown 
+          <Dropdown
             options={JSON.stringify(dropdownOptions)}
             placeholder="Select a framework"
             selected={selectedValue}
@@ -73,8 +89,8 @@ function App() {
 
         <h3>モーダル</h3>
         <div style={{ marginBottom: '1rem' }}>
-          <button onClick={() => setIsModalOpen(true)}>Open React Modal</button>
-          <Modal 
+          <button onClick={() => setIsModalOpen(true)}>Open Lit Modal</button>
+          <Modal
             open={isModalOpen}
             onModalClose={() => setIsModalOpen(false)}
           />
@@ -82,14 +98,63 @@ function App() {
       </section>
 
       <section style={{ marginBottom: '2rem' }}>
+        <h2>Lit Tailwind Components (@lit/react + Zag.js)</h2>
+
+        <h3>カウンター</h3>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }}>
+          <TailwindCounter count={count} />
+          <button onClick={() => setCount(count + 1)}>React Increment</button>
+          <button onClick={() => setCount(count - 1)}>React Decrement</button>
+        </div>
+
+        <h3>ボタン</h3>
+        <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+          <TailwindButton label="Primary" variant="primary" onButtonClick={() => handleButtonClick('Tailwind Primary')} />
+          <TailwindButton label="Secondary" variant="secondary" onButtonClick={() => handleButtonClick('Tailwind Secondary')} />
+          <TailwindButton label="Success" variant="success" onButtonClick={() => handleButtonClick('Tailwind Success')} />
+          <TailwindButton label="Danger" variant="danger" onButtonClick={() => handleButtonClick('Tailwind Danger')} />
+        </div>
+
+        <h3>トグル</h3>
+        <div style={{ marginBottom: '1rem' }}>
+          <TailwindToggle
+            pressed={togglePressed}
+            onPressedChange={(e: CustomEvent<{ pressed: boolean }>) => setTogglePressed(e.detail.pressed)}
+          />
+          <p>Toggle State: {togglePressed ? 'ON' : 'OFF'}</p>
+        </div>
+
+        <h3>ドロップダウン</h3>
+        <div style={{ marginBottom: '1rem' }}>
+          <TailwindDropdown
+            options={dropdownOptions}
+            placeholder="Select a framework"
+            selected={tailwindSelectedValue}
+            onChange={handleTailwindDropdownChange}
+          />
+          <p>Selected: {tailwindSelectedValue || 'None'}</p>
+        </div>
+
+        <h3>モーダル</h3>
+        <div style={{ marginBottom: '1rem' }}>
+          <button onClick={() => setIsTailwindModalOpen(true)}>Open Tailwind Modal</button>
+          <TailwindModal
+            open={isTailwindModalOpen}
+            onModalClose={() => setIsTailwindModalOpen(false)}
+          />
+        </div>
+      </section>
+
+      <section style={{ marginBottom: '2rem' }}>
         <h2>従来のWeb Components（比較用）</h2>
-        
+
         <h3>Counter Components</h3>
         <div className="counters-grid">
           <my-counter count={0}></my-counter>
           <react-counter count={0}></react-counter>
           <preact-counter count={0}></preact-counter>
           <svelte-counter count={0}></svelte-counter>
+          <lit-tailwind-counter count={0}></lit-tailwind-counter>
         </div>
 
         <h3>Button Components</h3>
@@ -98,6 +163,12 @@ function App() {
           <react-button label="React Button"></react-button>
           <preact-button label="Preact Button"></preact-button>
           <svelte-button label="Svelte Button"></svelte-button>
+          <lit-tailwind-button label="Tailwind Button"></lit-tailwind-button>
+        </div>
+
+        <h3>Toggle Components</h3>
+        <div className="buttons-grid">
+          <lit-tailwind-toggle></lit-tailwind-toggle>
         </div>
 
         <h3>Dropdown Components</h3>
@@ -118,6 +189,11 @@ function App() {
             options='[{"label": "Svelte", "value": "svelte"}, {"label": "SolidJS", "value": "solid"}, {"label": "Qwik", "value": "qwik"}]'
             placeholder="Svelte Dropdown"
           ></svelte-dropdown>
+        </div>
+
+        <h3>Modal Components</h3>
+        <div className="buttons-grid">
+          <lit-tailwind-modal></lit-tailwind-modal>
         </div>
       </section>
 

@@ -20,6 +20,7 @@ cp ../../packages/vanilla/dist/index.js public/components/vanilla.js
 cp ../../packages/react/dist/bundle/index.js public/components/react.js
 cp ../../packages/react/dist/bundle/index.css public/components/web-components-samples.css 2>/dev/null || true
 cp ../../packages/lit/dist/bundle/index.js public/components/lit.js
+cp ../../packages/lit-tailwind/dist/bundle/index.js public/components/lit-tailwind.js
 cp ../../packages/preact/dist/index.js public/components/preact.js
 cp ../../packages/preact/dist/index.css public/components/preact.css 2>/dev/null || true
 cp ../../packages/svelte/dist/bundle/index.js public/components/svelte.js
