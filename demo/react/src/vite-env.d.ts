@@ -106,3 +106,39 @@ declare namespace React {
     }
   }
 }
+
+// Lit パッケージの型宣言
+declare module '@web-components-samples/lit' {
+  import { LitElement } from 'lit';
+  import React from 'react';
+
+  export interface CounterProps {
+    count?: number;
+  }
+
+  export interface ButtonProps {
+    label?: string;
+    variant?: 'primary' | 'secondary' | 'success' | 'danger';
+    size?: 'small' | 'medium' | 'large';
+    disabled?: boolean;
+    onButtonClick?: (event: CustomEvent) => void;
+  }
+
+  export interface DropdownProps {
+    options?: string;
+    selected?: string;
+    placeholder?: string;
+    disabled?: boolean;
+    onChange?: (event: CustomEvent<{ value: string; option: any }>) => void;
+  }
+
+  export interface ModalProps {
+    open?: boolean;
+    onModalClose?: (event: CustomEvent) => void;
+  }
+
+  export const Counter: React.ComponentType<CounterProps>;
+  export const Button: React.ComponentType<ButtonProps>;
+  export const Dropdown: React.ComponentType<DropdownProps>;
+  export const Modal: React.ComponentType<ModalProps>;
+}

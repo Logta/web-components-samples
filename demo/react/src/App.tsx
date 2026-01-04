@@ -48,9 +48,10 @@ function App() {
     console.log('Selected:', event.detail);
   };
 
-  const handleTailwindDropdownChange = (event: CustomEvent<{ value: string; option: any }>) => {
-    setTailwindSelectedValue(event.detail.value);
-    console.log('Tailwind Selected:', event.detail);
+  const handleTailwindDropdownChange = (event: Event) => {
+    const customEvent = event as CustomEvent<{ value: string; option: any }>;
+    setTailwindSelectedValue(customEvent.detail.value);
+    console.log('Tailwind Selected:', customEvent.detail);
   };
 
   return (
@@ -119,7 +120,7 @@ function App() {
         <div style={{ marginBottom: '1rem' }}>
           <TailwindToggle
             pressed={togglePressed}
-            onPressedChange={(e: CustomEvent<{ pressed: boolean }>) => setTogglePressed(e.detail.pressed)}
+            onPressedChange={(e) => setTogglePressed((e as CustomEvent<{ pressed: boolean }>).detail.pressed)}
           />
           <p>Toggle State: {togglePressed ? 'ON' : 'OFF'}</p>
         </div>
