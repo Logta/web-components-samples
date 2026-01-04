@@ -9,6 +9,7 @@
     "dev:vanilla": "pnpm --filter @demo/vanillajs dev",
     "build": "pnpm -r build",
     "preview": "pnpm -r preview",
+    "typecheck": "pnpm -r typecheck",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "format": "biome format --write .",

@@ -31,7 +31,8 @@
     "build:wc": "tsc && vite build",
     "build:react": "tsc && vite build --config vite.config.react.ts",
     "build:bundle": "tsc && vite build --config vite.config.bundle.ts",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@lit/react": "^1.0.8",

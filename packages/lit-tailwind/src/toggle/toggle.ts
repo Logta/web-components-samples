@@ -11,10 +11,27 @@ import { useMachine, type SimpleService } from '../utils/use-machine';
  * Zag.jsのAPIを参考にした独自実装
  */
 
-interface ToggleApi {
-  pressed: boolean;
+/**
+ * ToggleボタンのDOM属性とイベントハンドラー
+ */
+interface ToggleRootProps {
+  type: 'button';
+  role: 'button';
+  'aria-pressed': boolean;
   disabled: boolean;
-  getRootProps: () => Record<string, any>;
+  onClick: () => void;
+}
+
+/**
+ * Toggle API
+ */
+interface ToggleApi {
+  /** トグルが押された状態かどうか */
+  readonly pressed: boolean;
+  /** トグルが無効化されているかどうか */
+  readonly disabled: boolean;
+  /** ルート要素（ボタン）のpropsを取得 */
+  getRootProps: () => ToggleRootProps;
 }
 
 @customElement('lit-tailwind-toggle')
@@ -58,25 +75,34 @@ export class LitTailwindToggle extends ZagElement<ToggleApi> {
 
   protected connectApi(service: SimpleService): ToggleApi {
     // 現在の値を取得（クロージャで固定しない）
-    const getCurrentPressed = () => service.context.get('pressed') ?? this.pressed;
-    const getCurrentDisabled = () => service.context.get('disabled') ?? this.disabled;
-    const onPressedChange = service.context.get('onPressedChange');
+    const getCurrentPressed = (): boolean => {
+      const value = service.context.get<boolean>('pressed');
+      return typeof value === 'boolean' ? value : this.pressed;
+    };
+    const getCurrentDisabled = (): boolean => {
+      const value = service.context.get<boolean>('disabled');
+      return typeof value === 'boolean' ? value : this.disabled;
+    };
+    const getOnPressedChange = (): ((pressed: boolean) => void) | undefined => {
+      return service.context.get<(pressed: boolean) => void>('onPressedChange');
+    };
 
     return {
-      get pressed() {
+      get pressed(): boolean {
         return getCurrentPressed();
       },
-      get disabled() {
+      get disabled(): boolean {
         return getCurrentDisabled();
       },
-      getRootProps: () => ({
-        type: 'button',
-        role: 'button',
+      getRootProps: (): ToggleRootProps => ({
+        type: 'button' as const,
+        role: 'button' as const,
         'aria-pressed': getCurrentPressed(),
         disabled: getCurrentDisabled(),
-        onClick: () => {
+        onClick: (): void => {
           const currentDisabled = getCurrentDisabled();
           const currentPressed = getCurrentPressed();
+          const onPressedChange = getOnPressedChange();
           if (!currentDisabled && onPressedChange) {
             onPressedChange(!currentPressed);
           }

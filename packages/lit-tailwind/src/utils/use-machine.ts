@@ -14,12 +14,42 @@ export interface UseMachineOptions {
 }
 
 /**
+ * 型安全なコンテキストアクセスを提供するクラス
+ */
+class TypeSafeContext {
+  private map: Map<string, unknown>;
+
+  constructor(initialContext?: Record<string, any>) {
+    this.map = new Map<string, unknown>();
+    if (initialContext) {
+      Object.entries(initialContext).forEach(([key, value]: [string, unknown]) => {
+        this.map.set(key, value);
+      });
+    }
+  }
+
+  get<T>(key: string): T | undefined {
+    const value = this.map.get(key);
+    return value !== undefined ? (value as T) : undefined;
+  }
+
+  set(key: string, value: unknown): void {
+    this.map.set(key, value);
+  }
+}
+
+/**
  * 簡易Service型
  * Zag.jsのService型を模倣した最小限の実装
  */
 export interface SimpleService {
-  context: Map<string, any>;
-  send: (event: any) => void;
+  /** コンテキスト値を保持するMap */
+  readonly context: {
+    get<T>(key: string): T | undefined;
+    set(key: string, value: unknown): void;
+  };
+  /** イベントを送信（現在は未実装） */
+  send: (event: unknown) => void;
 }
 
 /**
@@ -33,19 +63,12 @@ export function useMachine(
   _machine: Machine<any>,
   options: UseMachineOptions = {}
 ): SimpleService {
-  // コンテキストをMapとして保持
-  const contextMap = new Map<string, any>();
-
-  if (options.context) {
-    Object.entries(options.context).forEach(([key, value]) => {
-      contextMap.set(key, value);
-    });
-  }
+  const context = new TypeSafeContext(options.context);
 
   // 簡易的なServiceオブジェクトを返す
   return {
-    context: contextMap,
-    send: (_event: any) => {
+    context,
+    send: (_event: unknown): void => {
       // 現在はイベント送信は未実装
       // 必要に応じて拡張可能
     }
