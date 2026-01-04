@@ -18,7 +18,7 @@ import '@web-components-samples/vanilla';
 import '@web-components-samples/react';
 import '@web-components-samples/preact';
 import '@web-components-samples/svelte';
-import '@web-components-samples/lit-tailwind/wc';
+// Note: lit-tailwind/react を使用する場合、/wc は不要（自動的に登録される）
 
 function App() {
   const [count, setCount] = useState(0);
