@@ -3,7 +3,7 @@ packages:
   - "demo/*"
 
 catalog:
-  vite: 7.3.0
+  vite: 7.3.7
   typescript: 5.9.3
   # React 18 (for @lit/react compatibility)
   # Used by: demo/react, packages/lit, packages/lit-tailwind
