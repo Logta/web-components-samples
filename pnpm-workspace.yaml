@@ -3,12 +3,21 @@ packages:
   - "demo/*"
 
 catalog:
-  vite: 7.3.0
-  typescript: 5.9.3
-  # React 18 (for @lit/react compatibility)
+  vite: 8.3.5
+  typescript: 7.0.2
+  # React (shared version for @lit/react based packages)
   # Used by: demo/react, packages/lit, packages/lit-tailwind
-  react: ^18.3.1
-  react-dom: ^18.3.1
-  '@types/react': ^18.3.18
-  '@types/react-dom': ^18.3.5
-  # Note: packages/react uses React 19 directly (not via catalog)
+  react: ^19.3.1
+  react-dom: ^19.3.1
+  '@types/react': ^19.3.0
+  '@types/react-dom': ^19.3.0
+
+allowBuilds:
+  '@swc/core': true
+  esbuild: true
+
+packageExtensions:
+  '@headlessui/react':
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'

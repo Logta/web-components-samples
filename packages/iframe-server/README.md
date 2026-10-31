@@ -4,7 +4,7 @@ iframe内でWeb Componentsを表示するためのテストサーバーです。
 
 ## 技術スタック
 
-- **ランタイム**: Node.js 24.3.0
+- **ランタイム**: Node.js 26.13.0
 - **パッケージマネージャー**: pnpm
 - **フレームワーク**: [Hono](https://hono.dev/) - 軽量で高速なWebフレームワーク
 - **開発ツール**: [tsx](https://tsx.is/) - TypeScript実行 & ホットリロード

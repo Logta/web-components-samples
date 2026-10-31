@@ -17,12 +17,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.9",
-    "preact": "^10.28.1",
+    "@headlessui/react": "^2.2.10",
+    "preact": "^11.1.0",
     "preact-custom-element": "^4.6.0"
   },
   "devDependencies": {
-    "@preact/preset-vite": "^2.10.2",
+    "@preact/preset-vite": "^2.10.6",
     "typescript": "catalog:",
     "vite": "catalog:"
   }
