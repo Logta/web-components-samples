@@ -34,13 +34,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "lit": "^3.1.0",
-    "@lit/react": "^1.0.8"
+    "@lit/react": "^1.0.8",
+    "lit": "^3.3.3"
   },
   "devDependencies": {
-    "vite": "catalog:",
+    "@types/react": "catalog:",
     "react": "catalog:",
-    "@types/react": "catalog:"
+    "vite": "catalog:"
   },
   "peerDependencies": {
     "react": "^18.0.0"

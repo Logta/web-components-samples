@@ -177,8 +177,8 @@ import '@web-components-samples/lit';
 
 ### 前提条件
 
-- Ruby 3.3.6
-- Rails 8.0以上
+- Ruby 4.0.9
+- Rails 8.1以上
 - pnpm（Web Componentsのビルド用）
 
 ### ファイル構成

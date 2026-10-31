@@ -4,8 +4,8 @@
 
 ## 前提条件
 
-- Ruby 3.2以上
-- Rails 8.0以上
+- Ruby 4.0以上
+- Rails 8.1以上
 - Node.js & pnpm
 
 ## セットアップ

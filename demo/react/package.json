@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.9",
+    "@headlessui/react": "^2.2.10",
     "@lit/react": "^1.0.8",
     "@web-components-samples/lit": "workspace:*",
     "@web-components-samples/lit-tailwind": "workspace:*",
@@ -17,14 +17,14 @@
     "@web-components-samples/react": "workspace:*",
     "@web-components-samples/svelte": "workspace:*",
     "@web-components-samples/vanilla": "workspace:*",
-    "lit": "^3.1.0",
+    "lit": "^3.3.3",
     "react": "catalog:",
     "react-dom": "catalog:"
   },
   "devDependencies": {
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@vitejs/plugin-react-swc": "^4.2.2",
+    "@vitejs/plugin-react-swc": "^4.3.3",
     "typescript": "catalog:",
     "vite": "catalog:"
   }
